@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#07070b}
+  ::selection{background:rgba(124,108,247,0.35);color:#fff}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#0a0a10}
+  ::-webkit-scrollbar-thumb{background:rgba(124,108,247,0.25);border-radius:8px;border:2px solid #0a0a10}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(124,108,247,0.45)}
+  @keyframes floatGlow{0%,100%{transform:translate(0,0) scale(1);opacity:0.55}50%{transform:translate(2%,3%) scale(1.08);opacity:0.8}}
+  @keyframes floatGlow2{0%,100%{transform:translate(0,0) scale(1);opacity:0.4}50%{transform:translate(-3%,-2%) scale(1.12);opacity:0.65}}
+  @keyframes pulseDot{0%,100%{opacity:0.4;transform:scale(0.85)}50%{opacity:1;transform:scale(1.15)}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  @keyframes dash{to{stroke-dashoffset:-24}}
+</style>
+</helmet>
+
+<div style="display:flex;background:#07070b;color:#ECECF1;font-family:'Manrope',-apple-system,sans-serif;min-height:100vh;position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased">
+
+  <div style="position:fixed;top:-10%;right:-5%;width:55vw;height:55vw;max-width:820px;max-height:820px;background:radial-gradient(circle,rgba(124,108,247,0.20),transparent 62%);filter:blur(40px);pointer-events:none;z-index:0;animation:floatGlow 18s ease-in-out infinite"></div>
+  <div style="position:fixed;bottom:-15%;left:8%;width:48vw;height:48vw;max-width:720px;max-height:720px;background:radial-gradient(circle,rgba(56,128,255,0.14),transparent 65%);filter:blur(40px);pointer-events:none;z-index:0;animation:floatGlow2 22s ease-in-out infinite"></div>
+  <div style="position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;opacity:0.5"></div>
+
+  <aside style="width:288px;flex-shrink:0;position:sticky;top:0;height:100vh;z-index:5;border-right:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(13,13,20,0.7),rgba(7,7,11,0.7));backdrop-filter:blur(20px);display:flex;flex-direction:column">
+    <div style="padding:30px 26px 22px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="display:flex;align-items:center;gap:11px">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7c6cf7,#3880ff);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(124,108,247,0.45)">
+          <div style="width:13px;height:13px;border-radius:4px;background:#fff;opacity:0.95"></div>
+        </div>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.01em;line-height:1.1">AI Company OS</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#7a7a8c;text-transform:uppercase;margin-top:2px">Founder Blueprint</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;overflow-y:auto;padding:18px 14px 28px">
+      <sc-for list="{{ groups }}" as="group" hint-placeholder-count="6">
+        <div style="margin-bottom:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:#5a5a6c;padding:0 12px 8px">{{ group.label }}</div>
+          <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="3">
+            <a href="{{ item.href }}" onClick="{{ item.go }}" style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:9px;text-decoration:none;cursor:pointer;transition:background 0.16s,color 0.16s;color:{{ item.color }};background:{{ item.bg }}" style-hover="background:rgba(255,255,255,0.05)">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ item.numColor }};width:18px;flex-shrink:0">{{ item.n }}</span>
+              <span style="font-size:13px;font-weight:{{ item.weight }};letter-spacing:-0.01em">{{ item.t }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="padding:14px 22px;border-top:1px solid rgba(255,255,255,0.06);font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#5a5a6c;letter-spacing:0.08em;display:flex;justify-content:space-between">
+      <span>v1.0 · 26 DELIVERABLES</span>
+      <span style="color:#7c6cf7">●</span>
+    </div>
+  </aside>
+
+  <main style="flex:1;min-width:0;position:relative;z-index:1">
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" style="position:relative;padding:104px 64px 80px;border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden">
+      <div style="display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:100px;border:1px solid rgba(124,108,247,0.3);background:rgba(124,108,247,0.08);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#b9aefb;margin-bottom:30px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#7c6cf7;animation:pulseDot 2.2s ease-in-out infinite"></span>
+        PRODUCT ARCHITECTURE · v1.0 · CONFIDENTIAL
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:74px;line-height:0.98;letter-spacing:-0.035em;margin:0 0 26px;max-width:920px">
+        A <span style="background:linear-gradient(120deg,#a594ff,#7c6cf7 40%,#3880ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">virtual software company</span> that runs on one workspace.
+      </h1>
+      <p style="font-size:20px;line-height:1.55;color:#a8a8b8;max-width:680px;margin:0 0 40px;font-weight:400">
+        One founder. <span style="color:#ECECF1;font-weight:600">The leverage of an entire org.</span> AI Company OS routes every request through a coordinated team of executive and operational agents — and returns a single, unified, ship-ready output.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:54px">
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:500"><span style="color:#7c6cf7;font-family:'JetBrains Mono',monospace">16</span> specialist agents</div>
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:500"><span style="color:#7c6cf7;font-family:'JetBrains Mono',monospace">12</span> core systems</div>
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:500"><span style="color:#7c6cf7;font-family:'JetBrains Mono',monospace">∞</span> model-agnostic</div>
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:500"><span style="color:#7c6cf7;font-family:'JetBrains Mono',monospace">4</span> roadmap phases</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;max-width:880px">
+        <div style="padding:22px 24px;background:rgba(10,10,16,0.6)"><div style="font-family:'Instrument Serif',serif;font-size:38px;line-height:1;color:#fff">10×</div><div style="font-size:12px;color:#8a8a9a;margin-top:8px;line-height:1.4">Output leverage per founder</div></div>
+        <div style="padding:22px 24px;background:rgba(10,10,16,0.6)"><div style="font-family:'Instrument Serif',serif;font-size:38px;line-height:1;color:#fff">1</div><div style="font-size:12px;color:#8a8a9a;margin-top:8px;line-height:1.4">Unified surface, no agent juggling</div></div>
+        <div style="padding:22px 24px;background:rgba(10,10,16,0.6)"><div style="font-family:'Instrument Serif',serif;font-size:38px;line-height:1;color:#fff">~70%</div><div style="font-size:12px;color:#8a8a9a;margin-top:8px;line-height:1.4">Inference cost saved via routing</div></div>
+        <div style="padding:22px 24px;background:rgba(10,10,16,0.6)"><div style="font-family:'Instrument Serif',serif;font-size:38px;line-height:1;color:#fff">∞</div><div style="font-size:12px;color:#8a8a9a;margin-top:8px;line-height:1.4">Project memory that compounds</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 01 VISION ============ -->
+    <section id="vision" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06);scroll-margin-top:0">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">01 · PRODUCT VISION</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">The company is the interface.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Today, building a product means orchestrating a dozen tools and a dozen chatbots by hand. AI Company OS collapses that into a single operating surface. You describe intent; an internal org of agents debates, divides, executes, reviews, and delivers — the way a real company would, minus the headcount.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:880px;margin-bottom:36px">
+        <div style="padding:26px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(16px)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#7c6cf7;margin-bottom:10px">THE PROBLEM</div>
+          <div style="font-size:15px;line-height:1.55;color:#c8c8d4">Solo founders carry the cognitive load of an entire team. Tools are fragmented, context is lost between sessions, and every chatbot starts from zero. Leverage is capped by attention.</div>
+        </div>
+        <div style="padding:26px;border-radius:16px;background:linear-gradient(180deg,rgba(124,108,247,0.12),rgba(124,108,247,0.03));border:1px solid rgba(124,108,247,0.28);backdrop-filter:blur(16px)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#b9aefb;margin-bottom:10px">THE SHIFT</div>
+          <div style="font-size:15px;line-height:1.55;color:#e4e1f7">Stop talking to agents. Talk to a company. One workspace holds persistent memory, a coordinated agent org, and a model layer that always picks the cheapest capable brain for the job.</div>
+        </div>
+      </div>
+
+      <div style="max-width:880px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#8a8a9a;margin-bottom:16px">NORTH-STAR PRINCIPLES</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <div style="padding:20px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:7px">Unified, not fragmented</div><div style="font-size:13px;color:#9090a0;line-height:1.5">One output per request. The org's internal debate is invisible unless you ask to see it.</div></div>
+          <div style="padding:20px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:7px">Memory that compounds</div><div style="font-size:13px;color:#9090a0;line-height:1.5">Every project, decision, and asset is remembered and reused. The OS gets smarter per founder over time.</div></div>
+          <div style="padding:20px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:7px">Cost as a first-class citizen</div><div style="font-size:13px;color:#9090a0;line-height:1.5">The router defaults to the cheapest capable model; spend is visible and governable at every step.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 FEATURES ============ -->
+    <section id="features" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">02 · COMPLETE FEATURE SYSTEM</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Everything a software company does, in one surface.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Capabilities are grouped into six functional pillars. Each maps to agents, systems, and pages defined later in this blueprint.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px">
+        <sc-for list="{{ featurePillars }}" as="p" hint-placeholder-count="6">
+          <div style="padding:24px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.012));border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(14px)">
+            <div style="width:40px;height:40px;border-radius:11px;background:{{ p.iconBg }};display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:16px">{{ p.icon }}</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin-bottom:6px;letter-spacing:-0.01em">{{ p.title }}</div>
+            <div style="font-size:12.5px;color:#8a8a9a;line-height:1.5;margin-bottom:14px">{{ p.desc }}</div>
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="4">
+              <div style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-top:1px solid rgba(255,255,255,0.05);font-size:13px;color:#c4c4d2">
+                <span style="color:#7c6cf7;margin-top:1px;flex-shrink:0">→</span>{{ it }}
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- ============ 03 PRICING ============ -->
+    <section id="pricing" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">03 · SUBSCRIPTION PLANS</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Priced on leverage, not seats.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Bring-your-own-key on every tier keeps inference at cost. Plans gate org depth, memory retention, and the intelligence engines.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1120px">
+        <sc-for list="{{ plans }}" as="pl" hint-placeholder-count="4">
+          <div style="padding:26px 22px;border-radius:18px;background:{{ pl.cardBg }};border:1px solid {{ pl.border }};backdrop-filter:blur(14px);position:relative;display:flex;flex-direction:column">
+            <sc-if value="{{ pl.featured }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;top:-10px;right:18px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;padding:4px 10px;border-radius:100px;background:linear-gradient(135deg,#7c6cf7,#3880ff);color:#fff">MOST POPULAR</div>
+            </sc-if>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:{{ pl.nameColor }}">{{ pl.name }}</div>
+            <div style="margin:14px 0 4px;display:flex;align-items:baseline;gap:4px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:38px;letter-spacing:-0.02em">{{ pl.price }}</span><span style="font-size:13px;color:#8a8a9a">{{ pl.unit }}</span></div>
+            <div style="font-size:12px;color:#8a8a9a;line-height:1.45;margin-bottom:18px;min-height:34px">{{ pl.tagline }}</div>
+            <sc-for list="{{ pl.features }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:12.5px;color:#c4c4d2;line-height:1.4"><span style="color:#7c6cf7;flex-shrink:0;margin-top:1px">✓</span>{{ f }}</div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 04 AGENT ARCHITECTURE -->
+    <section id="agents" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">04 · AGENT ARCHITECTURE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">An org chart, not a chatbot list.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Three executives steer; thirteen specialists execute. Every agent is a configurable role with its own system prompt, tools, default model tier, and review duties — and every one is model-switchable.</p>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#8a8a9a;margin-bottom:14px">EXECUTIVE LAYER</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin-bottom:38px">
+        <sc-for list="{{ execAgents }}" as="a" hint-placeholder-count="3">
+          <div style="padding:24px;border-radius:16px;background:linear-gradient(180deg,rgba(124,108,247,0.10),rgba(124,108,247,0.02));border:1px solid rgba(124,108,247,0.24);backdrop-filter:blur(14px)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+              <div style="width:46px;height:46px;border-radius:12px;background:{{ a.color }};display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#fff">{{ a.abbr }}</div>
+              <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px">{{ a.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#9090a0;margin-top:2px">DEFAULT · {{ a.tier }}</div></div>
+            </div>
+            <div style="font-size:13.5px;color:#b8b8c6;line-height:1.5">{{ a.role }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#8a8a9a;margin-bottom:14px">OPERATIONAL LAYER · 13 SPECIALISTS</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1080px">
+        <sc-for list="{{ opAgents }}" as="a" hint-placeholder-count="13">
+          <div style="padding:16px;border-radius:13px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:-0.01em;margin-bottom:7px">{{ a.name }}</div>
+            <div style="font-size:11.5px;color:#8a8a9a;line-height:1.45;margin-bottom:10px;min-height:32px">{{ a.role }}</div>
+            <div style="display:inline-flex;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;padding:3px 8px;border-radius:6px;background:rgba(124,108,247,0.12);color:#b9aefb">{{ a.tier }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 05 ORCHESTRATOR -->
+    <section id="orchestrator" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">05 · AGENT ORCHESTRATOR</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">One brain coordinating many.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">The orchestrator turns intent into a dependency-aware task graph, runs agents in parallel where it can, manages a shared blackboard of state, and enforces review gates before anything reaches you.</p>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;max-width:1080px">
+        <div style="padding:26px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.012));border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(14px)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#7c6cf7;margin-bottom:18px">RESPONSIBILITIES</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:13px"><div style="width:26px;height:26px;border-radius:8px;background:rgba(124,108,247,0.16);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">⌗</div><div><div style="font-weight:600;font-size:14px;margin-bottom:2px">Task graph construction</div><div style="font-size:12.5px;color:#9090a0;line-height:1.5">Decompose intent into typed tasks with explicit dependencies & assigned agents.</div></div></div>
+            <div style="display:flex;gap:13px"><div style="width:26px;height:26px;border-radius:8px;background:rgba(56,128,255,0.16);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">⇄</div><div><div style="font-weight:600;font-size:14px;margin-bottom:2px">Parallel scheduling</div><div style="font-size:12.5px;color:#9090a0;line-height:1.5">Fan out independent tasks; join on dependencies; respect concurrency & rate limits.</div></div></div>
+            <div style="display:flex;gap:13px"><div style="width:26px;height:26px;border-radius:8px;background:rgba(34,211,238,0.16);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">▤</div><div><div style="font-weight:600;font-size:14px;margin-bottom:2px">Shared blackboard</div><div style="font-size:12.5px;color:#9090a0;line-height:1.5">Common working memory all agents read/write during a run — facts, drafts, decisions.</div></div></div>
+            <div style="display:flex;gap:13px"><div style="width:26px;height:26px;border-radius:8px;background:rgba(16,185,129,0.16);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✓</div><div><div style="font-weight:600;font-size:14px;margin-bottom:2px">Review gates & synthesis</div><div style="font-size:12.5px;color:#9090a0;line-height:1.5">Block delivery until acceptance criteria pass; merge into one unified output.</div></div></div>
+          </div>
+        </div>
+        <div style="padding:26px;border-radius:16px;background:rgba(8,8,12,0.7);border:1px solid rgba(255,255,255,0.08);font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.85;color:#c4c4d2;overflow-x:auto">
+          <div style="color:#5a5a6c;margin-bottom:8px">// orchestration loop</div>
+          <div><span style="color:#7c6cf7">graph</span> = <span style="color:#22d3ee">decompose</span>(intent, memory)</div>
+          <div><span style="color:#7c6cf7">while</span> graph.pending:</div>
+          <div style="padding-left:18px">batch = graph.<span style="color:#22d3ee">ready</span>()</div>
+          <div style="padding-left:18px"><span style="color:#7c6cf7">parallel</span> <span style="color:#ec4899">for</span> t <span style="color:#7c6cf7">in</span> batch:</div>
+          <div style="padding-left:36px">m = router.<span style="color:#22d3ee">pick</span>(t)</div>
+          <div style="padding-left:36px">out = agent[t.role].<span style="color:#22d3ee">run</span>(m)</div>
+          <div style="padding-left:36px">blackboard.<span style="color:#22d3ee">write</span>(out)</div>
+          <div style="padding-left:18px">review.<span style="color:#22d3ee">gate</span>(batch)</div>
+          <div><span style="color:#ec4899">return</span> ceo.<span style="color:#22d3ee">synthesize</span>(blackboard)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 MODEL ROUTER -->
+    <section id="router" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">06 · MODEL ROUTER</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Always the cheapest capable brain.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Free, local, Gemini, Claude, OpenAI, and whatever ships next — all behind one interface. The router scores every task and sends it to the lowest tier that clears the bar, escalating only on failure.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px;margin-bottom:30px">
+        <sc-for list="{{ routerTiers }}" as="t" hint-placeholder-count="4">
+          <div style="padding:20px;border-radius:15px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ t.color }}"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#8a8a9a">{{ t.tag }}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:{{ t.color }}">{{ t.cost }}</div></div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px">{{ t.name }}</div>
+            <div style="font-size:11px;color:#7a7a8c;font-family:'JetBrains Mono',monospace;line-height:1.5;margin-bottom:12px">{{ t.examples }}</div>
+            <div style="font-size:12px;color:#a0a0b0;line-height:1.5">{{ t.use }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);max-width:1080px;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;background:rgba(8,8,12,0.5)">
+        <sc-for list="{{ routerLogic }}" as="l" hint-placeholder-count="4">
+          <div style="padding:20px;border-right:1px solid rgba(255,255,255,0.06)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#7c6cf7;margin-bottom:9px">{{ l.idx }}</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:7px">{{ l.step }}</div>
+            <div style="font-size:12px;color:#9090a0;line-height:1.5">{{ l.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 07 WORKFLOW -->
+    <section id="workflow" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">07 · AGENT WORKFLOW</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Intent in. One deliverable out.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">The eight-stage loop every request flows through — from the founder's single prompt to a remembered, reusable result.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px">
+        <sc-for list="{{ workflow }}" as="w" hint-placeholder-count="8">
+          <div style="padding:20px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08);position:relative">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:11px"><div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#7c6cf7,#3880ff);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;color:#fff">{{ w.n }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#8a8a9a">{{ w.who }}</div></div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:6px">{{ w.title }}</div>
+            <div style="font-size:12px;color:#9090a0;line-height:1.5">{{ w.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 08 MEMORY -->
+    <section id="memory" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">08 · MEMORY ARCHITECTURE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">A company that never forgets.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Four layers of memory, from the live run to lifelong founder knowledge. Each is written by the Memory Manager and retrieved by relevance, recency, and reuse value.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px">
+        <sc-for list="{{ memoryLayers }}" as="m" hint-placeholder-count="4">
+          <div style="padding:22px;border-radius:15px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:{{ m.color }}"></div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#8a8a9a;margin-bottom:10px">{{ m.scope }}</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px">{{ m.name }}</div>
+            <div style="font-size:12px;color:#9090a0;line-height:1.5;margin-bottom:12px">{{ m.desc }}</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#b9aefb;padding:4px 9px;border-radius:7px;background:rgba(124,108,247,0.1);display:inline-block">{{ m.store }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:18px;max-width:1080px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div style="padding:18px;border-radius:13px;background:rgba(124,108,247,0.06);border:1px solid rgba(124,108,247,0.18)"><div style="font-weight:600;font-size:14px;margin-bottom:6px">📸 Screenshot analysis</div><div style="font-size:12px;color:#9090a0;line-height:1.5">Vision models parse UI screenshots into structured critique & design tokens, written to memory.</div></div>
+        <div style="padding:18px;border-radius:13px;background:rgba(56,128,255,0.06);border:1px solid rgba(56,128,255,0.18)"><div style="font-weight:600;font-size:14px;margin-bottom:6px">🎬 Video analysis</div><div style="font-size:12px;color:#9090a0;line-height:1.5">Flow recordings are segmented into steps & friction points feeding UX and QA agents.</div></div>
+        <div style="padding:18px;border-radius:13px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.18)"><div style="font-weight:600;font-size:14px;margin-bottom:6px">♻ Solution reuse</div><div style="font-size:12px;color:#9090a0;line-height:1.5">Past components & decisions are retrieved and re-applied before any new work begins.</div></div>
+      </div>
+    </section>
+
+    <!-- 09 KNOWLEDGE GRAPH -->
+    <section id="graph" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">09 · KNOWLEDGE GRAPH</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Everything connected.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Projects, decisions, components, and insights are nodes; reuse and dependency are edges. The graph powers retrieval, opportunity scoring, and cross-project solution transfer.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1080px;align-items:center">
+        <div style="border-radius:18px;background:radial-gradient(circle at 50% 45%,rgba(124,108,247,0.1),rgba(10,10,16,0.6));border:1px solid rgba(255,255,255,0.08);height:320px">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <sc-for list="{{ edges }}" as="e" hint-placeholder-count="6"><line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="rgba(124,108,247,0.3)" stroke-width="0.5"></line></sc-for>
+            <sc-for list="{{ graphNodes }}" as="n" hint-placeholder-count="6"><g><circle cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.r }}" fill="{{ n.fill }}" opacity="0.92"></circle><text x="{{ n.x }}" y="{{ n.y }}" text-anchor="middle" dy="1.4" fill="{{ n.text }}" font-size="4" font-family="Space Grotesk" font-weight="600">{{ n.label }}</text></g></sc-for>
+          </svg>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ graphTypes }}" as="g" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-radius:12px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)"><span style="width:12px;height:12px;border-radius:4px;background:{{ g.color }};flex-shrink:0"></span><div><div style="font-size:13.5px;font-weight:600">{{ g.name }}</div><div style="font-size:11.5px;color:#8a8a9a">{{ g.desc }}</div></div></div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 INTELLIGENCE ENGINES -->
+    <section id="engines" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">10 · INTELLIGENCE ENGINES</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Four engines that compound your edge.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Design DNA, Opportunity Radar, Technology Radar, and the Project Evolution Engine each run continuously off the knowledge graph.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1080px">
+        <sc-for list="{{ engines }}" as="e" hint-placeholder-count="4">
+          <div style="padding:24px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.012));border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(14px)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:13px"><div style="width:42px;height:42px;border-radius:12px;background:{{ e.bg }};display:flex;align-items:center;justify-content:center;font-size:19px">{{ e.icon }}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px">{{ e.name }}</div></div>
+            <div style="font-size:13.5px;color:#b8b8c6;line-height:1.55;margin-bottom:14px">{{ e.desc }}</div>
+            <sc-for list="{{ e.points }}" as="p" hint-placeholder-count="3"><div style="display:flex;gap:8px;padding:4px 0;font-size:12.5px;color:#c4c4d2"><span style="color:#7c6cf7;flex-shrink:0">→</span>{{ p }}</div></sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 11 DATABASE / SUPABASE -->
+    <section id="schema" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">11 · DATABASE · SUPABASE SCHEMA</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Postgres, pgvector, RLS by default.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Supabase is the system of record. Every table is row-level-secured per workspace; embeddings live in pgvector for memory retrieval; the knowledge graph is materialized in edge tables.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1080px">
+        <sc-for list="{{ tables }}" as="t" hint-placeholder-count="9">
+          <div style="border-radius:13px;background:rgba(8,8,12,0.6);border:1px solid rgba(255,255,255,0.08);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:11px 15px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(124,108,247,0.06)"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#7c6cf7">▤</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#d4d4de">{{ t.name }}</span></div>
+            <div style="padding:9px 15px">
+              <sc-for list="{{ t.cols }}" as="c" hint-placeholder-count="4"><div style="display:flex;justify-content:space-between;padding:4px 0;font-family:'JetBrains Mono',monospace;font-size:11px"><span style="color:#b8b8c6">{{ c.k }}</span><span style="color:#6b6b7c">{{ c.t }}</span></div></sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 12 API -->
+    <section id="api" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">12 · API STRUCTURE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">A thin, typed surface.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Edge functions for streaming agent runs; REST for CRUD; everything typed end-to-end. Runs stream over SSE so the workspace shows the org working in real time.</p>
+      <div style="max-width:1080px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;background:rgba(8,8,12,0.6)">
+        <sc-for list="{{ endpoints }}" as="e" hint-placeholder-count="8">
+          <div style="display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;border-radius:6px;width:54px;text-align:center;flex-shrink:0;color:{{ e.color }};background:{{ e.bg }}">{{ e.method }}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#d4d4de;flex:1;min-width:0">{{ e.path }}</span>
+            <span style="font-size:12px;color:#8a8a9a">{{ e.desc }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 13 BACKEND -->
+    <section id="backend" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">13 · BACKEND ARCHITECTURE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Stateless services around a smart core.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Six backend services compose the runtime. The orchestrator and router are the brains; everything else is supporting infrastructure that stays boring on purpose.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1080px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <div style="padding:20px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08)">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:7px">{{ s.name }}</div>
+            <div style="font-size:12.5px;color:#9090a0;line-height:1.5;margin-bottom:11px">{{ s.desc }}</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#7a7a8c">{{ s.stack }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 14 FRONTEND & FOLDERS -->
+    <section id="frontend" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">14 · FRONTEND ARCHITECTURE & FOLDER STRUCTURE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Next.js, server components, one design system.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">A feature-sliced Next.js app. Streaming UI for agent runs, a shared component library, and a typed data layer over Supabase.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1080px">
+        <div style="padding:22px;border-radius:14px;background:rgba(8,8,12,0.6);border:1px solid rgba(255,255,255,0.08);font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.95;color:#b8b8c6">
+          <div style="color:#7c6cf7">ai-company-os/</div>
+          <div style="padding-left:14px">├─ app/ <span style="color:#5a5a6c">// routes</span></div>
+          <div style="padding-left:28px">├─ (workspace)/dashboard</div>
+          <div style="padding-left:28px">├─ agent · projects · memory</div>
+          <div style="padding-left:28px">└─ cost · radar · dna</div>
+          <div style="padding-left:14px">├─ components/ <span style="color:#5a5a6c">// UI kit</span></div>
+          <div style="padding-left:14px">├─ features/ <span style="color:#5a5a6c">// sliced</span></div>
+          <div style="padding-left:28px">├─ orchestrator/</div>
+          <div style="padding-left:28px">├─ router/ · memory/</div>
+          <div style="padding-left:14px">├─ lib/ <span style="color:#5a5a6c">// supabase, ai</span></div>
+          <div style="padding-left:14px">├─ agents/ <span style="color:#5a5a6c">// prompts</span></div>
+          <div style="padding-left:14px">└─ types/</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ feArch }}" as="f" hint-placeholder-count="5">
+            <div style="padding:15px 17px;border-radius:12px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.07)"><div style="font-size:13.5px;font-weight:600;margin-bottom:4px">{{ f.name }}</div><div style="font-size:12px;color:#9090a0;line-height:1.5">{{ f.desc }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 PAGES & WIREFRAMES -->
+    <section id="pages" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">15 · PAGES & WIREFRAMES</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Seven screens, one workspace.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 32px">Each page maps to agents and systems above. A full interactive prototype of these screens lives in <span style="color:#b9aefb;font-family:'JetBrains Mono',monospace;font-size:14px">AI Company OS — App.dc.html</span>.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1080px">
+        <sc-for list="{{ pages }}" as="p" hint-placeholder-count="7">
+          <div style="display:flex;gap:15px;padding:18px;border-radius:14px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08)">
+            <div style="width:88px;height:64px;border-radius:9px;background:rgba(8,8,12,0.7);border:1px solid rgba(255,255,255,0.08);flex-shrink:0;padding:6px;display:flex;flex-direction:column;gap:3px">
+              <div style="height:8px;border-radius:2px;background:{{ p.wire1 }}"></div>
+              <div style="display:flex;gap:3px;flex:1"><div style="width:30%;border-radius:2px;background:rgba(255,255,255,0.06)"></div><div style="flex:1;border-radius:2px;background:{{ p.wire2 }}"></div></div>
+            </div>
+            <div style="flex:1;min-width:0"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:4px">{{ p.name }}</div><div style="font-size:12px;color:#9090a0;line-height:1.5">{{ p.desc }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 16 DESIGN SYSTEM -->
+    <section id="designsystem" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">16 · DESIGN SYSTEM & COMPONENT LIBRARY</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Dark luxury, codified.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Glassmorphism, premium gradients, floating panels — captured as tokens so every screen and every UI agent stays on-brand.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1080px;margin-bottom:16px">
+        <div style="padding:22px;border-radius:15px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08)">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:15px">Palette</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <sc-for list="{{ palette }}" as="c" hint-placeholder-count="6"><div><div style="height:48px;border-radius:10px;background:{{ c.hex }};border:1px solid rgba(255,255,255,0.1)"></div><div style="font-size:11.5px;font-weight:600;margin-top:7px">{{ c.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#7a7a8c">{{ c.hex }}</div></div></sc-for>
+          </div>
+        </div>
+        <div style="padding:22px;border-radius:15px;background:rgba(10,10,16,0.5);border:1px solid rgba(255,255,255,0.08)">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:15px">Type</div>
+          <div style="padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:13px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em">Space Grotesk</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8c;margin-top:3px">Display · 700/600</div></div>
+          <div style="padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:13px"><div style="font-family:'Manrope',sans-serif;font-weight:500;font-size:18px">Manrope — body & UI copy</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8c;margin-top:3px">Body · 300–800</div></div>
+          <div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#c4c4d2">JetBrains Mono — labels, code</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8c;margin-top:3px">Mono · 400–600</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1080px">
+        <sc-for list="{{ components }}" as="c" hint-placeholder-count="8"><div style="padding:15px;border-radius:12px;background:rgba(8,8,12,0.6);border:1px solid rgba(255,255,255,0.07)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#7c6cf7;margin-bottom:6px">{{ c.type }}</div><div style="font-size:13px;font-weight:600;margin-bottom:3px">{{ c.name }}</div><div style="font-size:11px;color:#8a8a9a;line-height:1.4">{{ c.desc }}</div></div></sc-for>
+      </div>
+    </section>
+
+    <!-- 18 LIFECYCLE -->
+    <section id="lifecycle" style="padding:80px 64px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">17 · PROJECT LIFECYCLE FLOW</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Idea to evolution, one continuum.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Every project moves through seven phases. Memory and the evolution engine feed the end back into the beginning — projects never truly finish, they compound.</p>
+      <div style="display:flex;align-items:stretch;gap:0;max-width:1080px;overflow-x:auto;padding-bottom:8px">
+        <sc-for list="{{ lifecycle }}" as="l" hint-placeholder-count="7">
+          <div style="flex:1;min-width:128px;position:relative">
+            <div style="padding:18px 16px;border-radius:13px;background:{{ l.bg }};border:1px solid {{ l.border }};margin-right:10px;height:100%">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ l.numColor }};margin-bottom:9px">{{ l.n }}</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:6px">{{ l.phase }}</div>
+              <div style="font-size:11px;color:#9090a0;line-height:1.45">{{ l.agents }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 19 ROADMAP -->
+    <section id="roadmap" style="padding:80px 64px 110px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">18 · MVP → PHASE 4 ROADMAP</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">From core loop to autonomous org.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:720px;margin:0 0 40px">Five releases. Ship the unified agent loop first; layer intelligence, then autonomy, then scale.</p>
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:1080px">
+        <sc-for list="{{ roadmap }}" as="r" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;padding:24px;border-radius:16px;background:{{ r.bg }};border:1px solid {{ r.border }}">
+            <div>
+              <div style="display:inline-flex;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;padding:4px 10px;border-radius:7px;background:{{ r.tagBg }};color:{{ r.tagColor }};margin-bottom:12px">{{ r.tag }}</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.015em;margin-bottom:5px">{{ r.name }}</div>
+              <div style="font-size:12px;color:#8a8a9a">{{ r.when }}</div>
+            </div>
+            <div>
+              <div style="font-size:14px;color:#c8c8d4;line-height:1.55;margin-bottom:14px">{{ r.goal }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ r.items }}" as="it" hint-placeholder-count="4"><span style="font-size:12px;color:#c4c4d2;padding:5px 11px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)">{{ it }}</span></sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 19 IMPLEMENTATION PLAN -->
+    <section id="implementation" style="padding:80px 64px 120px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#7c6cf7;margin-bottom:14px">19 · IMPLEMENTATION PLAN · BUILD ORDER</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;max-width:760px">Sequenced by dependency, not excitement.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#a8a8b8;max-width:760px;margin:0 0 32px">Six systems, in the order they must be built. Memory is the foundation everything reads from; the router makes agents affordable; the orchestrator coordinates them; surfaces and intelligence engines layer on top once memory has compounded.</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px;max-width:1080px;margin-bottom:30px">
+        <div style="flex:1;min-width:150px;padding:14px 16px;border-radius:12px;background:rgba(124,108,247,0.08);border:1px solid rgba(124,108,247,0.22)"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#b9aefb;margin-bottom:5px">FOUNDATION</div><div style="font-size:12.5px;color:#c8c8d4">Memory Engine · Model Router</div></div>
+        <div style="display:flex;align-items:center;color:#5a5a6c;font-size:18px">→</div>
+        <div style="flex:1;min-width:150px;padding:14px 16px;border-radius:12px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.22)"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#c4b5fd;margin-bottom:5px">COORDINATION</div><div style="font-size:12.5px;color:#c8c8d4">COO Orchestrator</div></div>
+        <div style="display:flex;align-items:center;color:#5a5a6c;font-size:18px">→</div>
+        <div style="flex:1;min-width:150px;padding:14px 16px;border-radius:12px;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.22)"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#7fe3f0;margin-bottom:5px">SURFACES</div><div style="font-size:12.5px;color:#c8c8d4">Project Workspace</div></div>
+        <div style="display:flex;align-items:center;color:#5a5a6c;font-size:18px">→</div>
+        <div style="flex:1;min-width:150px;padding:14px 16px;border-radius:12px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.22)"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#f0a0c8;margin-bottom:5px">INTELLIGENCE</div><div style="font-size:12.5px;color:#c8c8d4">Design DNA · Opportunity Radar</div></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:1080px">
+        <sc-for list="{{ buildOrder }}" as="b" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:20px;padding:24px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(14px);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:{{ b.color }}"></div>
+            <div style="font-family:'Instrument Serif',serif;font-size:42px;line-height:1;color:{{ b.color }};opacity:0.9">{{ b.order }}</div>
+            <div>
+              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:10px">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.015em">{{ b.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);color:#9595a6">{{ b.phase }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8c">{{ b.weeks }}</span>
+              </div>
+              <div style="font-size:13.5px;color:#b8b8c6;line-height:1.55;margin-bottom:14px;max-width:640px">{{ b.why }}</div>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px">
+                <div style="display:flex;align-items:center;gap:9px">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#7a7a8c">COMPLEXITY</span>
+                  <div style="display:flex;gap:3px">
+                    <sc-for list="{{ b.dots }}" as="d" hint-placeholder-count="5"><span style="width:18px;height:5px;border-radius:3px;background:{{ d.on }}"></span></sc-for>
+                  </div>
+                  <span style="font-size:12px;color:#c4c4d2;font-weight:600">{{ b.complexity }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#7a7a8c">DEPENDS ON</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px">
+                    <sc-for list="{{ b.deps }}" as="dep" hint-placeholder-count="2"><span style="font-size:11px;color:#c4c4d2;padding:3px 9px;border-radius:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)">{{ dep }}</span></sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="max-width:1080px;margin-top:18px;padding:20px 24px;border-radius:14px;background:rgba(124,108,247,0.06);border:1px solid rgba(124,108,247,0.2);font-size:13.5px;color:#c8c8d4;line-height:1.6">
+        <span style="font-weight:700;color:#fff;font-family:'Space Grotesk',sans-serif">Critical path:</span> Memory → Router → Orchestrator is strictly sequential (~13–18 weeks). Project Workspace can begin in parallel with the orchestrator's review-gate work. Design DNA and Opportunity Radar are deferred until real projects have populated memory and the knowledge graph — building them earlier produces empty, low-signal output.
+      </div>
+    </section>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: 'hero' };
+
+  componentDidMount() {
+    const ids = ['hero','vision','features','pricing','agents','orchestrator','router','workflow','memory','graph','engines','schema','api','backend','frontend','pages','designsystem','lifecycle','roadmap','implementation'];
+    try {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.target && e.target.id) this.setState({ active: e.target.id });
+        });
+      }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+      ids.forEach(id => { const el = document.getElementById(id); if (el) this._io.observe(el); });
+    } catch (err) { /* observer unsupported — nav still works via click */ }
+  }
+  componentWillUnmount() { try { if (this._io) this._io.disconnect(); } catch (e) {} }
+
+  go(id) {
+    return (e) => {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 8;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        this.setState({ active: id });
+      }
+    };
+  }
+
+  renderVals() {
+    const active = this.state.active;
+    const nav = [
+      { label: 'Strategy', items: [
+        { id: 'vision', n: '01', t: 'Product Vision' },
+        { id: 'features', n: '02', t: 'Feature System' },
+        { id: 'pricing', n: '03', t: 'Subscription Plans' },
+      ]},
+      { label: 'Intelligence', items: [
+        { id: 'agents', n: '04', t: 'Agent Architecture' },
+        { id: 'orchestrator', n: '05', t: 'Orchestrator' },
+        { id: 'router', n: '06', t: 'Model Router' },
+        { id: 'workflow', n: '07', t: 'Agent Workflow' },
+      ]},
+      { label: 'Memory & Knowledge', items: [
+        { id: 'memory', n: '08', t: 'Memory Architecture' },
+        { id: 'graph', n: '09', t: 'Knowledge Graph' },
+        { id: 'engines', n: '10', t: 'Intelligence Engines' },
+      ]},
+      { label: 'Data & Backend', items: [
+        { id: 'schema', n: '11', t: 'Database / Supabase' },
+        { id: 'api', n: '12', t: 'API Structure' },
+        { id: 'backend', n: '13', t: 'Backend Architecture' },
+      ]},
+      { label: 'Product & Design', items: [
+        { id: 'frontend', n: '14', t: 'Frontend & Folders' },
+        { id: 'pages', n: '15', t: 'Pages & Wireframes' },
+        { id: 'designsystem', n: '16', t: 'Design System' },
+      ]},
+      { label: 'Execution', items: [
+        { id: 'lifecycle', n: '17', t: 'Project Lifecycle' },
+        { id: 'roadmap', n: '18', t: 'MVP → Phase 4' },
+        { id: 'implementation', n: '19', t: 'Implementation Plan' },
+      ]},
+    ];
+    const groups = nav.map(g => ({
+      label: g.label,
+      items: g.items.map(it => {
+        const on = active === it.id;
+        return {
+          ...it,
+          href: '#' + it.id,
+          go: this.go(it.id),
+          color: on ? '#ffffff' : '#9595a6',
+          bg: on ? 'rgba(124,108,247,0.14)' : 'transparent',
+          numColor: on ? '#b9aefb' : '#5a5a6c',
+          weight: on ? 600 : 500,
+        };
+      })
+    }));
+
+    const featurePillars = [
+      { icon: '◈', iconBg: 'rgba(124,108,247,0.16)', title: 'Ideation & Research', desc: 'Turn a sentence into a validated direction.', items: ['Idea analysis & scoring', 'Competitor research', 'Opportunity discovery', 'Market & audience framing'] },
+      { icon: '◇', iconBg: 'rgba(56,128,255,0.16)', title: 'Planning & Architecture', desc: 'From plan to system design.', items: ['Product plans & PRDs', 'System architecture', 'Tech stack selection', 'Data & API modeling'] },
+      { icon: '❖', iconBg: 'rgba(236,72,153,0.16)', title: 'Design & Experience', desc: 'A coherent product identity.', items: ['UX flows & wireframes', 'UI design & screens', 'Design DNA system', 'Component libraries'] },
+      { icon: '⬡', iconBg: 'rgba(16,185,129,0.16)', title: 'Build & Review', desc: 'Ship-ready, reviewed work.', items: ['Frontend review', 'Backend review', 'Senior dev guidance', 'Refactor & improve loops'] },
+      { icon: '◉', iconBg: 'rgba(245,158,11,0.16)', title: 'Test & Verify', desc: 'Quality is enforced, not hoped for.', items: ['QA test plans', 'Automated test gen', 'Screenshot analysis', 'Video / flow analysis'] },
+      { icon: '⌬', iconBg: 'rgba(34,211,238,0.16)', title: 'Memory & Growth', desc: 'The OS that learns you.', items: ['Project & archived memory', 'Solution reuse', 'Technology Radar', 'Personal mentorship'] },
+    ];
+
+    const plans = [
+      { name: 'Solo', price: 'Free', unit: '', tagline: 'BYO key. Single active project, core agent loop.', featured: false, cardBg: 'rgba(10,10,16,0.55)', border: 'rgba(255,255,255,0.08)', nameColor: '#c8c8d4', features: ['1 active project', 'Core 5 agents', '7-day project memory', 'Free + local models only', 'Community support'] },
+      { name: 'Founder', price: '$29', unit: '/mo', tagline: 'The full org for one builder.', featured: true, cardBg: 'linear-gradient(180deg,rgba(124,108,247,0.14),rgba(124,108,247,0.03))', border: 'rgba(124,108,247,0.4)', nameColor: '#ffffff', features: ['Unlimited projects', 'All 16 agents', 'Persistent project memory', 'All model providers + routing', 'Design DNA + Tech Radar', 'Cost dashboard'] },
+      { name: 'Studio', price: '$99', unit: '/mo', tagline: 'For agencies & small teams.', featured: false, cardBg: 'rgba(10,10,16,0.55)', border: 'rgba(255,255,255,0.08)', nameColor: '#c8c8d4', features: ['Everything in Founder', '5 seats + shared memory', 'Archived project library', 'Opportunity Radar', 'Knowledge graph export', 'Priority routing'] },
+      { name: 'Enterprise', price: 'Custom', unit: '', tagline: 'Self-host, SSO, governance.', featured: false, cardBg: 'rgba(10,10,16,0.55)', border: 'rgba(255,255,255,0.08)', nameColor: '#c8c8d4', features: ['Self-host / VPC', 'Custom agents & models', 'SSO + audit logs', 'Spend governance', 'SLA + dedicated support'] },
+    ];
+
+    const execAgents = [
+      { abbr: 'CEO', name: 'CEO Agent', role: 'Sets direction, arbitrates trade-offs, owns the single unified output. The voice you hear.', tier: 'Frontier', color: '#7c6cf7' },
+      { abbr: 'COO', name: 'COO Agent', role: 'Decomposes intent into work, schedules the operational agents, tracks delivery.', tier: 'Balanced', color: '#3880ff' },
+      { abbr: 'CTO', name: 'CTO Agent', role: 'Owns technical strategy, stack decisions, and the bar for architecture & code review.', tier: 'Balanced', color: '#22d3ee' },
+    ];
+    const opAgents = [
+      { name: 'Product Manager', role: 'PRDs, scope, prioritization, acceptance criteria', tier: 'Balanced' },
+      { name: 'Business Analyst', role: 'Idea scoring, market & viability analysis', tier: 'Fast' },
+      { name: 'UX Lead', role: 'Flows, IA, wireframes, usability heuristics', tier: 'Balanced' },
+      { name: 'UI Designer', role: 'Visual design, screens, Design DNA application', tier: 'Balanced' },
+      { name: 'System Architect', role: 'Data models, services, API & infra design', tier: 'Frontier' },
+      { name: 'Senior Developer', role: 'Implementation guidance, code generation', tier: 'Balanced' },
+      { name: 'QA Engineer', role: 'Test plans, edge cases, acceptance gates', tier: 'Fast' },
+      { name: 'Automation Tester', role: 'Generates & runs automated test suites', tier: 'Fast' },
+      { name: 'Content Writer', role: 'Copy, docs, marketing & in-product text', tier: 'Fast' },
+      { name: 'Competitor Researcher', role: 'Landscape scans, feature & pricing diffs', tier: 'Fast' },
+      { name: 'Cost Controller', role: 'Tracks spend, enforces budgets, flags waste', tier: 'Local' },
+      { name: 'Memory Manager', role: 'Writes, indexes & retrieves project memory', tier: 'Local' },
+      { name: 'Personal Mentor', role: 'Teaches, explains decisions, grows the founder', tier: 'Balanced' },
+    ];
+    const routerTiers = [
+      { name: 'Local / Free', tag: 'Tier 0', examples: 'Llama 3 · Qwen 2.5 · Gemma · Mistral', use: 'Classification, memory ops, formatting, cost-bound bulk work', cost: '$0', color: '#10b981' },
+      { name: 'Fast', tag: 'Tier 1', examples: 'Gemini Flash · GPT-mini · Claude Haiku', use: 'Research, drafts, tests, summaries, high-volume tasks', cost: '$', color: '#22d3ee' },
+      { name: 'Balanced', tag: 'Tier 2', examples: 'Claude Sonnet · GPT · Gemini Pro', use: 'Design, planning, code, review — the daily workhorse', cost: '$$', color: '#3880ff' },
+      { name: 'Frontier', tag: 'Tier 3', examples: 'Claude Opus · GPT (large) · Gemini Ultra', use: 'Hard architecture, executive arbitration, ambiguous reasoning', cost: '$$$', color: '#7c6cf7' },
+    ];
+    const routerLogic = [
+      { idx: 'STEP 1', step: 'Classify', desc: 'Score task on complexity, risk, token volume & capability needs.' },
+      { idx: 'STEP 2', step: 'Constrain', desc: 'Apply user budget, plan tier, latency target & provider availability.' },
+      { idx: 'STEP 3', step: 'Select', desc: 'Pick cheapest model that clears the capability threshold.' },
+      { idx: 'STEP 4', step: 'Verify & fallback', desc: 'Cheap critic checks output; escalate one tier on failure.' },
+    ];
+
+    const memoryLayers = [
+      { scope: 'LAYER 0 · EPHEMERAL', name: 'Run blackboard', desc: 'Shared working state for a single run — facts, drafts, decisions. Discarded after synthesis.', color: '#22d3ee', store: 'Redis / in-memory' },
+      { scope: 'LAYER 1 · PROJECT', name: 'Project memory', desc: 'Every decision, artifact, and thread scoped to one project. The default retrieval context.', color: '#7c6cf7', store: 'Postgres + pgvector' },
+      { scope: 'LAYER 2 · ARCHIVE', name: 'Archived memory', desc: 'Completed projects frozen but fully searchable — the source of solution reuse.', color: '#3880ff', store: 'Postgres (cold)' },
+      { scope: 'LAYER 3 · FOUNDER', name: 'Founder memory', desc: 'Cross-project preferences, skills, and style that personalize the whole OS over time.', color: '#ec4899', store: 'pgvector + graph' },
+    ];
+    const graphNodes = [
+      { x: 50, y: 46, r: 14, label: 'Nimbus', fill: '#7c6cf7', text: '#fff' },
+      { x: 22, y: 22, r: 9, label: 'Auth', fill: 'rgba(56,128,255,0.85)', text: '#fff' },
+      { x: 80, y: 24, r: 8, label: 'Stepper', fill: 'rgba(16,185,129,0.85)', text: '#06120c' },
+      { x: 16, y: 72, r: 7.5, label: 'RLS', fill: 'rgba(34,211,238,0.8)', text: '#06121a' },
+      { x: 84, y: 70, r: 9.5, label: 'DNA', fill: 'rgba(236,72,153,0.85)', text: '#fff' },
+      { x: 50, y: 86, r: 7, label: 'Pulse', fill: 'rgba(245,158,11,0.85)', text: '#1a1206' },
+    ];
+    const edgePairs = [[0,1],[0,2],[0,3],[0,4],[0,5],[2,4]];
+    const edges = edgePairs.map(([a,b]) => ({ x1: graphNodes[a].x, y1: graphNodes[a].y, x2: graphNodes[b].x, y2: graphNodes[b].y }));
+    const graphTypes = [
+      { name: 'Project nodes', desc: 'Each project, active or archived', color: '#7c6cf7' },
+      { name: 'Decision nodes', desc: 'Choices + rationale, time-stamped', color: '#3880ff' },
+      { name: 'Solution nodes', desc: 'Reusable components & patterns', color: '#10b981' },
+      { name: 'Insight nodes', desc: 'Learnings mined from outcomes', color: '#f59e0b' },
+    ];
+    const engines = [
+      { icon: '❖', bg: 'rgba(236,72,153,0.16)', name: 'Design DNA Engine', desc: 'Extracts a reusable visual fingerprint from approved screens and feeds it to every UI agent.', points: ['Vision parse → tokens (color, type, spacing, motion)', 'Versioned fingerprint per project', 'Auto-applied on every design task'] },
+      { icon: '◉', bg: 'rgba(124,108,247,0.16)', name: 'Opportunity Radar Engine', desc: 'Scores market gaps against your stack, memory, and past wins to surface what to build next.', points: ['Signal ingestion + clustering', 'Fit score vs. founder graph', 'Ranked, actionable opportunities'] },
+      { icon: '⌖', bg: 'rgba(34,211,238,0.16)', name: 'Technology Radar Engine', desc: 'Tracks libraries, models, and patterns; flags what to adopt, trial, or retire.', points: ['Adopt / Trial / Assess / Hold rings', 'Per-project relevance filtering', 'Upgrade suggestions with impact'] },
+      { icon: '⟳', bg: 'rgba(16,185,129,0.16)', name: 'Project Evolution Engine', desc: 'Continuously proposes improvements to live projects from new memory and signals.', points: ['Diff current vs. best-known patterns', 'Proposes refactors & upgrades', 'Closes the lifecycle back to ideation'] },
+    ];
+
+    const tables = [
+      { name: 'workspaces', cols: [{k:'id',t:'uuid'},{k:'owner_id',t:'uuid'},{k:'plan',t:'enum'},{k:'budget_cap',t:'numeric'}] },
+      { name: 'projects', cols: [{k:'id',t:'uuid'},{k:'workspace_id',t:'fk'},{k:'phase',t:'enum'},{k:'status',t:'enum'}] },
+      { name: 'agents', cols: [{k:'id',t:'uuid'},{k:'role',t:'text'},{k:'model_tier',t:'enum'},{k:'system_prompt',t:'text'}] },
+      { name: 'agent_runs', cols: [{k:'id',t:'uuid'},{k:'project_id',t:'fk'},{k:'graph',t:'jsonb'},{k:'output',t:'jsonb'}] },
+      { name: 'memory_entries', cols: [{k:'id',t:'uuid'},{k:'project_id',t:'fk'},{k:'type',t:'enum'},{k:'body',t:'text'}] },
+      { name: 'embeddings', cols: [{k:'id',t:'uuid'},{k:'entry_id',t:'fk'},{k:'vector',t:'vector'},{k:'model',t:'text'}] },
+      { name: 'graph_edges', cols: [{k:'src',t:'uuid'},{k:'dst',t:'uuid'},{k:'rel',t:'enum'},{k:'weight',t:'float'}] },
+      { name: 'model_calls', cols: [{k:'id',t:'uuid'},{k:'run_id',t:'fk'},{k:'model',t:'text'},{k:'cost',t:'numeric'}] },
+      { name: 'design_dna', cols: [{k:'id',t:'uuid'},{k:'project_id',t:'fk'},{k:'tokens',t:'jsonb'},{k:'version',t:'int'}] },
+    ];
+    const endpoints = [
+      { method: 'POST', color: '#7ee0b8', bg: 'rgba(16,185,129,0.14)', path: '/api/runs', desc: 'Start an agent run (SSE stream)' },
+      { method: 'GET', color: '#8fb6ff', bg: 'rgba(56,128,255,0.14)', path: '/api/projects', desc: 'List / filter projects' },
+      { method: 'POST', color: '#7ee0b8', bg: 'rgba(16,185,129,0.14)', path: '/api/projects', desc: 'Create a project' },
+      { method: 'GET', color: '#8fb6ff', bg: 'rgba(56,128,255,0.14)', path: '/api/memory/search', desc: 'Semantic memory retrieval' },
+      { method: 'POST', color: '#7ee0b8', bg: 'rgba(16,185,129,0.14)', path: '/api/memory', desc: 'Write a memory entry' },
+      { method: 'POST', color: '#7ee0b8', bg: 'rgba(16,185,129,0.14)', path: '/api/router/route', desc: 'Resolve cheapest capable model' },
+      { method: 'GET', color: '#8fb6ff', bg: 'rgba(56,128,255,0.14)', path: '/api/cost/summary', desc: 'Spend by model / agent / project' },
+      { method: 'GET', color: '#8fb6ff', bg: 'rgba(56,128,255,0.14)', path: '/api/radar/opportunities', desc: 'Ranked opportunities for workspace' },
+    ];
+    const services = [
+      { name: 'Orchestrator', desc: 'Builds task graphs, schedules agents, runs review gates, synthesizes output.', stack: 'Node · queue · SSE' },
+      { name: 'Model Router', desc: 'Scores tasks, picks the cheapest capable model, handles fallback & provider keys.', stack: 'TS · provider adapters' },
+      { name: 'Memory Service', desc: 'Reads/writes the four memory layers; owns embeddings & retrieval.', stack: 'Postgres · pgvector' },
+      { name: 'Agent Runtime', desc: 'Executes a single agent: prompt assembly, tools, structured output.', stack: 'TS · tool calling' },
+      { name: 'Intelligence Engines', desc: 'Design DNA, Opportunity & Tech Radar, Evolution — scheduled jobs over the graph.', stack: 'Workers · cron' },
+      { name: 'Cost & Billing', desc: 'Meters every model call, enforces budgets, powers the Cost Center.', stack: 'Postgres · Stripe' },
+    ];
+    const feArch = [
+      { name: 'App Router + RSC', desc: 'Server components for data-heavy screens; client islands for interactivity.' },
+      { name: 'Streaming run UI', desc: 'SSE-driven run timeline that paints agents working in real time.' },
+      { name: 'Component library', desc: 'Glass panels, command palette, run cards — all Design-DNA tokenized.' },
+      { name: 'Typed data layer', desc: 'End-to-end types from Supabase schema to the UI via generated types.' },
+      { name: 'State & realtime', desc: 'Lightweight store + Supabase realtime for live org activity.' },
+    ];
+    const pages = [
+      { name: 'Dashboard', desc: 'Command center: stats, active projects, live org activity.', wire1: 'rgba(124,108,247,0.5)', wire2: 'rgba(255,255,255,0.05)' },
+      { name: 'Agent Workspace', desc: 'One composer, live run timeline, unified output, agent roster.', wire1: 'rgba(124,108,247,0.5)', wire2: 'rgba(124,108,247,0.18)' },
+      { name: 'Project Workspace', desc: 'Phase tabs, artifacts, project memory panel.', wire1: 'rgba(56,128,255,0.5)', wire2: 'rgba(255,255,255,0.05)' },
+      { name: 'Memory Explorer', desc: 'Search, knowledge graph, recent memory, archived projects.', wire1: 'rgba(34,211,238,0.5)', wire2: 'rgba(34,211,238,0.16)' },
+      { name: 'Cost Center', desc: 'Budget, router savings, spend by model & agent.', wire1: 'rgba(16,185,129,0.5)', wire2: 'rgba(255,255,255,0.05)' },
+      { name: 'Opportunity Radar', desc: 'Radial fit radar + ranked opportunity cards.', wire1: 'rgba(245,158,11,0.5)', wire2: 'rgba(245,158,11,0.16)' },
+      { name: 'Design DNA', desc: 'Fingerprint, palette, type scale, tokens.', wire1: 'rgba(236,72,153,0.5)', wire2: 'rgba(236,72,153,0.16)' },
+    ];
+    const palette = [
+      { name: 'Iris', hex: '#7C6CF7' }, { name: 'Azure', hex: '#3880FF' }, { name: 'Ink', hex: '#06060A' },
+      { name: 'Mist', hex: '#9595A6' }, { name: 'Jade', hex: '#10B981' }, { name: 'Amber', hex: '#F59E0B' },
+    ];
+    const components = [
+      { type: 'SURFACE', name: 'Glass Panel', desc: 'Blurred, bordered container' },
+      { type: 'OVERLAY', name: 'Command Palette', desc: '⌘K nav + actions' },
+      { type: 'DATA', name: 'Agent Run Card', desc: 'Streaming step timeline' },
+      { type: 'DATA', name: 'Stat Card', desc: 'Metric + delta' },
+      { type: 'NAV', name: 'Phase Tabs', desc: 'Project lifecycle tabs' },
+      { type: 'TOKEN', name: 'Swatch', desc: 'Color / type token' },
+      { type: 'VIZ', name: 'Radar', desc: 'Radial fit plot' },
+      { type: 'VIZ', name: 'Graph Canvas', desc: 'Knowledge graph nodes' },
+    ];
+    const lifecycle = [
+      { n: '01', phase: 'Ideate', agents: 'Business Analyst · Competitor Researcher', bg: 'rgba(124,108,247,0.1)', border: 'rgba(124,108,247,0.25)', numColor: '#b9aefb' },
+      { n: '02', phase: 'Plan', agents: 'Product Manager · CEO', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', numColor: '#8a8a9a' },
+      { n: '03', phase: 'Architect', agents: 'System Architect · CTO', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', numColor: '#8a8a9a' },
+      { n: '04', phase: 'Design', agents: 'UX Lead · UI Designer', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', numColor: '#8a8a9a' },
+      { n: '05', phase: 'Build', agents: 'Senior Developer', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', numColor: '#8a8a9a' },
+      { n: '06', phase: 'Test', agents: 'QA Engineer · Automation Tester', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', numColor: '#8a8a9a' },
+      { n: '07', phase: 'Evolve', agents: 'Evolution Engine · Memory Manager', bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.25)', numColor: '#7ee0b8' },
+    ];
+    const roadmap = [
+      { tag: 'MVP', when: 'Months 0–3', name: 'The unified loop', goal: 'Prove that one prompt → coordinated agents → one output, with memory and routing, beats chatting with separate bots.', bg: 'linear-gradient(120deg,rgba(124,108,247,0.12),rgba(56,128,255,0.05))', border: 'rgba(124,108,247,0.3)', tagBg: 'rgba(124,108,247,0.2)', tagColor: '#b9aefb', items: ['Memory Engine', 'Model Router', 'COO Orchestrator', '5 core agents', 'Dashboard + Agent Workspace'] },
+      { tag: 'PHASE 1', when: 'Months 3–6', name: 'The full org', goal: 'All 16 agents, the project lifecycle, and persistent project memory across the seven screens.', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', tagBg: 'rgba(255,255,255,0.06)', tagColor: '#c4c4d2', items: ['All 16 agents', 'Project Workspace', 'Cost Center', 'Screenshot analysis'] },
+      { tag: 'PHASE 2', when: 'Months 6–9', name: 'Intelligence engines', goal: 'Design DNA, Opportunity & Technology Radar, and the knowledge graph turn memory into proactive leverage.', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', tagBg: 'rgba(255,255,255,0.06)', tagColor: '#c4c4d2', items: ['Design DNA', 'Opportunity Radar', 'Technology Radar', 'Knowledge Graph'] },
+      { tag: 'PHASE 3', when: 'Months 9–12', name: 'Autonomy & evolution', goal: 'The Evolution Engine proposes and applies improvements; agents act with less supervision.', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', tagBg: 'rgba(255,255,255,0.06)', tagColor: '#c4c4d2', items: ['Evolution Engine', 'Video analysis', 'Autonomous review loops', 'Solution reuse v2'] },
+      { tag: 'PHASE 4', when: 'Year 2', name: 'Scale & teams', goal: 'Multi-seat studios, shared memory, self-host, governance — the OS for whole teams.', bg: 'rgba(10,10,16,0.5)', border: 'rgba(255,255,255,0.08)', tagBg: 'rgba(255,255,255,0.06)', tagColor: '#c4c4d2', items: ['Studio seats', 'Shared memory', 'Self-host / VPC', 'SSO + governance'] },
+    ];
+
+    const workflow = [
+      { n: '1', title: 'Intake', who: 'Workspace', desc: 'Founder states intent in one box. Context + memory attached automatically.' },
+      { n: '2', title: 'Triage', who: 'CEO + COO', desc: 'Executives interpret intent, set the goal, and pick the operating mode.' },
+      { n: '3', title: 'Decompose', who: 'COO', desc: 'Goal split into a task graph with dependencies and assigned agents.' },
+      { n: '4', title: 'Execute', who: 'Operational agents', desc: 'Agents run in parallel where possible, each on its routed model.' },
+      { n: '5', title: 'Cross-review', who: 'CTO + QA + UX', desc: 'Peer review loop: critique, revise, gate against acceptance criteria.' },
+      { n: '6', title: 'Synthesize', who: 'CEO', desc: 'Outputs merged into one coherent deliverable — conflicts resolved.' },
+      { n: '7', title: 'Deliver', who: 'Workspace', desc: 'Single unified output surfaced. Internal debate available on demand.' },
+      { n: '8', title: 'Remember', who: 'Memory Manager', desc: 'Decisions, assets & rationale written to project + knowledge graph.' },
+    ];
+
+    const buildOrder = [
+      { order: '01', name: 'Memory Engine', phase: 'FOUNDATION', complexity: 'High', level: 4, weeks: '4–6 wks', deps: ['Supabase schema', 'pgvector'], why: 'Every agent reads and writes memory — nothing downstream is meaningful without it. Build the four layers, embeddings, and retrieval first.', color: '#7c6cf7' },
+      { order: '02', name: 'Model Router', phase: 'FOUNDATION', complexity: 'Medium', level: 3, weeks: '3–4 wks', deps: ['Provider adapters', 'Memory Engine'], why: 'Agents can\u2019t run economically until routing exists. Depends on memory for cost logging; ship before the orchestrator drives real traffic.', color: '#3880ff' },
+      { order: '03', name: 'COO Orchestrator', phase: 'COORDINATION', complexity: 'Very High', level: 5, weeks: '6–8 wks', deps: ['Memory Engine', 'Model Router', 'Agent Runtime'], why: 'The hardest piece: task-graph decomposition, parallel scheduling, blackboard, review gates, synthesis. Everything above must exist first.', color: '#a78bfa' },
+      { order: '04', name: 'Project Workspace', phase: 'SURFACES', complexity: 'Medium', level: 3, weeks: '3–4 wks', deps: ['COO Orchestrator', 'Memory Engine'], why: 'First durable user surface — phases, artifacts, project memory. Makes the orchestrator\u2019s output tangible and reviewable.', color: '#22d3ee' },
+      { order: '05', name: 'Design DNA', phase: 'INTELLIGENCE', complexity: 'Medium', level: 3, weeks: '3–5 wks', deps: ['Memory Engine', 'Vision models'], why: 'Enriches UI agents with a reusable fingerprint. Needs memory + screenshot analysis; valuable once real projects exist to learn from.', color: '#ec4899' },
+      { order: '06', name: 'Opportunity Radar', phase: 'INTELLIGENCE', complexity: 'High', level: 4, weeks: '4–6 wks', deps: ['Knowledge Graph', 'Tech Radar feeds'], why: 'Last by design — fit scoring is only useful once the graph holds enough founder history. Build after memory has compounded.', color: '#f59e0b' },
+    ];
+
+    return {
+      groups, featurePillars, plans, execAgents, opAgents, routerTiers, routerLogic, workflow,
+      memoryLayers, graphNodes, edges, graphTypes, engines, tables, endpoints, services,
+      feArch, pages, palette, components, lifecycle, roadmap,
+      buildOrder: buildOrder.map(b => ({
+        ...b,
+        dots: [1,2,3,4,5].map(i => ({ on: i <= b.level ? b.color : 'rgba(255,255,255,0.1)' })),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

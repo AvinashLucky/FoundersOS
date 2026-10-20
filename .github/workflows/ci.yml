@@ -1,0 +1,29 @@
+# FounderOS CI — runs on every push and pull request.
+# Typecheck + tests for the web app, the design-director skill tests, and a production build.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Typecheck (apps/web)
+        run: npm run typecheck --workspace apps/web
+      - name: Tests (apps/web)
+        run: npm run test --workspace apps/web
+      - name: design-director skill
+        run: |
+          node skills/design-director/scripts/design.mjs validate
+          npm run test:skills
+      - name: Production build (apps/web)
+        run: npm run build --workspace apps/web

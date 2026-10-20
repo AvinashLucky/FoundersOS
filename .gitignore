@@ -1,0 +1,27 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env*.local
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+.turbo/
+
+# Browser-test output
+test-results/
+playwright-report/
+
+# Per-machine files
+projects/.owners.json
+.claude/settings.local.json
+
+# Projects with code live in their own repositories (they are handed over or sold).
+# Add a line here when a project gets its first code.
+projects/gati-rides/

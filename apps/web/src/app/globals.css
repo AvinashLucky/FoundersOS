@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  STRATA — design tokens
+  ----------------------
+  Substrate is constant (timeless). Accent spectrum is adaptive per project theme.
+  RGB triplets (space-separated) so Tailwind's <alpha-value> works: rgb(var(--accent) / .4)
+*/
+:root {
+  /* timeless substrate */
+  --void: 6 7 10;
+  --base: 10 12 17;
+  --raised: 17 20 27;
+  --raised2: 22 26 35;
+  --ink: 244 245 248;
+  --ink2: 166 171 186;
+  --ink3: 107 113 133;
+  --ink4: 61 66 80;
+  --hair-rgb: 255 255 255;
+
+  /* adaptive accent — default "founder" identity */
+  --accent: 124 108 247;
+  --accent2: 52 229 255;
+  --accent-ink: 10 12 17;
+  --glow: rgba(124, 108, 247, 0.35);
+  --glow2: rgba(52, 229, 255, 0.22);
+
+  /* type voices */
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ---- Adaptive project themes: one substrate, many accents ---- */
+[data-theme="founder"]  { --accent: 124 108 247; --accent2: 52 229 255;  --glow: rgba(124,108,247,.35); --glow2: rgba(52,229,255,.22); }
+[data-theme="fintech"]  { --accent: 31 181 143;  --accent2: 61 214 196;  --glow: rgba(31,181,143,.33);  --glow2: rgba(61,214,196,.2); }
+[data-theme="health"]   { --accent: 43 168 224;  --accent2: 111 224 208; --glow: rgba(43,168,224,.32);  --glow2: rgba(111,224,208,.2); }
+[data-theme="creative"] { --accent: 157 92 246;  --accent2: 255 110 199; --glow: rgba(157,92,246,.35);  --glow2: rgba(255,110,199,.22); }
+[data-theme="media"]    { --accent: 245 165 36;  --accent2: 255 107 107; --glow: rgba(245,165,36,.3);   --glow2: rgba(255,107,107,.2); }
+[data-theme="commerce"] { --accent: 255 122 26;  --accent2: 255 77 141;  --glow: rgba(255,122,26,.3);   --glow2: rgba(255,77,141,.2); }
+[data-theme="developer"]{ --accent: 24 210 224;  --accent2: 158 240 26;  --glow: rgba(24,210,224,.3);   --glow2: rgba(158,240,26,.2); }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: rgb(var(--void));
+  color: rgb(var(--ink));
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ambient field — the calm substrate glow that re-tunes with the theme */
+.strata-field::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 600px at 8% -8%, var(--glow), transparent 60%),
+    radial-gradient(800px 560px at 98% 4%, var(--glow2), transparent 55%),
+    radial-gradient(700px 700px at 50% 116%, var(--glow), transparent 62%);
+  transition: background 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* focus ring on the accent — keyboard-complete */
+:focus-visible { outline: 2px solid rgb(var(--accent2)); outline-offset: 2px; border-radius: 6px; }

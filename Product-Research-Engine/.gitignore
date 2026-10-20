@@ -1,0 +1,15 @@
+# Saved logins are live account access. Never commit, never share, never move with the kit.
+research/browser-sessions/*.json
+research/browser-sessions/.env.research
+C:/Temp/AvionResearch/
+
+# Crawl output — per-project research data, not engine code
+research/competitors/*/screenshots/
+research/competitors/*/snapshots/
+research/competitors/*/authenticated/
+research/competitors/*/intelligence/
+l5-gallery-and-editor/output/
+extras/video-structure-decoder/raw_videos/
+
+node_modules/
+__pycache__/

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FounderOS · Phases 1–3 Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07080C; --base:#0B0D13; --raised:#11141B; --raised2:#171b24;
+  --hair:rgba(255,255,255,.07); --hair2:rgba(255,255,255,.14);
+  --ink:#F4F5F8; --ink2:#AAB0BF; --ink3:#6B7185; --ink4:#3D4250;
+  --iris:#7C6CF7; --iris2:#B9AEFB; --cyan:#34E5FF; --green:#54E0A8; --amber:#F5B544; --pink:#FF6EC7;
+  --be:#34E5FF;  /* backend */ --fe:#7C6CF7; /* frontend */
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(900px 600px at 8% -8%,rgba(124,108,247,.15),transparent 60%),
+  radial-gradient(800px 560px at 98% 2%,rgba(52,229,255,.10),transparent 55%),var(--void);
+  color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.wrap{max-width:1060px;margin:0 auto;padding:0 26px}
+.mono{font-family:var(--mono)} .serif{font-family:var(--serif)}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+a{color:inherit}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--iris2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,8,12,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--hair)}
+.nav .wrap{display:flex;align-items:center;gap:6px;height:54px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav .brand{font-family:var(--serif);font-size:17px;margin-right:14px;white-space:nowrap}
+.nav .brand b{color:var(--cyan)}
+.nav a{font-size:12.5px;color:var(--ink3);text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.hero{padding:74px 0 44px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.6vw,56px);line-height:1.02}
+.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero p{max-width:660px;color:var(--ink2);font-size:16.5px;margin:18px 0 0}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.legend span{display:flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.sec{padding:50px 0;border-top:1px solid var(--hair)}
+.sec-h{display:flex;align-items:baseline;gap:13px;margin-bottom:8px;flex-wrap:wrap}
+.sec-h .n{font-family:var(--mono);font-size:13px;color:var(--iris)}
+.sec-h h2{font-family:var(--serif);font-weight:350;font-size:clamp(22px,3.4vw,32px)}
+.lead{color:var(--ink2);max-width:730px;margin:6px 0 24px;font-size:15px}
+.steps{display:flex;flex-wrap:wrap;gap:8px}
+.step{flex:1 1 150px;min-width:150px;border:1px solid var(--hair);border-radius:13px;padding:14px;background:rgba(255,255,255,.03)}
+.step .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em}
+.step h5{font-family:var(--serif);font-weight:500;font-size:14px;margin:6px 0 4px}
+.step p{font-size:11.5px;color:var(--ink3);margin:0}
+.arr{align-self:center;color:var(--iris);opacity:.6;font-size:16px}
+.code{font-family:var(--mono);font-size:12.5px;background:#0c1020;border:1px solid var(--hair2);border-radius:14px;padding:18px 20px;color:#cdd6f4;line-height:1.85;overflow-x:auto;white-space:pre}
+.code .c{color:var(--ink3)} .code .be{color:var(--cyan)} .code .fe{color:var(--iris2)} .code .s{color:var(--green)}
+.phase{border:1px solid var(--hair);border-radius:18px;overflow:hidden;margin-bottom:16px}
+.phase .top{display:flex;align-items:center;gap:14px;padding:16px 22px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--hair)}
+.phase .num{font-family:var(--mono);font-size:12px;color:var(--iris);border:1px solid var(--hair2);border-radius:8px;padding:4px 10px}
+.phase .ttl{font-family:var(--serif);font-weight:400;font-size:19px}
+.phase .badge{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--green);border:1px solid rgba(84,224,168,.3);border-radius:999px;padding:3px 10px}
+.phase .pad{padding:18px 22px}
+.files{font-family:var(--mono);font-size:12px;line-height:1.95;color:var(--ink2)}
+.files .be{color:var(--be)} .files .fe{color:var(--fe)} .files .c{color:var(--ink4)}
+.note{font-size:13.5px;color:var(--ink2);margin:14px 0 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.card{border:1px solid var(--hair);border-radius:14px;padding:18px;background:rgba(255,255,255,.03)}
+.card h4{font-family:var(--serif);font-weight:400;font-size:16px;margin:0 0 7px}
+.card p{font-size:13px;color:var(--ink2);margin:0}
+.card code,.note code,li code{font-family:var(--mono);font-size:11.5px;background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;color:var(--iris2)}
+ul{margin:8px 0 0;padding-left:18px} li{font-size:13.5px;color:var(--ink2);margin-bottom:6px}
+footer{padding:50px 0 70px;border-top:1px solid var(--hair);color:var(--ink3);font-size:13px}
+footer b{color:var(--ink);font-family:var(--serif);font-weight:400}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <span class="brand">Founder<b>OS</b> · Phases 1–3</span>
+  <a href="#run">Run it</a>
+  <a href="#flow">The flow</a>
+  <a href="#p1">1 · Projects</a>
+  <a href="#p2">2 · Auth</a>
+  <a href="#p3">3 · Memory</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#real">Go real</a>
+  <a href="#next">Next</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kick">End-to-end walkthrough · built &amp; runnable</div>
+  <h1 style="margin-top:16px">How Phases 1–3 actually <em>work</em>.</h1>
+  <p>Sign in → create a project → open it → give it a memory. This page teaches the whole path — frontend and backend — file by file, so you can read, change, and extend it. Everything here is built and working in <span class="mono">apps/web</span>.</p>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--fe)"></span> Frontend (apps/web/src/features, shared)</span>
+    <span><span class="dot" style="background:var(--be)"></span> Backend (apps/web/src/server, app/api)</span>
+  </div>
+</div></header>
+
+<!-- RUN -->
+<section class="sec" id="run"><div class="wrap">
+  <div class="sec-h"><span class="n">00</span><h2>Run it (today, no database needed)</h2></div>
+  <p class="lead">The backend uses an in-memory store until you set <code>MONGODB_URI</code>, so it runs instantly.</p>
+  <div class="code"><span class="c"># from apps/web</span>
+npm install
+npm run dev            <span class="c"># http://localhost:3000</span>
+
+<span class="c"># you'll land on /signin → enter any email → /projects</span>
+<span class="c"># create a project → open it → add a memory note</span></div>
+</div></section>
+
+<!-- FLOW -->
+<section class="sec" id="flow"><div class="wrap">
+  <div class="sec-h"><span class="n">01</span><h2>The request lifecycle</h2></div>
+  <p class="lead">Every feature follows this same path. Learn it once and the whole app makes sense.</p>
+  <div class="steps">
+    <div class="step"><div class="k" style="color:var(--fe)">FRONTEND</div><h5>Component</h5><p>A screen calls a hook (e.g. <code>useProjects()</code>).</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k" style="color:var(--fe)">FRONTEND</div><h5>React Query</h5><p>The hook fetches &amp; caches from the API.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k" style="color:var(--be)">BACKEND</div><h5>Route handler</h5><p><code>app/api/v1/...</code> validates + checks session.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k" style="color:var(--be)">BACKEND</div><h5>Repository</h5><p>Reads/writes the store (Mongo or in-memory).</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k" style="color:var(--fe)">FRONTEND</div><h5>Render</h5><p>Data returns; UI shows it (or loading/empty/error).</p></div>
+  </div>
+  <p class="note"><b style="color:var(--ink)">Two kinds of state, never mixed:</b> server data (the project list) lives in <b>React Query</b>; pure UI state (which dialog is open) lives in <b>Redux</b> (<code>projectsSlice.ts</code>). That one rule keeps everything clean.</p>
+</div></section>
+
+<!-- PHASE 1 -->
+<section class="sec" id="p1"><div class="wrap">
+  <div class="sec-h"><span class="n">02</span><h2>Phase 1 — Projects</h2></div>
+  <p class="lead">Create, list and open projects. Opening one re-themes the whole app to that project's identity.</p>
+  <div class="phase">
+    <div class="top"><span class="num">Phase 1</span><span class="ttl">Files &amp; what each does</span><span class="badge">DONE</span></div>
+    <div class="pad">
+      <div class="files">
+<span class="fe">features/projects/types.ts</span>            <span class="c"># the Project shape = the contract</span>
+<span class="fe">features/projects/api.ts</span>              <span class="c"># HttpProjectsApi → /api/v1/projects (+ in-memory adapter)</span>
+<span class="fe">features/projects/hooks.ts</span>            <span class="c"># useProjects / useCreateProject (React Query)</span>
+<span class="fe">features/projects/projectsSlice.ts</span>    <span class="c"># Redux UI state: active project, dialog open</span>
+<span class="fe">features/projects/ProjectsScreen.tsx</span>  <span class="c"># the screen: grid + loading/empty/error states</span>
+<span class="fe">features/projects/components/*</span>        <span class="c"># ProjectCard, CreateProjectDialog</span>
+<span class="be">app/api/v1/projects/route.ts</span>          <span class="c"># GET list · POST create (zod-validated)</span>
+<span class="be">app/api/v1/projects/[id]/route.ts</span>     <span class="c"># GET one</span>
+<span class="be">server/repositories/projects.repo.ts</span> <span class="c"># Mongo + in-memory, workspace-scoped</span>
+<span class="be">server/validation/projects.schema.ts</span> <span class="c"># the zod rules</span>
+      </div>
+      <p class="note"><b style="color:var(--ink)">The seam:</b> the UI talks to a <code>ProjectsApi</code> interface in <code>api.ts</code>. Today it's <code>HttpProjectsApi</code> (real API). Nothing in the screens knows or cares where data lives — that's why the backend could change without touching the UI.</p>
+      <div class="code" style="margin-top:14px"><span class="c">// POST /api/v1/projects — the whole create path, ~12 lines</span>
+export async function <span class="be">POST</span>(req) {
+  const session = getSession();                  <span class="c">// who is this? (Phase 2)</span>
+  if (!session) return problem("UNAUTHORIZED", …, 401);
+  const parsed = createProjectSchema.safeParse(await readJson(req));  <span class="c">// validate</span>
+  if (!parsed.success) return problem("VALIDATION", …, 400);
+  const project = await getProjectsRepository()
+      .create(session.workspaceId, parsed.data); <span class="c">// scoped to YOUR workspace</span>
+  return ok(project, 201);
+}</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- PHASE 2 -->
+<section class="sec" id="p2"><div class="wrap">
+  <div class="sec-h"><span class="n">03</span><h2>Phase 2 — Authentication</h2></div>
+  <p class="lead">A real httpOnly cookie session (the secure part), with a simple email sign-in. Your email maps to a stable workspace, so your data is yours and persists.</p>
+  <div class="phase">
+    <div class="top"><span class="num">Phase 2</span><span class="ttl">Files &amp; what each does</span><span class="badge">DONE</span></div>
+    <div class="pad">
+      <div class="files">
+<span class="be">server/auth/session.ts</span>        <span class="c"># getSession / writeSession / clearSession + email→workspace</span>
+<span class="be">app/api/v1/auth/route.ts</span>      <span class="c"># GET me · POST sign-in · DELETE sign-out</span>
+<span class="fe">features/auth/SignInScreen.tsx</span> <span class="c"># the sign-in UI</span>
+<span class="fe">app/signin/page.tsx</span>            <span class="c"># /signin route (redirects in if already signed in)</span>
+<span class="fe">app/projects/page.tsx</span>          <span class="c"># server-guarded: no session → redirect /signin</span>
+      </div>
+      <ul>
+        <li><b style="color:var(--ink)">How scoping works:</b> every projects/notes query takes <code>session.workspaceId</code>, so one workspace can never read another's data.</li>
+        <li><b style="color:var(--ink)">Guarding pages:</b> a Server Component calls <code>getSession()</code> and <code>redirect("/signin")</code> if absent — the page never renders for signed-out users.</li>
+        <li><b style="color:var(--ink)">To productionize:</b> swap the email sign-in for magic-link/OAuth and sign/encrypt the cookie. Everything else stays the same.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- PHASE 3 -->
+<section class="sec" id="p3"><div class="wrap">
+  <div class="sec-h"><span class="n">04</span><h2>Phase 3 — Project Memory (seed)</h2></div>
+  <p class="lead">A project's first memory: timestamped notes, scoped to (workspace, project). This is the seed the full Memory Engine grows from.</p>
+  <div class="phase">
+    <div class="top"><span class="num">Phase 3</span><span class="ttl">Files &amp; what each does</span><span class="badge">DONE</span></div>
+    <div class="pad">
+      <div class="files">
+<span class="be">server/repositories/notes.repo.ts</span>          <span class="c"># Note store, Mongo + in-memory</span>
+<span class="be">app/api/v1/projects/[id]/notes/route.ts</span>    <span class="c"># GET list · POST add (checks project ownership)</span>
+<span class="fe">features/project-workspace/notes.ts</span>         <span class="c"># useNotes / useAddNote (React Query)</span>
+<span class="fe">features/project-workspace/ProjectWorkspaceScreen.tsx</span> <span class="c"># open project + memory panel</span>
+<span class="fe">app/projects/[id]/page.tsx</span>                 <span class="c"># /projects/:id route, server-guarded</span>
+      </div>
+      <p class="note">Opening a project (<code>ProjectCard</code> → <code>router.push("/projects/:id")</code>) loads the workspace, re-themes to the project's domain, and shows its notes. Add a note → <code>POST …/notes</code> → it's remembered and re-listed instantly.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- CONCEPTS -->
+<section class="sec" id="concepts"><div class="wrap">
+  <div class="sec-h"><span class="n">05</span><h2>Key concepts (plain language)</h2></div>
+  <div class="grid2">
+    <div class="card"><h4>Route handler</h4><p>A file named <code>route.ts</code> under <code>app/api/…</code> that exports <code>GET</code>/<code>POST</code>/etc. It's your backend endpoint — runs on the server, talks to the database, returns JSON.</p></div>
+    <div class="card"><h4>Repository pattern</h4><p>One place that knows how to read/write a kind of data. Routes call the repository; the repository hides whether it's Mongo or in-memory. Swap storage → routes don't change.</p></div>
+    <div class="card"><h4>In-memory fallback</h4><p>When <code>MONGODB_URI</code> isn't set, the repository keeps data in a JS Map for the session. Lets you build &amp; demo with zero database setup; flip to Mongo by setting one env var.</p></div>
+    <div class="card"><h4>Session cookie</h4><p>A small httpOnly cookie the browser sends on every request. The server decodes it to know <i>who</i> you are and <i>which workspace</i> to scope to. The browser can't read it (safer).</p></div>
+    <div class="card"><h4>React Query</h4><p>Manages server data: fetching, caching, loading/error states, and refetching after a change (<code>invalidateQueries</code>). You never store server data in Redux.</p></div>
+    <div class="card"><h4>Redux slice</h4><p>Holds only UI state. <code>createSlice</code> = initial state + small reducers. Read with <code>useAppSelector</code>, change with <code>dispatch(action())</code>. That's the whole model.</p></div>
+  </div>
+</div></section>
+
+<!-- GO REAL -->
+<section class="sec" id="real"><div class="wrap">
+  <div class="sec-h"><span class="n">06</span><h2>Switch to a real database</h2></div>
+  <p class="lead">No code change — just configure MongoDB and restart.</p>
+  <div class="code"><span class="c"># apps/web/.env.local</span>
+MONGODB_URI=<span class="s">mongodb://localhost:27017</span>
+MONGODB_DB=<span class="s">founderos</span>
+
+<span class="c"># restart — repositories now read/write real collections:</span>
+<span class="c">#   projects · project_notes  (indexes created automatically)</span></div>
+  <p class="note">Everything else is identical. The repository sees the env var and uses the Mongo implementation; the routes, hooks, and UI are unchanged. That's the payoff of the repository seam.</p>
+</div></section>
+
+<!-- NEXT -->
+<section class="sec" id="next"><div class="wrap">
+  <div class="sec-h"><span class="n">07</span><h2>What&rsquo;s next</h2></div>
+  <ul>
+    <li><b style="color:var(--ink)">Phase 4 — The loop:</b> the Model Router + a minimal agent run that produces one answer and writes to project memory (turns notes into true recall).</li>
+    <li><b style="color:var(--ink)">Phase 5 — Screen/visual capture:</b> upload screenshots/video → FFmpeg in a worker → a vision model reads them → structured meaning into memory.</li>
+    <li>Harden auth (magic-link/OAuth), add tests for the routes &amp; repositories, and promote <code>server/*</code> into the shared <code>packages/*</code> when ready.</li>
+  </ul>
+</div></section>
+
+<footer><div class="wrap">
+  <b>FounderOS · Phases 1–3 Walkthrough</b><br>
+  Kept in <span class="mono" style="color:var(--cyan)">docs/learning/</span>. Built end-to-end and runnable. Pair with <span class="mono">FounderOS-Learning-Hub.html</span> for the big picture.<br>
+  <span style="font-family:var(--mono);font-size:11px;color:var(--ink4)">v1 · June 28, 2026</span>
+</div></footer>
+
+</body>
+</html>

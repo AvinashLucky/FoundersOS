@@ -1,0 +1,20 @@
+{
+  "name": "product-research-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable competitor research engine (L1–L5). Copy this folder into any project.",
+  "scripts": {
+    "session": "node research/explorers/save-session-cdp.js",
+    "crawl": "node research/explorers/crawl.js",
+    "test:l5": "node --test l5-gallery-and-editor/core.test.mjs l5-gallery-and-editor/research-core.test.mjs",
+    "crawl:gated": "node gate/cli.mjs run",
+    "gate:review": "node gate/cli.mjs review",
+    "gate:status": "node gate/cli.mjs status",
+    "test:gate": "node --test gate/gate.test.mjs",
+    "test:configs": "node --test research/lib/site-config.test.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}

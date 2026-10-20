@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "prj_lumapath",
+  "name": "LumaPath",
+  "domain": "health",
+  "summary": "From tracking reports to coordinating the entire diagnostic journey across labs, collection teams, and patients.",
+  "layout": "split",
+  "apps": {
+    "frontend": {
+      "dir": "frontend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 5101
+    },
+    "backend": {
+      "dir": "backend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 4101
+    }
+  },
+  "runtime": {
+    "node": ">=20",
+    "packageManager": "npm"
+  },
+  "client": {
+    "name": "",
+    "contact": ""
+  },
+  "delivery": {
+    "status": "planned",
+    "pricedUsd": null,
+    "deliveredAt": null
+  },
+  "provenance": {
+    "blueprintRunId": null,
+    "createdAt": "2026-10-02T00:00:00Z",
+    "detailsDir": "details"
+  },
+  "eject": {
+    "standalone": true,
+    "verifiedAt": null
+  }
+}

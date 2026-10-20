@@ -1,0 +1,7 @@
+auth/
+output/
+raw_videos/
+__pycache__/
+*.pyc
+*.tmp
+

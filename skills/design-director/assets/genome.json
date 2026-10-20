@@ -1,0 +1,1937 @@
+{
+  "version": 1,
+  "about": "The design vocabulary for design-director. Every axis is public, generic design language — no option reproduces a specific company's template. Weights below 1 down-rank overused AI defaults; they stay available when chosen deliberately.",
+  "weights": {
+    "layout": 3,
+    "color": 3,
+    "type": 2,
+    "imagery": 2,
+    "hero": 2,
+    "signature": 2,
+    "nav": 1,
+    "shape": 1,
+    "density": 1,
+    "motion": 1,
+    "surface": 1
+  },
+  "axes": {
+    "layout": [
+      {
+        "id": "editorial-column",
+        "note": "One strong reading column, generous margins, pull quotes. Long-form, trust, storytelling."
+      },
+      {
+        "id": "swiss-grid",
+        "note": "Strict 12-column grid, flush-left type, visible alignment. Institutions, finance, design-literate brands."
+      },
+      {
+        "id": "asymmetric-split",
+        "note": "Unequal two-column compositions that alternate. Product marketing with personality."
+      },
+      {
+        "id": "bento-modular",
+        "note": "Mixed-size tiles. Feature overviews — heavily overused, use only when content is genuinely modular.",
+        "weight": 0.35
+      },
+      {
+        "id": "full-bleed-cinematic",
+        "note": "Edge-to-edge imagery or video per section. Hospitality, launches, premium consumer."
+      },
+      {
+        "id": "card-mosaic",
+        "note": "Uniform cards in a responsive grid. Catalogues, directories, listings."
+      },
+      {
+        "id": "long-scroll-narrative",
+        "note": "One continuous story with chapters. Launches, mission-led brands."
+      },
+      {
+        "id": "dashboard-forward",
+        "note": "The product UI is the page. Analytics, ops tools, fintech."
+      },
+      {
+        "id": "magazine-multicolumn",
+        "note": "Mixed column counts like print. Media, publishing, culture."
+      },
+      {
+        "id": "minimal-centered",
+        "note": "Centred stack, very few elements. Waitlists, single-purpose tools."
+      },
+      {
+        "id": "sidebar-index",
+        "note": "Persistent index or table of contents beside content. Docs, knowledge bases, reports."
+      },
+      {
+        "id": "brutalist-raw",
+        "note": "Exposed structure, system fonts or heavy type, hard borders. Studios, culture, dev tools with attitude."
+      },
+      {
+        "id": "stacked-panels",
+        "note": "Full-height panels that stack on scroll. Product tours, step-by-step stories."
+      },
+      {
+        "id": "product-led-canvas",
+        "note": "Interactive product canvas the visitor can try on the page. Tools, calculators, builders."
+      },
+      {
+        "id": "catalog-grid",
+        "note": "Filterable product grid with strong facets. Commerce.",
+        "only": [
+          "ecommerce",
+          "food-delivery",
+          "restaurant",
+          "real-estate",
+          "travel-hospitality"
+        ]
+      },
+      {
+        "id": "timeline-story",
+        "note": "A visible timeline rail carries the page. Process, history, logistics, healthcare journeys."
+      },
+      {
+        "id": "documentation-shell",
+        "note": "Header + sidebar + content + on-page nav. Developer docs, APIs.",
+        "only": [
+          "devtools",
+          "saas-b2b",
+          "ai-product"
+        ]
+      },
+      {
+        "id": "split-screen-fixed",
+        "note": "One half fixed (image or form), the other scrolls. Contact, booking, onboarding."
+      }
+    ],
+    "type": [
+      {
+        "id": "fraunces-inter",
+        "display": "Fraunces",
+        "body": "Inter",
+        "mood": "warm editorial",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "instrument-serif-inter-tight",
+        "display": "Instrument Serif",
+        "body": "Inter Tight",
+        "mood": "refined, fashion-editorial",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "playfair-source-sans",
+        "display": "Playfair Display",
+        "body": "Source Sans 3",
+        "mood": "classic luxury",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "dm-serif-dm-sans",
+        "display": "DM Serif Display",
+        "body": "DM Sans",
+        "mood": "friendly editorial",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "newsreader-public-sans",
+        "display": "Newsreader",
+        "body": "Public Sans",
+        "mood": "journalistic, civic trust",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "libre-baskerville-karla",
+        "display": "Libre Baskerville",
+        "body": "Karla",
+        "mood": "bookish, calm",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "ibm-plex-serif-sans",
+        "display": "IBM Plex Serif",
+        "body": "IBM Plex Sans",
+        "mono": "IBM Plex Mono",
+        "mood": "institutional, technical trust",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "space-grotesk-plex-mono",
+        "display": "Space Grotesk",
+        "body": "Space Grotesk",
+        "mono": "IBM Plex Mono",
+        "mood": "technical, engineered",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "sora-manrope",
+        "display": "Sora",
+        "body": "Manrope",
+        "mood": "modern fintech",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "syne-work-sans",
+        "display": "Syne",
+        "body": "Work Sans",
+        "mood": "expressive, creative",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "archivo-black-archivo",
+        "display": "Archivo Black",
+        "body": "Archivo",
+        "mood": "bold, industrial",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "bricolage-inter",
+        "display": "Bricolage Grotesque",
+        "body": "Inter",
+        "mood": "contemporary, characterful",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "unbounded-figtree",
+        "display": "Unbounded",
+        "body": "Figtree",
+        "mood": "playful, futuristic",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "epilogue",
+        "display": "Epilogue",
+        "body": "Epilogue",
+        "mood": "geometric editorial",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "outfit",
+        "display": "Outfit",
+        "body": "Outfit",
+        "mood": "clean geometric",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "plus-jakarta",
+        "display": "Plus Jakarta Sans",
+        "body": "Plus Jakarta Sans",
+        "mood": "friendly product",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "lexend",
+        "display": "Lexend",
+        "body": "Lexend",
+        "mood": "high readability, education",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "atkinson-hyperlegible",
+        "display": "Atkinson Hyperlegible",
+        "body": "Atkinson Hyperlegible",
+        "mood": "accessibility-first",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "noto-serif-noto-sans",
+        "display": "Noto Serif",
+        "body": "Noto Sans",
+        "extra": "Noto Sans Devanagari",
+        "mood": "multilingual, dependable",
+        "scripts": [
+          "latin",
+          "devanagari"
+        ]
+      },
+      {
+        "id": "mukta-hind",
+        "display": "Mukta",
+        "body": "Hind",
+        "mood": "Indian multilingual product",
+        "scripts": [
+          "latin",
+          "devanagari"
+        ]
+      },
+      {
+        "id": "spectral-rubik",
+        "display": "Spectral",
+        "body": "Rubik",
+        "mood": "literary + soft",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "red-hat",
+        "display": "Red Hat Display",
+        "body": "Red Hat Text",
+        "mood": "corporate modern",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "chivo-chivo-mono",
+        "display": "Chivo",
+        "body": "Chivo",
+        "mono": "Chivo Mono",
+        "mood": "data, analytics",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "bebas-barlow",
+        "display": "Bebas Neue",
+        "body": "Barlow",
+        "mood": "sport, energy, condensed",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "anton-inter",
+        "display": "Anton",
+        "body": "Inter",
+        "mood": "poster-loud",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "cormorant-instrument-sans",
+        "display": "Cormorant Garamond",
+        "body": "Instrument Sans",
+        "mood": "luxury hospitality",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "lora-nunito",
+        "display": "Lora",
+        "body": "Nunito",
+        "mood": "soft, wellness",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "jetbrains-inter",
+        "display": "JetBrains Mono",
+        "body": "Inter",
+        "mono": "JetBrains Mono",
+        "mood": "terminal, developer",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "merriweather-open-sans",
+        "display": "Merriweather",
+        "body": "Open Sans",
+        "mood": "dependable content",
+        "scripts": [
+          "latin"
+        ]
+      },
+      {
+        "id": "inter-only",
+        "display": "Inter",
+        "body": "Inter",
+        "mood": "neutral default",
+        "scripts": [
+          "latin"
+        ],
+        "weight": 0.15
+      },
+      {
+        "id": "poppins-only",
+        "display": "Poppins",
+        "body": "Poppins",
+        "mood": "generic geometric default",
+        "scripts": [
+          "latin"
+        ],
+        "weight": 0.15
+      }
+    ],
+    "color": [
+      {
+        "id": "mono-accent",
+        "note": "Neutral ground, one decisive accent.",
+        "mode": "light",
+        "bg": {
+          "L": 0.985,
+          "C": 0.004,
+          "h": "seed"
+        },
+        "accents": [
+          {
+            "h": "seed",
+            "C": 0.17,
+            "L": 0.55
+          }
+        ]
+      },
+      {
+        "id": "ink-paper",
+        "note": "Newsprint: warm off-white, ink text, one red.",
+        "mode": "light",
+        "bg": {
+          "L": 0.97,
+          "C": 0.015,
+          "h": 85
+        },
+        "accents": [
+          {
+            "h": 27,
+            "C": 0.19,
+            "L": 0.52
+          }
+        ]
+      },
+      {
+        "id": "clinical-cool",
+        "note": "Calm, clean, cool — healthcare and labs.",
+        "mode": "light",
+        "bg": {
+          "L": 0.985,
+          "C": 0.008,
+          "h": 220
+        },
+        "accents": [
+          {
+            "h": 195,
+            "C": 0.11,
+            "L": 0.55
+          },
+          {
+            "h": 250,
+            "C": 0.09,
+            "L": 0.5
+          }
+        ]
+      },
+      {
+        "id": "trust-blue",
+        "note": "Institutional blue on white — banking, insurance, government.",
+        "mode": "light",
+        "bg": {
+          "L": 0.99,
+          "C": 0.003,
+          "h": 250
+        },
+        "accents": [
+          {
+            "h": 258,
+            "C": 0.16,
+            "L": 0.45
+          },
+          {
+            "h": 160,
+            "C": 0.11,
+            "L": 0.55
+          }
+        ]
+      },
+      {
+        "id": "warm-earth",
+        "note": "Sand, terracotta, olive.",
+        "mode": "light",
+        "bg": {
+          "L": 0.955,
+          "C": 0.025,
+          "h": 75
+        },
+        "accents": [
+          {
+            "h": 40,
+            "C": 0.13,
+            "L": 0.55
+          },
+          {
+            "h": 120,
+            "C": 0.08,
+            "L": 0.5
+          }
+        ]
+      },
+      {
+        "id": "nature-green",
+        "note": "Fresh greens on soft white.",
+        "mode": "light",
+        "bg": {
+          "L": 0.98,
+          "C": 0.012,
+          "h": 140
+        },
+        "accents": [
+          {
+            "h": 150,
+            "C": 0.14,
+            "L": 0.5
+          },
+          {
+            "h": 95,
+            "C": 0.12,
+            "L": 0.7
+          }
+        ]
+      },
+      {
+        "id": "jewel",
+        "note": "Deep emerald, sapphire, ruby on light.",
+        "mode": "light",
+        "bg": {
+          "L": 0.975,
+          "C": 0.006,
+          "h": 300
+        },
+        "accents": [
+          {
+            "h": 165,
+            "C": 0.14,
+            "L": 0.45
+          },
+          {
+            "h": 265,
+            "C": 0.17,
+            "L": 0.42
+          },
+          {
+            "h": 15,
+            "C": 0.17,
+            "L": 0.5
+          }
+        ]
+      },
+      {
+        "id": "pastel-wash",
+        "note": "Soft tinted washes, one firm accent.",
+        "mode": "light",
+        "bg": {
+          "L": 0.975,
+          "C": 0.02,
+          "h": "seed"
+        },
+        "accents": [
+          {
+            "h": "seed+150",
+            "C": 0.14,
+            "L": 0.55
+          },
+          {
+            "h": "seed+40",
+            "C": 0.07,
+            "L": 0.86
+          }
+        ]
+      },
+      {
+        "id": "vibrant-multi",
+        "note": "Three saturated accents used with discipline.",
+        "mode": "light",
+        "bg": {
+          "L": 0.99,
+          "C": 0.003,
+          "h": "seed"
+        },
+        "accents": [
+          {
+            "h": "seed",
+            "C": 0.2,
+            "L": 0.6
+          },
+          {
+            "h": "seed+120",
+            "C": 0.18,
+            "L": 0.62
+          },
+          {
+            "h": "seed+240",
+            "C": 0.17,
+            "L": 0.6
+          }
+        ]
+      },
+      {
+        "id": "dark-luxe",
+        "note": "Warm near-black with gold.",
+        "mode": "dark",
+        "bg": {
+          "L": 0.17,
+          "C": 0.008,
+          "h": 60
+        },
+        "accents": [
+          {
+            "h": 85,
+            "C": 0.11,
+            "L": 0.78
+          }
+        ]
+      },
+      {
+        "id": "neon-dark",
+        "note": "Dark violet ground, electric accents.",
+        "mode": "dark",
+        "bg": {
+          "L": 0.15,
+          "C": 0.03,
+          "h": 285
+        },
+        "accents": [
+          {
+            "h": 150,
+            "C": 0.2,
+            "L": 0.82
+          },
+          {
+            "h": 330,
+            "C": 0.22,
+            "L": 0.7
+          }
+        ],
+        "weight": 0.5
+      },
+      {
+        "id": "high-contrast-bw",
+        "note": "Pure black and white with one loud accent.",
+        "mode": "light",
+        "bg": {
+          "L": 1.0,
+          "C": 0.0,
+          "h": 0
+        },
+        "accents": [
+          {
+            "h": "seed",
+            "C": 0.2,
+            "L": 0.6
+          }
+        ]
+      },
+      {
+        "id": "sunset",
+        "note": "Warm coral to rose.",
+        "mode": "light",
+        "bg": {
+          "L": 0.98,
+          "C": 0.015,
+          "h": 50
+        },
+        "accents": [
+          {
+            "h": 32,
+            "C": 0.17,
+            "L": 0.62
+          },
+          {
+            "h": 355,
+            "C": 0.15,
+            "L": 0.58
+          }
+        ]
+      },
+      {
+        "id": "duotone",
+        "note": "Two complementary accents carry everything.",
+        "mode": "light",
+        "bg": {
+          "L": 0.985,
+          "C": 0.005,
+          "h": "seed"
+        },
+        "accents": [
+          {
+            "h": "seed",
+            "C": 0.16,
+            "L": 0.5
+          },
+          {
+            "h": "seed+180",
+            "C": 0.15,
+            "L": 0.6
+          }
+        ]
+      },
+      {
+        "id": "saffron-indigo",
+        "note": "Saffron and indigo on warm white.",
+        "mode": "light",
+        "bg": {
+          "L": 0.98,
+          "C": 0.015,
+          "h": 80
+        },
+        "accents": [
+          {
+            "h": 275,
+            "C": 0.15,
+            "L": 0.38
+          },
+          {
+            "h": 62,
+            "C": 0.17,
+            "L": 0.72
+          }
+        ]
+      },
+      {
+        "id": "midnight-calm",
+        "note": "Deep navy with soft cyan.",
+        "mode": "dark",
+        "bg": {
+          "L": 0.2,
+          "C": 0.04,
+          "h": 255
+        },
+        "accents": [
+          {
+            "h": 210,
+            "C": 0.1,
+            "L": 0.8
+          }
+        ]
+      }
+    ],
+    "shape": [
+      {
+        "id": "sharp",
+        "radii": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "note": "No rounding anywhere."
+      },
+      {
+        "id": "subtle",
+        "radii": [
+          2,
+          4,
+          6,
+          999
+        ],
+        "note": "Barely softened."
+      },
+      {
+        "id": "soft",
+        "radii": [
+          8,
+          12,
+          20,
+          999
+        ],
+        "note": "Friendly product default."
+      },
+      {
+        "id": "round",
+        "radii": [
+          12,
+          20,
+          28,
+          999
+        ],
+        "note": "Very soft, approachable."
+      },
+      {
+        "id": "mixed",
+        "radii": [
+          0,
+          0,
+          0,
+          999
+        ],
+        "note": "Square containers, pill buttons and tags."
+      },
+      {
+        "id": "chamfer",
+        "radii": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "note": "Cut corners via clip-path on key containers."
+      },
+      {
+        "id": "organic",
+        "radii": [
+          16,
+          28,
+          48,
+          999
+        ],
+        "note": "Large, uneven blobs for illustration-led brands."
+      }
+    ],
+    "density": [
+      {
+        "id": "airy",
+        "ratio": 1.333,
+        "base": 17,
+        "section": 128,
+        "note": "Luxury, editorial, launches."
+      },
+      {
+        "id": "balanced",
+        "ratio": 1.25,
+        "base": 16,
+        "section": 96,
+        "note": "Most marketing sites."
+      },
+      {
+        "id": "compact",
+        "ratio": 1.2,
+        "base": 15,
+        "section": 64,
+        "note": "Product sites with lots to say."
+      },
+      {
+        "id": "data-dense",
+        "ratio": 1.125,
+        "base": 14,
+        "section": 40,
+        "note": "Dashboards, trading, ops."
+      }
+    ],
+    "motion": [
+      {
+        "id": "static",
+        "duration": 0,
+        "easing": "linear",
+        "note": "No decorative motion — focus and state changes only."
+      },
+      {
+        "id": "subtle-fade",
+        "duration": 220,
+        "easing": "cubic-bezier(0.2, 0, 0, 1)",
+        "note": "Gentle reveals."
+      },
+      {
+        "id": "spring-physical",
+        "duration": 380,
+        "easing": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "note": "Weighty, responsive springs on interaction."
+      },
+      {
+        "id": "scroll-story",
+        "duration": 600,
+        "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "note": "Scroll-linked chapters."
+      },
+      {
+        "id": "kinetic-type",
+        "duration": 500,
+        "easing": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "note": "Headlines that move with meaning."
+      },
+      {
+        "id": "parallax-depth",
+        "duration": 450,
+        "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "note": "Layered depth on scroll."
+      },
+      {
+        "id": "micro-only",
+        "duration": 150,
+        "easing": "cubic-bezier(0.2, 0, 0, 1)",
+        "note": "Hover/press feedback only."
+      },
+      {
+        "id": "cinematic",
+        "duration": 800,
+        "easing": "cubic-bezier(0.76, 0, 0.24, 1)",
+        "note": "Slow, film-like page and media transitions."
+      }
+    ],
+    "imagery": [
+      {
+        "id": "people-photo",
+        "note": "Real people, real context (licensed or the client's own)."
+      },
+      {
+        "id": "product-ui-in-code",
+        "note": "Product screens rebuilt in live HTML, not screenshots."
+      },
+      {
+        "id": "3d-render",
+        "note": "Rendered objects; needs a real 3D source."
+      },
+      {
+        "id": "flat-illustration",
+        "note": "Original flat illustration."
+      },
+      {
+        "id": "line-illustration",
+        "note": "Single-weight line drawings."
+      },
+      {
+        "id": "abstract-mesh",
+        "note": "Gradient meshes and abstract fields.",
+        "weight": 0.5
+      },
+      {
+        "id": "data-viz-hero",
+        "note": "Real charts or maps as the hero."
+      },
+      {
+        "id": "typographic-only",
+        "note": "No imagery; type carries the page."
+      },
+      {
+        "id": "collage-cutout",
+        "note": "Cut-out photo collage, editorial."
+      },
+      {
+        "id": "documentary-photo",
+        "note": "Candid, place-based photography."
+      },
+      {
+        "id": "icon-led",
+        "note": "Systematic custom icon set."
+      },
+      {
+        "id": "maps-geo",
+        "note": "Maps and routes as primary imagery."
+      }
+    ],
+    "nav": [
+      {
+        "id": "minimal-bar",
+        "note": "Logo left, few links right."
+      },
+      {
+        "id": "centered-logo-split",
+        "note": "Links split around a centred logo."
+      },
+      {
+        "id": "mega-menu",
+        "note": "Rich dropdown panels for large sites."
+      },
+      {
+        "id": "persistent-sidebar",
+        "note": "Vertical nav always visible."
+      },
+      {
+        "id": "floating-pill",
+        "note": "Floating rounded bar — overused.",
+        "weight": 0.35
+      },
+      {
+        "id": "fullscreen-overlay",
+        "note": "Menu opens as a full-screen layer."
+      },
+      {
+        "id": "bottom-tabs-mobile",
+        "note": "App-like bottom tabs on mobile."
+      },
+      {
+        "id": "sticky-progress",
+        "note": "Sticky bar with reading/step progress."
+      },
+      {
+        "id": "command-first",
+        "note": "Search/command palette is the main navigation."
+      }
+    ],
+    "surface": [
+      {
+        "id": "flat",
+        "note": "Solid fills, no shadow."
+      },
+      {
+        "id": "hairline",
+        "note": "1px borders define structure."
+      },
+      {
+        "id": "soft-shadow",
+        "note": "Low, diffuse elevation."
+      },
+      {
+        "id": "grain",
+        "note": "Fine noise texture over fills."
+      },
+      {
+        "id": "glass",
+        "note": "Translucent blurred layers — overused.",
+        "weight": 0.35
+      },
+      {
+        "id": "paper",
+        "note": "Warm stock, slight shadow, print feel."
+      },
+      {
+        "id": "gradient-field",
+        "note": "Large soft gradients behind sections.",
+        "weight": 0.5
+      },
+      {
+        "id": "brutal-shadow",
+        "note": "Hard offset shadows, thick borders."
+      }
+    ],
+    "hero": [
+      {
+        "id": "statement-type",
+        "note": "One huge sentence, nothing else."
+      },
+      {
+        "id": "split-media",
+        "note": "Copy one side, media the other."
+      },
+      {
+        "id": "product-demo-live",
+        "note": "A working product slice above the fold."
+      },
+      {
+        "id": "full-bleed-media",
+        "note": "Edge-to-edge image or video with overlay copy."
+      },
+      {
+        "id": "search-first",
+        "note": "A search or booking box is the hero."
+      },
+      {
+        "id": "form-first",
+        "note": "The conversion form is the hero (contact, quote, signup)."
+      },
+      {
+        "id": "stat-wall",
+        "note": "Real, sourced numbers as the hero."
+      },
+      {
+        "id": "story-opening",
+        "note": "First chapter of a narrative."
+      },
+      {
+        "id": "interactive-calculator",
+        "note": "A calculator the visitor uses immediately."
+      },
+      {
+        "id": "map-hero",
+        "note": "A live map or route view.",
+        "only": [
+          "mobility",
+          "logistics",
+          "real-estate",
+          "food-delivery",
+          "travel-hospitality",
+          "healthcare",
+          "diagnostics-lab"
+        ]
+      },
+      {
+        "id": "collage-hero",
+        "note": "Composed editorial collage."
+      },
+      {
+        "id": "quiet-minimal",
+        "note": "Small type, big space, one action."
+      }
+    ],
+    "signature": [
+      {
+        "id": "oversized-numerals",
+        "note": "Huge figures as structure (steps, stats)."
+      },
+      {
+        "id": "marquee-ticker",
+        "note": "A moving band of content (logos only if real)."
+      },
+      {
+        "id": "scroll-scrub-product",
+        "note": "Product state changes as you scroll."
+      },
+      {
+        "id": "split-compare",
+        "note": "Before/after or with/without side by side."
+      },
+      {
+        "id": "live-widget",
+        "note": "A small working tool embedded mid-page."
+      },
+      {
+        "id": "kinetic-headline",
+        "note": "A headline that rewrites itself meaningfully."
+      },
+      {
+        "id": "pull-quotes",
+        "note": "Large editorial quotes (real people only)."
+      },
+      {
+        "id": "annotated-ui",
+        "note": "Product UI with callout annotations."
+      },
+      {
+        "id": "timeline-rail",
+        "note": "A rail that tracks progress through the page."
+      },
+      {
+        "id": "before-after-slider",
+        "note": "Draggable comparison."
+      },
+      {
+        "id": "data-ticker",
+        "note": "Live or recent data strip (real data only)."
+      },
+      {
+        "id": "handwritten-notes",
+        "note": "Hand-drawn annotations and arrows."
+      },
+      {
+        "id": "layered-card-stack",
+        "note": "Cards that fan or stack as you move."
+      },
+      {
+        "id": "index-numbering",
+        "note": "Every section numbered like a report (01, 02…)."
+      },
+      {
+        "id": "color-block-sections",
+        "note": "Each section owns a bold colour block."
+      }
+    ]
+  },
+  "conflicts": [
+    [
+      "density:data-dense",
+      "layout:full-bleed-cinematic"
+    ],
+    [
+      "density:data-dense",
+      "motion:cinematic"
+    ],
+    [
+      "density:data-dense",
+      "layout:long-scroll-narrative"
+    ],
+    [
+      "layout:documentation-shell",
+      "motion:cinematic"
+    ],
+    [
+      "layout:documentation-shell",
+      "hero:full-bleed-media"
+    ],
+    [
+      "layout:brutalist-raw",
+      "surface:glass"
+    ],
+    [
+      "layout:brutalist-raw",
+      "shape:round"
+    ],
+    [
+      "layout:brutalist-raw",
+      "shape:organic"
+    ],
+    [
+      "surface:brutal-shadow",
+      "surface:glass"
+    ],
+    [
+      "layout:minimal-centered",
+      "nav:mega-menu"
+    ],
+    [
+      "layout:sidebar-index",
+      "nav:fullscreen-overlay"
+    ],
+    [
+      "layout:catalog-grid",
+      "hero:statement-type"
+    ],
+    [
+      "motion:static",
+      "signature:kinetic-headline"
+    ],
+    [
+      "motion:static",
+      "signature:scroll-scrub-product"
+    ],
+    [
+      "motion:static",
+      "signature:marquee-ticker"
+    ],
+    [
+      "imagery:typographic-only",
+      "hero:full-bleed-media"
+    ],
+    [
+      "imagery:typographic-only",
+      "hero:collage-hero"
+    ],
+    [
+      "shape:sharp",
+      "surface:glass"
+    ],
+    [
+      "color:high-contrast-bw",
+      "surface:gradient-field"
+    ]
+  ],
+  "industries": {
+    "general": {
+      "label": "General / unspecified",
+      "prefer": {},
+      "avoid": {}
+    },
+    "banking": {
+      "label": "Retail or business banking",
+      "prefer": {
+        "layout": [
+          "swiss-grid",
+          "asymmetric-split",
+          "split-screen-fixed",
+          "dashboard-forward",
+          "editorial-column",
+          "product-led-canvas"
+        ],
+        "color": [
+          "trust-blue",
+          "mono-accent",
+          "jewel",
+          "saffron-indigo",
+          "midnight-calm"
+        ],
+        "type": [
+          "ibm-plex-serif-sans",
+          "sora-manrope",
+          "red-hat",
+          "noto-serif-noto-sans",
+          "newsreader-public-sans"
+        ],
+        "motion": [
+          "subtle-fade",
+          "micro-only",
+          "static"
+        ],
+        "density": [
+          "balanced",
+          "compact"
+        ],
+        "hero": [
+          "split-media",
+          "interactive-calculator",
+          "product-demo-live",
+          "search-first"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark",
+          "pastel-wash"
+        ],
+        "motion": [
+          "cinematic",
+          "parallax-depth"
+        ],
+        "layout": [
+          "brutalist-raw"
+        ],
+        "type": [
+          "anton-inter",
+          "bebas-barlow",
+          "unbounded-figtree"
+        ]
+      }
+    },
+    "fintech": {
+      "label": "Fintech / payments",
+      "prefer": {
+        "color": [
+          "mono-accent",
+          "duotone",
+          "midnight-calm",
+          "jewel",
+          "vibrant-multi"
+        ],
+        "type": [
+          "sora-manrope",
+          "space-grotesk-plex-mono",
+          "chivo-chivo-mono",
+          "bricolage-inter"
+        ],
+        "hero": [
+          "product-demo-live",
+          "interactive-calculator",
+          "split-media"
+        ]
+      },
+      "avoid": {
+        "layout": [
+          "brutalist-raw"
+        ]
+      }
+    },
+    "trading": {
+      "label": "Stock trading / brokerage",
+      "prefer": {
+        "density": [
+          "compact",
+          "data-dense"
+        ],
+        "layout": [
+          "dashboard-forward",
+          "swiss-grid",
+          "split-screen-fixed"
+        ],
+        "type": [
+          "chivo-chivo-mono",
+          "ibm-plex-serif-sans",
+          "jetbrains-inter",
+          "space-grotesk-plex-mono"
+        ],
+        "imagery": [
+          "data-viz-hero",
+          "product-ui-in-code"
+        ],
+        "motion": [
+          "micro-only",
+          "subtle-fade"
+        ]
+      },
+      "avoid": {
+        "motion": [
+          "cinematic",
+          "parallax-depth"
+        ],
+        "imagery": [
+          "people-photo",
+          "collage-cutout"
+        ]
+      }
+    },
+    "insurance": {
+      "label": "Insurance",
+      "prefer": {
+        "color": [
+          "trust-blue",
+          "nature-green",
+          "warm-earth"
+        ],
+        "type": [
+          "newsreader-public-sans",
+          "red-hat",
+          "atkinson-hyperlegible",
+          "dm-serif-dm-sans"
+        ],
+        "hero": [
+          "interactive-calculator",
+          "form-first",
+          "split-media"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark"
+        ]
+      }
+    },
+    "healthcare": {
+      "label": "Hospital / healthcare provider",
+      "prefer": {
+        "color": [
+          "clinical-cool",
+          "nature-green",
+          "trust-blue",
+          "warm-earth"
+        ],
+        "type": [
+          "atkinson-hyperlegible",
+          "lexend",
+          "noto-serif-noto-sans",
+          "newsreader-public-sans",
+          "lora-nunito"
+        ],
+        "motion": [
+          "subtle-fade",
+          "static",
+          "micro-only"
+        ],
+        "hero": [
+          "search-first",
+          "form-first",
+          "split-media"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark",
+          "dark-luxe",
+          "high-contrast-bw"
+        ],
+        "motion": [
+          "cinematic",
+          "kinetic-type"
+        ],
+        "layout": [
+          "brutalist-raw"
+        ],
+        "type": [
+          "anton-inter",
+          "bebas-barlow"
+        ]
+      }
+    },
+    "diagnostics-lab": {
+      "label": "Diagnostics / pathology lab",
+      "prefer": {
+        "color": [
+          "clinical-cool",
+          "trust-blue",
+          "mono-accent"
+        ],
+        "type": [
+          "ibm-plex-serif-sans",
+          "atkinson-hyperlegible",
+          "red-hat",
+          "mukta-hind"
+        ],
+        "hero": [
+          "search-first",
+          "form-first",
+          "split-media"
+        ],
+        "layout": [
+          "timeline-story",
+          "swiss-grid",
+          "split-screen-fixed"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark"
+        ],
+        "motion": [
+          "cinematic"
+        ]
+      }
+    },
+    "saas-b2b": {
+      "label": "B2B SaaS",
+      "prefer": {
+        "hero": [
+          "product-demo-live",
+          "split-media",
+          "statement-type"
+        ],
+        "imagery": [
+          "product-ui-in-code",
+          "line-illustration",
+          "icon-led"
+        ]
+      },
+      "avoid": {}
+    },
+    "devtools": {
+      "label": "Developer tools / APIs",
+      "prefer": {
+        "type": [
+          "jetbrains-inter",
+          "space-grotesk-plex-mono",
+          "chivo-chivo-mono",
+          "ibm-plex-serif-sans"
+        ],
+        "layout": [
+          "documentation-shell",
+          "brutalist-raw",
+          "swiss-grid",
+          "sidebar-index"
+        ],
+        "nav": [
+          "command-first",
+          "minimal-bar",
+          "persistent-sidebar"
+        ],
+        "imagery": [
+          "product-ui-in-code",
+          "typographic-only"
+        ]
+      },
+      "avoid": {
+        "imagery": [
+          "people-photo"
+        ],
+        "type": [
+          "lora-nunito",
+          "cormorant-instrument-sans"
+        ]
+      }
+    },
+    "ai-product": {
+      "label": "AI product",
+      "prefer": {
+        "hero": [
+          "product-demo-live",
+          "statement-type",
+          "interactive-calculator"
+        ],
+        "signature": [
+          "live-widget",
+          "annotated-ui"
+        ],
+        "imagery": [
+          "product-ui-in-code",
+          "typographic-only",
+          "data-viz-hero"
+        ]
+      },
+      "avoid": {}
+    },
+    "ecommerce": {
+      "label": "E-commerce / retail",
+      "prefer": {
+        "layout": [
+          "catalog-grid",
+          "card-mosaic",
+          "full-bleed-cinematic",
+          "asymmetric-split"
+        ],
+        "hero": [
+          "full-bleed-media",
+          "search-first",
+          "collage-hero",
+          "split-media"
+        ],
+        "imagery": [
+          "people-photo",
+          "documentary-photo",
+          "collage-cutout",
+          "3d-render"
+        ],
+        "nav": [
+          "mega-menu",
+          "minimal-bar",
+          "bottom-tabs-mobile"
+        ]
+      },
+      "avoid": {
+        "layout": [
+          "documentation-shell",
+          "dashboard-forward"
+        ]
+      }
+    },
+    "food-delivery": {
+      "label": "Food ordering / delivery",
+      "prefer": {
+        "color": [
+          "sunset",
+          "warm-earth",
+          "vibrant-multi",
+          "saffron-indigo"
+        ],
+        "imagery": [
+          "documentary-photo",
+          "people-photo",
+          "maps-geo"
+        ],
+        "hero": [
+          "search-first",
+          "map-hero",
+          "full-bleed-media"
+        ],
+        "nav": [
+          "bottom-tabs-mobile",
+          "minimal-bar"
+        ]
+      },
+      "avoid": {
+        "layout": [
+          "documentation-shell"
+        ],
+        "color": [
+          "clinical-cool"
+        ]
+      }
+    },
+    "restaurant": {
+      "label": "Restaurant / café",
+      "prefer": {
+        "layout": [
+          "full-bleed-cinematic",
+          "editorial-column",
+          "split-screen-fixed"
+        ],
+        "imagery": [
+          "documentary-photo",
+          "people-photo"
+        ],
+        "type": [
+          "cormorant-instrument-sans",
+          "playfair-source-sans",
+          "fraunces-inter",
+          "dm-serif-dm-sans"
+        ]
+      },
+      "avoid": {
+        "layout": [
+          "dashboard-forward",
+          "documentation-shell"
+        ]
+      }
+    },
+    "mobility": {
+      "label": "Rides / mobility / fleets",
+      "prefer": {
+        "imagery": [
+          "maps-geo",
+          "product-ui-in-code",
+          "documentary-photo"
+        ],
+        "hero": [
+          "map-hero",
+          "search-first",
+          "product-demo-live"
+        ],
+        "layout": [
+          "dashboard-forward",
+          "asymmetric-split",
+          "split-screen-fixed"
+        ]
+      },
+      "avoid": {}
+    },
+    "education": {
+      "label": "Education / courses",
+      "prefer": {
+        "type": [
+          "lexend",
+          "atkinson-hyperlegible",
+          "plus-jakarta",
+          "lora-nunito",
+          "mukta-hind"
+        ],
+        "color": [
+          "pastel-wash",
+          "nature-green",
+          "vibrant-multi",
+          "saffron-indigo"
+        ],
+        "imagery": [
+          "flat-illustration",
+          "people-photo",
+          "line-illustration"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "dark-luxe",
+          "neon-dark"
+        ]
+      }
+    },
+    "real-estate": {
+      "label": "Real estate",
+      "prefer": {
+        "layout": [
+          "card-mosaic",
+          "full-bleed-cinematic",
+          "split-screen-fixed"
+        ],
+        "hero": [
+          "search-first",
+          "map-hero",
+          "full-bleed-media"
+        ],
+        "imagery": [
+          "documentary-photo",
+          "maps-geo"
+        ]
+      },
+      "avoid": {}
+    },
+    "travel-hospitality": {
+      "label": "Travel / hotels",
+      "prefer": {
+        "layout": [
+          "full-bleed-cinematic",
+          "long-scroll-narrative",
+          "editorial-column"
+        ],
+        "type": [
+          "cormorant-instrument-sans",
+          "playfair-source-sans",
+          "fraunces-inter",
+          "instrument-serif-inter-tight"
+        ],
+        "motion": [
+          "cinematic",
+          "parallax-depth",
+          "subtle-fade"
+        ],
+        "hero": [
+          "full-bleed-media",
+          "search-first"
+        ]
+      },
+      "avoid": {
+        "density": [
+          "data-dense"
+        ]
+      }
+    },
+    "legal-professional": {
+      "label": "Legal / accounting / consulting",
+      "prefer": {
+        "type": [
+          "libre-baskerville-karla",
+          "newsreader-public-sans",
+          "ibm-plex-serif-sans",
+          "playfair-source-sans"
+        ],
+        "color": [
+          "ink-paper",
+          "mono-accent",
+          "trust-blue",
+          "dark-luxe"
+        ],
+        "layout": [
+          "editorial-column",
+          "swiss-grid"
+        ],
+        "motion": [
+          "static",
+          "subtle-fade"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark",
+          "vibrant-multi"
+        ],
+        "type": [
+          "unbounded-figtree",
+          "anton-inter"
+        ]
+      }
+    },
+    "agency-studio": {
+      "label": "Creative agency / studio",
+      "prefer": {
+        "layout": [
+          "brutalist-raw",
+          "asymmetric-split",
+          "magazine-multicolumn",
+          "full-bleed-cinematic"
+        ],
+        "type": [
+          "syne-work-sans",
+          "anton-inter",
+          "bricolage-inter",
+          "instrument-serif-inter-tight",
+          "archivo-black-archivo"
+        ],
+        "motion": [
+          "kinetic-type",
+          "cinematic",
+          "spring-physical"
+        ],
+        "signature": [
+          "kinetic-headline",
+          "color-block-sections",
+          "index-numbering"
+        ]
+      },
+      "avoid": {}
+    },
+    "nonprofit-gov": {
+      "label": "Non-profit / government",
+      "prefer": {
+        "type": [
+          "atkinson-hyperlegible",
+          "newsreader-public-sans",
+          "noto-serif-noto-sans",
+          "mukta-hind",
+          "lexend"
+        ],
+        "color": [
+          "trust-blue",
+          "nature-green",
+          "ink-paper",
+          "saffron-indigo"
+        ],
+        "motion": [
+          "static",
+          "subtle-fade"
+        ]
+      },
+      "avoid": {
+        "color": [
+          "neon-dark",
+          "dark-luxe"
+        ],
+        "surface": [
+          "glass"
+        ]
+      }
+    },
+    "logistics": {
+      "label": "Logistics / supply chain",
+      "prefer": {
+        "layout": [
+          "dashboard-forward",
+          "timeline-story",
+          "swiss-grid"
+        ],
+        "imagery": [
+          "maps-geo",
+          "data-viz-hero",
+          "product-ui-in-code"
+        ],
+        "hero": [
+          "map-hero",
+          "product-demo-live",
+          "search-first"
+        ]
+      },
+      "avoid": {}
+    },
+    "media-publishing": {
+      "label": "Media / publishing",
+      "prefer": {
+        "layout": [
+          "magazine-multicolumn",
+          "editorial-column"
+        ],
+        "type": [
+          "newsreader-public-sans",
+          "fraunces-inter",
+          "playfair-source-sans",
+          "spectral-rubik",
+          "instrument-serif-inter-tight"
+        ],
+        "color": [
+          "ink-paper",
+          "high-contrast-bw",
+          "mono-accent"
+        ]
+      },
+      "avoid": {}
+    },
+    "portfolio": {
+      "label": "Personal portfolio",
+      "prefer": {
+        "layout": [
+          "brutalist-raw",
+          "minimal-centered",
+          "editorial-column",
+          "asymmetric-split"
+        ],
+        "hero": [
+          "statement-type",
+          "quiet-minimal",
+          "collage-hero"
+        ]
+      },
+      "avoid": {}
+    }
+  },
+  "contexts": {
+    "site": {
+      "label": "Website or landing page — the full vocabulary",
+      "allow": {}
+    },
+    "app": {
+      "label": "Working software: consoles, dashboards, internal tools. Operators scan and act under time pressure, so layouts stay fixed, density stays useful and motion stays quiet.",
+      "allow": {
+        "layout": [
+          "dashboard-forward",
+          "split-screen-fixed",
+          "sidebar-index",
+          "swiss-grid",
+          "asymmetric-split",
+          "documentation-shell"
+        ],
+        "density": [
+          "balanced",
+          "compact",
+          "data-dense"
+        ],
+        "motion": [
+          "static",
+          "micro-only",
+          "subtle-fade",
+          "spring-physical"
+        ],
+        "imagery": [
+          "product-ui-in-code",
+          "data-viz-hero",
+          "maps-geo",
+          "icon-led",
+          "typographic-only"
+        ],
+        "nav": [
+          "persistent-sidebar",
+          "minimal-bar",
+          "command-first",
+          "bottom-tabs-mobile"
+        ],
+        "hero": [
+          "product-demo-live",
+          "quiet-minimal",
+          "stat-wall",
+          "map-hero",
+          "search-first"
+        ],
+        "surface": [
+          "flat",
+          "hairline",
+          "soft-shadow",
+          "grain",
+          "paper"
+        ],
+        "signature": [
+          "annotated-ui",
+          "data-ticker",
+          "live-widget",
+          "index-numbering",
+          "split-compare",
+          "timeline-rail",
+          "oversized-numerals"
+        ]
+      }
+    }
+  }
+}

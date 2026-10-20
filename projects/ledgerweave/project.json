@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "prj_ledgerweave",
+  "name": "LedgerWeave",
+  "domain": "fintech",
+  "summary": "From monthly document chasing to an always-current finance exception queue.",
+  "layout": "split",
+  "apps": {
+    "frontend": {
+      "dir": "frontend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 5103
+    },
+    "backend": {
+      "dir": "backend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 4103
+    }
+  },
+  "runtime": {
+    "node": ">=20",
+    "packageManager": "npm"
+  },
+  "client": {
+    "name": "",
+    "contact": ""
+  },
+  "delivery": {
+    "status": "planned",
+    "pricedUsd": null,
+    "deliveredAt": null
+  },
+  "provenance": {
+    "blueprintRunId": null,
+    "createdAt": "2026-10-02T00:00:00Z",
+    "detailsDir": "details"
+  },
+  "eject": {
+    "standalone": true,
+    "verifiedAt": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@founderos/logger",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-dependency structured logger with correlation and secret redaction.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@founderos/core": "0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.3"
+  }
+}

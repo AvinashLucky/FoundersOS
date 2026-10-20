@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FounderOS · Workflow Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --void:#07080C;--base:#0B0D13;--raised:#11141B;--raised2:#171b24;
+ --hair:rgba(255,255,255,.07);--hair2:rgba(255,255,255,.14);
+ --ink:#F4F5F8;--ink2:#AAB0BF;--ink3:#6B7185;--ink4:#3D4250;
+ --iris:#7C6CF7;--iris2:#B9AEFB;--cyan:#34E5FF;--green:#54E0A8;--amber:#F5B544;--pink:#FF6EC7;
+ --serif:'Newsreader',Georgia,serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(900px 600px at 6% -8%,rgba(124,108,247,.15),transparent 60%),
+ radial-gradient(820px 560px at 98% 2%,rgba(52,229,255,.10),transparent 55%),var(--void);
+ color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+.mono{font-family:var(--mono)}.serif{font-family:var(--serif)}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+a{color:inherit}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,8,12,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--hair)}
+.nav .wrap{display:flex;align-items:center;gap:6px;height:54px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav .brand{font-family:var(--serif);font-size:17px;margin-right:14px;white-space:nowrap}.nav .brand b{color:var(--cyan)}
+.nav a{font-size:12.5px;color:var(--ink3);text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.hero{padding:70px 0 40px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.6vw,56px);line-height:1.02}
+.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero p{max-width:660px;color:var(--ink2);font-size:16.5px;margin:18px 0 0}
+.sec{padding:46px 0;border-top:1px solid var(--hair)}
+.sec-h{display:flex;align-items:baseline;gap:13px;margin-bottom:8px;flex-wrap:wrap}
+.sec-h .n{font-family:var(--mono);font-size:13px;color:var(--cyan)}
+.sec-h h2{font-family:var(--serif);font-weight:350;font-size:clamp(22px,3.4vw,30px)}
+.lead{color:var(--ink2);max-width:740px;margin:6px 0 22px;font-size:15px}
+/* journey rail */
+.rail{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.stop{flex:1 1 150px;min-width:150px;border:1px solid var(--hair);border-radius:13px;padding:14px;background:rgba(255,255,255,.03)}
+.stop .u{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--cyan)}
+.stop h5{font-family:var(--serif);font-weight:500;font-size:14.5px;margin:6px 0 4px}
+.stop p{font-size:11.5px;color:var(--ink3);margin:0}
+.stop .r{font-family:var(--mono);font-size:9.5px;color:var(--ink4);margin-top:8px}
+.arr{align-self:center;color:var(--cyan);opacity:.6;font-size:16px}
+/* screen cards */
+.screen{border:1px solid var(--hair);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.screen .top{display:flex;align-items:center;gap:12px;padding:14px 20px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.screen .route{font-family:var(--mono);font-size:12px;color:var(--cyan);border:1px solid var(--hair2);border-radius:7px;padding:3px 9px}
+.screen .ttl{font-family:var(--serif);font-weight:400;font-size:18px}
+.screen .pad{padding:16px 20px}
+.click{display:flex;gap:11px;padding:9px 0;border-bottom:1px dashed var(--hair)}
+.click:last-child{border:0}
+.click .btn{font-family:var(--mono);font-size:10.5px;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--hair2);border-radius:6px;padding:3px 8px;white-space:nowrap;flex:none;height:fit-content}
+.click .btn.p{background:linear-gradient(120deg,var(--iris),var(--cyan));color:#0a0c10;border-color:transparent}
+.click p{font-size:13px;color:var(--ink2);margin:0}
+.click .go{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--cyan);flex:none}
+/* agents callout */
+.agents{border:1px solid rgba(52,229,255,.3);border-radius:16px;padding:20px;background:linear-gradient(160deg,rgba(52,229,255,.07),transparent)}
+.agentflow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ag{flex:1 1 130px;min-width:130px;border:1px solid var(--hair);border-radius:12px;padding:12px;background:rgba(255,255,255,.03)}
+.ag .a{width:24px;height:24px;border-radius:7px;background:linear-gradient(130deg,var(--iris),var(--cyan));display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;color:#0a0c10}
+.ag h5{font-size:12.5px;margin:8px 0 2px}.ag p{font-size:10.5px;color:var(--ink3);margin:0}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--hair2);color:var(--ink3);margin-left:6px}
+.tag.ok{color:var(--green);border-color:rgba(84,224,168,.3)}
+.tag.soon{color:var(--amber);border-color:rgba(245,181,68,.3)}
+footer{padding:46px 0 70px;border-top:1px solid var(--hair);color:var(--ink3);font-size:13px}
+footer b{color:var(--ink);font-family:var(--serif);font-weight:400}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+ <span class="brand">Founder<b>OS</b> · Workflow</span>
+ <a href="#journey">The journey</a>
+ <a href="#signin">Sign in</a>
+ <a href="#projects">Projects</a>
+ <a href="#run">Run + agents</a>
+ <a href="#memory">Memory</a>
+ <a href="#overview">Analytics</a>
+ <a href="#freelance">Freelance</a>
+ <a href="#sell">Build &amp; sell</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+ <div class="kick">Click-by-click · what to click, where to go, where the agents are</div>
+ <h1 style="margin-top:16px">One idea in.<br>A whole company <em>works</em>.</h1>
+ <p>This is the exact path through FounderOS — every screen, every button, and the moment you watch the AI departments work live. Follow it top to bottom.</p>
+</div></header>
+
+<!-- JOURNEY -->
+<section class="sec" id="journey"><div class="wrap">
+ <div class="sec-h"><span class="n">01</span><h2>The journey, end to end</h2></div>
+ <p class="lead">Open the app → and follow this rail. Each stop is a real screen that exists today.</p>
+ <div class="rail">
+  <div class="stop"><div class="u">/signin</div><h5>Sign in</h5><p>Enter your email → your workspace.</p><div class="r">1 field</div></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">/projects</div><h5>Projects</h5><p>Search, sort, create, open. ⌘K anywhere.</p><div class="r">grid + palette</div></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">/projects/:id</div><h5>Run the company</h5><p>Type intent → watch agents → one answer.</p><div class="r">the agents live here</div></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">memory</div><h5>Remember</h5><p>Notes + screenshots auto-saved.</p><div class="r">compounds</div></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">/overview</div><h5>Analytics</h5><p>Runs, spend, 14-day trend.</p><div class="r">financial</div></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">/freelance</div><h5>Sell</h5><p>Idea Agent + listings + platforms.</p><div class="r">money</div></div>
+ </div>
+</div></section>
+
+<!-- SIGN IN -->
+<section class="sec" id="signin"><div class="wrap">
+ <div class="sec-h"><span class="n">02</span><h2>Sign in</h2></div>
+ <div class="screen">
+  <div class="top"><span class="route">/signin</span><span class="ttl">Enter your workspace</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">Email field</span><p>Type any email — it maps to your private workspace (data is isolated to you).</p></div>
+   <div class="click"><span class="btn p">Continue</span><p>Signs you in (secure signed cookie) and routes to your Projects.</p><span class="go">→ /projects</span></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- PROJECTS -->
+<section class="sec" id="projects"><div class="wrap">
+ <div class="sec-h"><span class="n">03</span><h2>Projects — your workspace home</h2></div>
+ <p class="lead">This is the screen in your screenshot. Everything here is wired.</p>
+ <div class="screen">
+  <div class="top"><span class="route">/projects</span><span class="ttl">Projects</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">Search projects…</span><p>Filter the grid as you type.</p></div>
+   <div class="click"><span class="btn">Recent / A–Z</span><p>Sort order.</p></div>
+   <div class="click"><span class="btn">Active / Archived</span><p>Toggle which projects show. <span class="tag ok">archive works</span></p></div>
+   <div class="click"><span class="btn">⌘K</span><p>Command palette — jump to any project, create one, sign out, from anywhere.</p></div>
+   <div class="click"><span class="btn p">+ New project</span><p>Name + domain (domain sets the visual theme). Creates &amp; opens it.</p></div>
+   <div class="click"><span class="btn">Project card</span><p>Click to open. The ARCHIVE button on the card soft-archives it (reversible).</p><span class="go">→ /projects/:id</span></div>
+   <div class="click"><span class="btn">Overview</span><p>Top-right — jump to analytics &amp; spend.</p><span class="go">→ /overview</span></div>
+   <div class="click"><span class="btn">Freelance</span><p>Top-right — the money studio.</p><span class="go">→ /freelance</span></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- RUN + AGENTS -->
+<section class="sec" id="run"><div class="wrap">
+ <div class="sec-h"><span class="n">04</span><h2>Run the company — where you SEE the agents</h2></div>
+ <p class="lead">This is the heart. Open a project, and in the "run the company" bar, type one idea. Then watch.</p>
+ <div class="screen">
+  <div class="top"><span class="route">/projects/:id</span><span class="ttl">The run panel</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">› intent input</span><p>Type e.g. <i>"Design the onboarding flow and a pricing page"</i>.</p></div>
+   <div class="click"><span class="btn p">Run</span><p>Streams live (SSE). You watch the company work in real time.</p></div>
+  </div>
+ </div>
+ <div class="agents">
+  <div class="serif" style="font-size:19px">What you watch, in order</div>
+  <p style="color:var(--ink2);font-size:14px;margin:6px 0 0">The COO plans, the needed departments light up and run in parallel, then the CEO speaks — one answer.</p>
+  <div class="agentflow">
+   <div class="ag"><div class="a">COO</div><h5>1 · Plan</h5><p>Activates only the departments the intent needs (token economy). Shows a rationale.</p></div>
+   <div class="ag"><div class="a">PM</div><h5>Product</h5><p>Scope: what to build, for whom.</p></div>
+   <div class="ag"><div class="a">AR</div><h5>Architecture</h5><p>Simplest design that scales.</p></div>
+   <div class="ag"><div class="a">UX</div><h5>Design</h5><p>Flows, states, on-brand.</p></div>
+   <div class="ag"><div class="a">QA</div><h5>QA + Security</h5><p>Risks, edge cases, tests.</p></div>
+   <div class="ag"><div class="a">CEO</div><h5>2 · Answer</h5><p>Synthesizes ONE decisive answer + cost + time.</p></div>
+  </div>
+  <p style="color:var(--ink3);font-size:12px;margin-top:14px;font-family:var(--mono)">Each answer is saved to project memory. A budget governor caps spend; every prompt carries an ethics clause. Offline it uses a local model; add ANTHROPIC_API_KEY for real Claude.</p>
+ </div>
+</div></section>
+
+<!-- MEMORY -->
+<section class="sec" id="memory"><div class="wrap">
+ <div class="sec-h"><span class="n">05</span><h2>Memory — the project gets smarter</h2></div>
+ <div class="screen">
+  <div class="top"><span class="route">/projects/:id</span><span class="ttl">Below the run panel</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">Remember (notes)</span><p>Type a decision/idea → saved. Every run also auto-saves its decision here.</p></div>
+   <div class="click"><span class="btn">Drop a screenshot</span><p>Visual memory — resized &amp; stored with a caption; builds the project's visual record.</p></div>
+   <div class="click"><span class="btn">← all projects</span><p>Back to the grid.</p><span class="go">→ /projects</span></div>
+  </div>
+ </div>
+ <p class="lead" style="margin-top:14px">Next time you run the company on this project, recent memory is injected into the prompt — so it builds on past decisions instead of starting from zero.</p>
+</div></section>
+
+<!-- OVERVIEW -->
+<section class="sec" id="overview"><div class="wrap">
+ <div class="sec-h"><span class="n">06</span><h2>Overview — analytics &amp; spend</h2></div>
+ <div class="screen">
+  <div class="top"><span class="route">/overview</span><span class="ttl">The financial pulse</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">Metric cards</span><p>Projects · Runs · Memories · Total spend.</p></div>
+   <div class="click"><span class="btn">Spend — 14 days</span><p>Hover any bar for that day's exact cost + run count.</p></div>
+   <div class="click"><span class="btn">Spend by model</span><p>See most work route to cheap tiers (the router's job).</p></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- FREELANCE -->
+<section class="sec" id="freelance"><div class="wrap">
+ <div class="sec-h"><span class="n">07</span><h2>Freelance Studio — turn work into money</h2></div>
+ <div class="screen">
+  <div class="top"><span class="route">/freelance</span><span class="ttl">Ideas → listings → platforms</span></div>
+  <div class="pad">
+   <div class="click"><span class="btn">Idea Agent · niche</span><p>Type a niche → 5 sellable ideas, each scored (demand · effort · fit · monetization) with a suggested price + platforms. <span class="tag ok">scoring live</span> <span class="tag soon">live web search: next</span></p></div>
+   <div class="click"><span class="btn p">Save as listing</span><p>Turn an idea into a listing you track.</p></div>
+   <div class="click"><span class="btn">Platform tracker</span><p>Mark where each is posted (Gumroad · Contra · Fiverr) and its status.</p></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- BUILD & SELL -->
+<section class="sec" id="sell"><div class="wrap">
+ <div class="sec-h"><span class="n">08</span><h2>Your off-screen build &amp; sell loop</h2></div>
+ <p class="lead">How you actually make money with it, combining FounderOS + your co-agent (Claude Code).</p>
+ <div class="rail">
+  <div class="stop"><div class="u">FOUNDEROS</div><h5>Decide</h5><p>Idea Agent picks a sellable idea; run the company to plan it.</p></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">CLAUDE CODE</div><h5>Build</h5><p>Your co-agent reads the repo + the plan and builds the actual project.</p></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">THEME</div><h5>Reskin</h5><p>Apply domain themes → multiple sellable variants.</p></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">PACKAGE</div><h5>Bundle</h5><p>README + previews + license → a kit.</p></div>
+  <div class="arr">→</div>
+  <div class="stop"><div class="u">POST</div><h5>Sell</h5><p>Gumroad / Contra / Fiverr; track in Freelance Studio.</p></div>
+ </div>
+ <p class="lead" style="margin-top:16px"><b style="color:var(--ink)">Claude Code handoff:</b> point it at this repo and have it read, in order — <span class="mono" style="color:var(--cyan)">ENGINEERING.md</span>, <span class="mono" style="color:var(--cyan)">PROJECT-STRUCTURE.md</span>, <span class="mono" style="color:var(--cyan)">docs/CROSS-CHECK-AUDIT.md</span>, then the feature you're building. It will follow the same patterns and update the docs as it goes.</p>
+</div></section>
+
+<footer><div class="wrap">
+ <b>FounderOS · Workflow Map</b><br>
+ Every screen and click that exists today. Kept in <span class="mono" style="color:var(--cyan)">docs/learning/</span> — pair with the Learning Hub, the Phases 1–3 Walkthrough, and the Money Engine.<br>
+ <span style="font-family:var(--mono);font-size:11px;color:var(--ink4)">v1 · July 2026</span>
+</div></footer>
+
+</body>
+</html>

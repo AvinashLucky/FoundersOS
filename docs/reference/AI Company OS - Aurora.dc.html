@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0f0d15}
+  ::selection{background:rgba(208,188,255,0.3);color:#fff}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(208,188,255,0.18);border-radius:8px}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(208,188,255,0.35)}
+  .msym{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr}
+  @keyframes auroraDrift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6%,4%) scale(1.12)}}
+  @keyframes auroraDrift2{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-5%,-6%) scale(1)}}
+  @keyframes radarSweep{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes corePulse{0%{transform:scale(0.8);opacity:0.7}100%{transform:scale(2.4);opacity:0}}
+  @keyframes nodeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes dotPulse{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1.25)}}
+  @keyframes logIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="height:100vh;overflow:hidden;background:#0f0d15;color:#e7e0ed;font-family:'Geist',-apple-system,sans-serif;position:relative;-webkit-font-smoothing:antialiased">
+
+  <!-- aurora ambient -->
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden">
+    <div style="position:absolute;top:-12%;left:-8%;width:52%;height:52%;background:#ff007a;filter:blur(120px);opacity:0.32;mix-blend-mode:screen;border-radius:50%;animation:auroraDrift 24s ease-in-out infinite"></div>
+    <div style="position:absolute;bottom:-14%;right:-10%;width:52%;height:52%;background:#ff5c00;filter:blur(120px);opacity:0.26;mix-blend-mode:screen;border-radius:50%;animation:auroraDrift2 28s ease-in-out infinite"></div>
+    <div style="position:absolute;top:30%;right:18%;width:38%;height:38%;background:#7c6cf7;filter:blur(130px);opacity:0.28;mix-blend-mode:screen;border-radius:50%;animation:auroraDrift 32s ease-in-out infinite"></div>
+  </div>
+
+  <!-- floating sidebar -->
+  <aside style="position:fixed;left:10px;top:10px;bottom:10px;width:266px;z-index:40;border-radius:20px;background:rgba(33,30,39,0.45);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);display:flex;flex-direction:column;padding:20px 16px">
+    <div style="padding:6px 8px 22px">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;color:#d0bcff">FounderOS</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#cbc3d7;margin-top:3px;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#4cd7f6;animation:dotPulse 2s infinite"></span>SENTIENT MODE ACTIVE</div>
+    </div>
+    <nav style="flex:1;display:flex;flex-direction:column;gap:4px;overflow-y:auto">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="7">
+        <div onClick="{{ item.go }}" style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;cursor:pointer;transition:all 0.18s;color:{{ item.color }};background:{{ item.bg }};font-weight:{{ item.weight }};box-shadow:{{ item.shadow }}" style-hover="background:rgba(255,255,255,0.06)">
+          <span class="msym" style="font-size:21px;color:{{ item.iconColor }}">{{ item.icon }}</span>
+          <span style="font-size:15px;flex:1">{{ item.label }}</span>
+        </div>
+      </sc-for>
+    </nav>
+    <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;margin-top:10px">
+      <div style="display:flex;align-items:center;gap:12px;padding:6px 8px">
+        <div style="width:40px;height:40px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#ff007a,#ff5c00);flex-shrink:0"><div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#a078ff,#4cd7f6)"></div></div>
+        <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:600">Personal Mentor</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#cbc3d7;letter-spacing:0.06em">LEVEL 12 · ARCHITECT</div></div>
+        <span class="msym" style="font-size:20px;color:#958ea0;cursor:pointer">settings</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- top bar -->
+  <header style="position:fixed;top:0;left:286px;right:0;height:80px;z-index:30;display:flex;align-items:center;gap:16px;padding:0 40px">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;letter-spacing:-0.01em;color:#e7e0ed">{{ screenTitle }}</div>
+    <div style="flex:1"></div>
+    <div onClick="{{ openPalette }}" style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:12px;background:rgba(33,30,39,0.5);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:#958ea0" style-hover="border-color:rgba(208,188,255,0.4)"><span class="msym" style="font-size:18px">search</span><span style="font-size:13px;font-family:'JetBrains Mono',monospace">⌘K</span></div>
+    <span class="msym" style="font-size:22px;color:#cbc3d7;cursor:pointer">notifications</span>
+    <span class="msym" style="font-size:22px;color:#cbc3d7;cursor:pointer">bolt</span>
+    <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,0.12);background:linear-gradient(135deg,#ff007a,#ff5c00)"></div>
+  </header>
+
+  <!-- main canvas -->
+  <main style="position:absolute;left:286px;right:0;top:80px;bottom:0;overflow-y:auto;padding:8px 40px 48px;z-index:1">
+
+    <!-- ============ COMMAND CENTER ============ -->
+    <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+    <div style="max-width:1180px">
+      <!-- command canvas -->
+      <div style="border-radius:24px;padding:1.5px;background:linear-gradient(120deg,rgba(160,120,255,0.7),rgba(76,215,246,0.5),rgba(255,0,122,0.4));box-shadow:0 12px 48px rgba(124,108,247,0.2)">
+        <div style="border-radius:23px;background:rgba(15,13,21,0.86);backdrop-filter:blur(40px);padding:30px 32px;display:flex;align-items:center;gap:18px">
+          <span class="msym" style="font-size:30px;color:#d0bcff">terminal</span>
+          <input placeholder="What are we building today, Founder?" style="flex:1;border:none;outline:none;background:transparent;color:#e7e0ed;font-family:'Geist',sans-serif;font-size:22px;font-weight:400">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#958ea0;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12)">⌘K</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;margin-bottom:38px">
+        <sc-for list="{{ quickActions }}" as="q" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:9px;padding:10px 18px;border-radius:14px;background:rgba(33,30,39,0.4);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.16s" style-hover="border-color:rgba(208,188,255,0.4)"><span class="msym" style="font-size:19px;color:#d0bcff">{{ q.icon }}</span><span style="font-size:14px;font-weight:500">{{ q.label }}</span></div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:22px">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px">Active Evolutions <span style="color:#4cd7f6">●</span></div><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#4cd7f6;cursor:pointer">VIEW ARCHIVES</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+              <div onClick="{{ goProject }}" style="border-radius:18px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:18px;cursor:pointer;transition:all 0.18s" style-hover="border-color:rgba(208,188,255,0.35)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div style="width:40px;height:40px;border-radius:12px;background:{{ p.iconBg }};display:flex;align-items:center;justify-content:center"><span class="msym" style="font-size:20px;color:{{ p.iconColor }}">{{ p.icon }}</span></div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ p.statusColor }}">{{ p.status }}</span></div>
+                <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:5px">{{ p.name }}</div>
+                <div style="font-size:12.5px;color:#cbc3d7;line-height:1.45;margin-bottom:14px;min-height:36px">{{ p.desc }}</div>
+                <div style="display:flex;align-items:flex-end;gap:5px;height:42px">
+                  <sc-for list="{{ p.bars }}" as="b" hint-placeholder-count="7"><div style="flex:1;border-radius:4px;height:{{ b.h }};background:{{ b.c }}"></div></sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:22px;position:relative;overflow:hidden">
+            <span class="msym" style="position:absolute;top:18px;right:18px;font-size:22px;color:#ff007a;opacity:0.6">auto_awesome</span>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:14px">Mentor Insight</div>
+            <div style="font-size:14.5px;color:#cbc3d7;line-height:1.6;font-style:italic;margin-bottom:18px">"{{ mentor.quote }}"</div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,0,122,0.4);padding:3px"><div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#ff007a,#ff5c00)"></div></div><div><div style="font-weight:600;font-size:14px">{{ mentor.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#cbc3d7">{{ mentor.role }}</div></div></div>
+          </div>
+          <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:8px 20px 14px">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 0 4px">Live org activity</div>
+            <sc-for list="{{ activity }}" as="a" hint-placeholder-count="4">
+              <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid rgba(255,255,255,0.07)"><div style="width:28px;height:28px;border-radius:8px;background:{{ a.bg }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:9.5px;color:#fff;flex-shrink:0">{{ a.abbr }}</div><div style="flex:1;min-width:0"><div style="font-size:12.5px;line-height:1.45;color:#cbc3d7"><span style="color:#e7e0ed;font-weight:600">{{ a.agent }}</span> {{ a.action }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0;margin-top:2px">{{ a.time }}</div></div></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;margin-top:34px">
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-radius:100px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1)"><span class="msym" style="font-size:18px;color:#4cd7f6">sensors</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#cbc3d7">SYSTEM ACTIVE: 99.8% EFFICIENCY</span><span style="color:#10b981">●</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#958ea0">Aurora Node 7</span></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ AGENT WORKSPACE ============ -->
+    <sc-if value="{{ isAgent }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;height:100%;gap:18px">
+      <!-- agent status strip -->
+      <div style="border-radius:18px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:14px 22px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <sc-for list="{{ agentStatus }}" as="a" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:11px;flex:1">
+            <div style="width:38px;height:38px;border-radius:50%;padding:2px;background:linear-gradient(135deg,{{ a.c1 }},{{ a.c2 }});flex-shrink:0"><div style="width:100%;height:100%;border-radius:50%;background:#15121b;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;color:{{ a.c1 }}">{{ a.abbr }}</div></div>
+            <div><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.04em">{{ a.role }}</div><div style="font-size:11.5px;color:#cbc3d7;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:{{ a.dot }};animation:dotPulse 1.6s infinite"></span>{{ a.status }}</div></div>
+          </div>
+          <sc-if value="{{ a.divider }}" hint-placeholder-val="{{ false }}"><div style="width:1px;height:32px;background:rgba(255,255,255,0.1)"></div></sc-if>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;flex:1;min-height:0">
+        <!-- result canvas -->
+        <div style="border-radius:24px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:32px 34px;overflow-y:auto">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#d0bcff;padding:5px 12px;border-radius:8px;background:rgba(160,120,255,0.14)">STRATEGIC PROPOSAL #842</span><div style="display:flex;gap:8px"><span class="msym" style="font-size:18px;color:#cbc3d7;padding:7px;border-radius:9px;background:rgba(255,255,255,0.05);cursor:pointer">share</span><span class="msym" style="font-size:18px;color:#cbc3d7;padding:7px;border-radius:9px;background:rgba(255,255,255,0.05);cursor:pointer">history</span></div></div>
+          <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;line-height:1.08;letter-spacing:-0.025em;margin:0 0 16px">Nimbus Onboarding Flow</h1>
+          <p style="font-size:16px;line-height:1.6;color:#cbc3d7;margin:0 0 24px;max-width:640px">A unified, agent-built plan: a 3-step progressive-disclosure onboarding with the first screen designed, coded against the project component library, and QA-gated — synthesized into one deliverable.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px">
+            <div style="border-radius:16px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.08);padding:20px"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#d0bcff;margin-bottom:8px">CORE OBJECTIVE</div><div style="font-size:14px;color:#e7e0ed;line-height:1.5">Reduce first-screen cognitive load — 3 steps, never more than 4 fields visible at once.</div></div>
+            <div style="border-radius:16px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.08);padding:20px"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#4cd7f6;margin-bottom:8px">REUSE & RISK</div><div style="font-size:14px;color:#e7e0ed;line-height:1.5">Reused &lt;Stepper/&gt; + &lt;Field/&gt; from Folio memory; a11y + tab-order gated by QA.</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:3px;height:18px;border-radius:3px;background:#a078ff"></div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px">The Implementation Roadmap</div></div>
+          <sc-for list="{{ canvasRoadmap }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0"><div style="width:22px;height:22px;border-radius:50%;background:rgba(16,185,129,0.16);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="msym" style="font-size:14px;color:#10b981">check</span></div><div style="font-size:14px;color:#cbc3d7;line-height:1.45">{{ r }}</div></div>
+          </sc-for>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+            <sc-for list="{{ canvasArtifacts }}" as="a" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.08)"><span class="msym" style="font-size:16px;color:{{ a.color }}">{{ a.icon }}</span><span style="font-size:12.5px;font-weight:600">{{ a.name }}</span></div></sc-for>
+          </div>
+        </div>
+
+        <!-- internal dialogue -->
+        <div style="border-radius:24px;background:rgba(15,13,21,0.55);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);display:flex;flex-direction:column;overflow:hidden">
+          <div style="padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,0.08)"><div style="display:flex;align-items:center;gap:9px"><span class="msym" style="font-size:18px;color:#4cd7f6">terminal</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.06em">INTERNAL DIALOGUE</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0;margin-top:6px">OS_CORE_LOG · SESSION_4829</div></div>
+          <div style="flex:1;overflow-y:auto;padding:8px 20px 16px">
+            <sc-for list="{{ internal }}" as="d" hint-placeholder-count="3">
+              <div style="padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><div style="display:flex;align-items:center;gap:8px"><span style="width:9px;height:9px;border-radius:50%;background:{{ d.color }}"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;color:#e7e0ed">{{ d.abbr }}</span></div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0">{{ d.time }}</span></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#cbc3d7;line-height:1.55;padding-left:17px">{{ d.text }}</div>
+              </div>
+            </sc-for>
+            <div style="margin-top:14px;border-radius:14px;background:rgba(160,120,255,0.1);border:1px solid rgba(160,120,255,0.25);padding:14px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span class="msym" style="font-size:15px;color:#d0bcff">sync_alt</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.05em;color:#d0bcff">CONSENSUS REACHED</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#cbc3d7;line-height:1.5">Synthesizing constraints with growth targets. Drafting final proposal…</div><div style="height:5px;border-radius:4px;background:rgba(255,255,255,0.08);margin-top:11px;overflow:hidden"><div style="height:100%;width:82%;background:linear-gradient(90deg,#a078ff,#4cd7f6)"></div></div></div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#6f6a7a;line-height:1.9;margin-top:14px">
+              <div>&gt; fetching market_data_api_v4…</div>
+              <div>&gt; running monte_carlo (N=10,000)…</div>
+              <div>&gt; success: 82.4% probability high yield</div>
+              <div>&gt; rendering workspace output…</div>
+            </div>
+          </div>
+          <div style="padding:14px 18px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#958ea0">RUN COST</span><span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:#10b981">$0.038</span></div>
+        </div>
+      </div>
+
+      <!-- command bar -->
+      <div style="border-radius:18px;background:rgba(33,30,39,0.5);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.12);padding:12px 16px;display:flex;align-items:center;gap:14px;flex-shrink:0">
+        <span class="msym" style="font-size:20px;color:#d0bcff">bolt</span>
+        <input placeholder="Direct the Evolution…" style="flex:1;border:none;outline:none;background:transparent;color:#e7e0ed;font-family:'Geist',sans-serif;font-size:15px">
+        <span class="msym" style="font-size:20px;color:#958ea0;cursor:pointer">mic</span>
+        <span class="msym" style="font-size:20px;color:#958ea0;cursor:pointer">upload_file</span>
+        <button style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;border:none;background:linear-gradient(135deg,#a078ff,#4cd7f6);color:#1a0a3a;font-family:'Geist',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer"><span class="msym" style="font-size:16px">rocket_launch</span>Approve Evolution</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ PROJECT WORKSPACE ============ -->
+    <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1180px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div style="display:flex;align-items:center;gap:16px"><div style="width:52px;height:52px;border-radius:15px;background:rgba(160,120,255,0.18);display:flex;align-items:center;justify-content:center"><span class="msym" style="font-size:26px;color:#d0bcff">hub</span></div><div><h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;margin:0">Nimbus Analytics</h1><div style="font-size:13px;color:#cbc3d7;margin-top:3px">SaaS analytics for indie founders · 5 agents assigned · 4 days ago</div></div></div>
+        <button onClick="{{ goAgent }}" style="display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;border:none;background:linear-gradient(135deg,#a078ff,#4cd7f6);color:#1a0a3a;font-family:'Geist',sans-serif;font-weight:700;font-size:13.5px;cursor:pointer"><span class="msym" style="font-size:17px">auto_awesome</span>Open in Agent Workspace</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+        <sc-for list="{{ projectTabs }}" as="t" hint-placeholder-count="6"><div style="padding:9px 18px;border-radius:100px;font-size:13px;font-weight:{{ t.weight }};color:{{ t.color }};background:{{ t.bg }};border:1px solid {{ t.border }};cursor:pointer">{{ t.label }}</div></sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:18px">
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:14px">Artifacts</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ artifacts }}" as="a" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:14px;border-radius:16px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:15px 18px;cursor:pointer" style-hover="border-color:rgba(208,188,255,0.35)"><div style="width:40px;height:40px;border-radius:11px;background:{{ a.color }};display:flex;align-items:center;justify-content:center"><span class="msym" style="font-size:20px;color:{{ a.iconColor }}">{{ a.icon }}</span></div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">{{ a.name }}</div><div style="font-size:11.5px;color:#cbc3d7;margin-top:2px">{{ a.kind }} · {{ a.by }}</div></div><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#958ea0">{{ a.age }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:14px">Project memory</div>
+          <div style="border-radius:18px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:6px 18px 12px">
+            <sc-for list="{{ projMemory }}" as="m" hint-placeholder-count="3"><div style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.07)"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#d0bcff;margin-bottom:5px">{{ m.t }}</div><div style="font-size:13px;color:#cbc3d7;line-height:1.45">{{ m.d }}</div><div style="font-size:10.5px;color:#958ea0;margin-top:5px">— {{ m.by }}</div></div></sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ MEMORY EXPLORER ============ -->
+    <sc-if value="{{ isMemory }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:18px;height:100%">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px"><div><h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em;margin:0">Memory Explorer</h1><p style="font-size:13.5px;color:#cbc3d7;margin:5px 0 0">Synthesizing 1.4TB of active project intelligence.</p></div><button style="display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;border:none;background:linear-gradient(135deg,#a078ff,#4cd7f6);color:#1a0a3a;font-family:'Geist',sans-serif;font-weight:700;font-size:13px;cursor:pointer"><span class="msym" style="font-size:17px">add</span>Forge Memory</button></div>
+        <div style="flex:1;position:relative;border-radius:24px;background:radial-gradient(circle at 50% 45%,rgba(124,108,247,0.12),transparent 60%);overflow:hidden;margin-top:8px;min-height:420px">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"><sc-for list="{{ memEdges }}" as="e" hint-placeholder-count="5"><line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="rgba(208,188,255,0.25)" stroke-width="1"></line></sc-for></svg>
+          <sc-for list="{{ memNodes }}" as="n" hint-placeholder-count="5">
+            <div style="position:absolute;left:{{ n.left }};top:{{ n.top }};transform:translate(-50%,-50%);width:{{ n.size }};height:{{ n.size }};border-radius:50%;background:{{ n.bg }};backdrop-filter:blur(14px);border:1px solid {{ n.border }};box-shadow:0 0 40px {{ n.glow }};display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;animation:nodeFloat {{ n.dur }} ease-in-out infinite;animation-delay:{{ n.delay }}">
+              <span class="msym" style="font-size:{{ n.iconSize }};color:{{ n.iconColor }};margin-bottom:4px">{{ n.icon }}</span>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:{{ n.fs }};color:#e7e0ed;text-align:center;padding:0 8px">{{ n.label }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.04em;color:#cbc3d7;margin-top:2px">{{ n.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:14px;border-radius:16px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:13px 18px;display:flex;align-items:center;gap:14px"><span class="msym" style="font-size:18px;color:#958ea0">timeline</span><span class="msym" style="font-size:18px;color:#cbc3d7">first_page</span><div style="flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,0.1);position:relative"><div style="position:absolute;left:22%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#d0bcff;box-shadow:0 0 14px #d0bcff"></div></div><div style="display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:10px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.1)"><span class="msym" style="font-size:15px;color:#4cd7f6">calendar_month</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#e7e0ed">15 MAY 2024</span></div></div>
+      </div>
+      <div style="width:330px;flex-shrink:0;border-radius:24px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:22px;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#d0bcff">Memory DNA</div><span class="msym" style="font-size:20px;color:#958ea0;cursor:pointer">close</span></div>
+        <div style="border-radius:14px;height:130px;background:radial-gradient(circle at 40% 35%,#a078ff,#3c0091 70%,#15121b);position:relative;overflow:hidden;margin-bottom:8px;border:1px solid rgba(255,255,255,0.1)"><div style="position:absolute;bottom:10px;left:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#4cd7f6;font-weight:600">Neural Impression</div></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#958ea0;margin:16px 0 12px">LOGIC SEQUENCE</div>
+        <sc-for list="{{ memDNA }}" as="d" hint-placeholder-count="3">
+          <div style="border-radius:13px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.08);padding:14px;margin-bottom:10px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;color:{{ d.color }}">{{ d.key }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0">{{ d.hash }}</span></div><div style="font-size:12px;color:#cbc3d7;line-height:1.45">{{ d.desc }}</div></div>
+        </sc-for>
+        <button style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#e7e0ed;font-family:'Geist',sans-serif;font-weight:600;font-size:13px;cursor:pointer;margin-top:6px"><span class="msym" style="font-size:16px;color:#d0bcff">history</span>Revert State</button>
+        <button style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:none;background:rgba(76,215,246,0.12);color:#4cd7f6;font-family:'Geist',sans-serif;font-weight:600;font-size:13px;cursor:pointer;margin-top:10px"><span class="msym" style="font-size:16px">ios_share</span>Export DNA</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ COST CENTER ============ -->
+    <sc-if value="{{ isCost }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1180px">
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;margin:0 0 5px">Cost Center</h1>
+      <p style="font-size:13.5px;color:#cbc3d7;margin:0 0 24px">The Model Router keeps spend at the floor. Track, attribute, and cap every dollar.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px">
+        <div style="border-radius:20px;background:linear-gradient(160deg,rgba(160,120,255,0.16),rgba(76,215,246,0.05));backdrop-filter:blur(24px);border:1px solid rgba(160,120,255,0.28);padding:22px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#d0bcff;margin-bottom:12px">JUNE SPEND</div><div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px">$42.18</span><span style="font-size:13px;color:#cbc3d7">/ $100</span></div><div style="height:8px;border-radius:6px;background:rgba(255,255,255,0.1);margin-top:14px;overflow:hidden"><div style="height:100%;width:42%;background:linear-gradient(90deg,#a078ff,#4cd7f6)"></div></div></div>
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#958ea0;margin-bottom:12px">ROUTER SAVINGS</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#10b981">$118</div><div style="font-size:11.5px;color:#cbc3d7;margin-top:8px">vs. always-frontier</div></div>
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#958ea0;margin-bottom:12px">TASKS ON TIER 0–1</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px">63%</div><div style="font-size:11.5px;color:#cbc3d7;margin-top:8px">free / fast models</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:18px">Spend by model</div><sc-for list="{{ costModels }}" as="c" hint-placeholder-count="5"><div style="margin-bottom:15px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12.5px;font-weight:500"><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#958ea0;margin-right:6px">{{ c.tier }}</span>{{ c.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#cbc3d7">{{ c.val }}</span></div><div style="height:7px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden"><div style="height:100%;width:{{ c.pctW }};background:{{ c.color }}"></div></div></div></sc-for></div>
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:18px">Spend by agent</div><sc-for list="{{ costAgents }}" as="c" hint-placeholder-count="6"><div style="margin-bottom:15px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12.5px;font-weight:500">{{ c.name }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#cbc3d7">{{ c.val }}</span></div><div style="height:7px;border-radius:5px;background:rgba(255,255,255,0.08);overflow:hidden"><div style="height:100%;width:{{ c.pctW }};background:linear-gradient(90deg,#a078ff,#4cd7f6)"></div></div></div></sc-for></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ OPPORTUNITY RADAR ============ -->
+    <sc-if value="{{ isOpp }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:24px;height:100%">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#4cd7f6;margin-bottom:8px">OPPORTUNITY RADAR</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.025em;margin:0 0 8px">Proactive Intelligence</h1>
+        <p style="font-size:14px;color:#cbc3d7;margin:0;max-width:460px">Synthesizing global tech signals and market gaps against your stack and memory to architect your next move.</p>
+        <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;min-height:440px">
+          <div style="position:absolute;width:560px;height:560px;border:1px solid rgba(255,255,255,0.08);border-radius:50%"></div>
+          <div style="position:absolute;width:400px;height:400px;border:1px solid rgba(255,255,255,0.06);border-radius:50%"></div>
+          <div style="position:absolute;width:240px;height:240px;border:1px solid rgba(208,188,255,0.12);border-radius:50%"></div>
+          <div style="position:absolute;width:560px;height:560px;border-radius:50%;animation:radarSweep 8s linear infinite;background:conic-gradient(from 0deg,transparent 0deg,rgba(255,0,122,0.18) 55deg,transparent 62deg)"></div>
+          <div style="position:absolute;width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 0 40px rgba(255,255,255,0.7);display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="msym" style="font-size:20px;color:#15121b">my_location</span></div>
+          <div style="position:absolute;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.5);animation:corePulse 4s ease-out infinite"></div>
+          <sc-for list="{{ oppNodes }}" as="o" hint-placeholder-count="5">
+            <div style="position:absolute;left:{{ o.left }};top:{{ o.top }};transform:translate(-50%,-50%);animation:nodeFloat {{ o.dur }} ease-in-out infinite;animation-delay:{{ o.delay }}">
+              <div style="width:16px;height:16px;border-radius:50%;background:{{ o.color }};box-shadow:0 0 16px {{ o.color }}"></div>
+            </div>
+          </sc-for>
+          <div style="position:absolute;bottom:10px;left:10px;display:flex;gap:12px">
+            <div style="border-radius:16px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:14px 18px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#ff007a;text-transform:uppercase;margin-bottom:5px">Active Signals</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px">42</div></div>
+            <div style="border-radius:16px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:14px 18px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#ff5c00;text-transform:uppercase;margin-bottom:5px">Critical Gaps</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px">03</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="width:380px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;overflow-y:auto">
+        <div style="border-radius:22px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.37);padding:22px;position:relative">
+          <span class="msym" style="position:absolute;top:18px;right:18px;font-size:22px;color:#ff007a;opacity:0.6">auto_awesome</span>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:14px">Mentor Insight</div>
+          <div style="font-size:14px;color:#cbc3d7;line-height:1.6;font-style:italic;margin-bottom:18px">"{{ mentor.quote }}"</div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,0,122,0.4);padding:3px"><div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#ff007a,#ff5c00)"></div></div><div><div style="font-weight:600;font-size:14px">{{ mentor.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#cbc3d7">{{ mentor.role }}</div></div></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;color:#cbc3d7">Recommended Moves</div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#d0bcff;cursor:pointer">View All</span></div>
+        <sc-for list="{{ upgrades }}" as="u" hint-placeholder-count="3">
+          <div style="border-radius:16px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-left:3px solid {{ u.color }};padding:16px;cursor:pointer" style-hover="background:rgba(255,255,255,0.05)">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px"><div style="width:32px;height:32px;border-radius:10px;background:{{ u.iconBg }};display:flex;align-items:center;justify-content:center"><span class="msym" style="font-size:17px;color:{{ u.color }}">{{ u.icon }}</span></div><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0">{{ u.impact }}</span></div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px">{{ u.title }}</div>
+            <div style="font-size:12px;color:#cbc3d7;line-height:1.45">{{ u.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="position:fixed;bottom:28px;right:36px;z-index:20"><button style="display:flex;align-items:center;gap:10px;padding:15px 24px;border-radius:100px;border:none;background:linear-gradient(135deg,#ff007a,#ff5c00);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 12px 40px rgba(255,0,122,0.4)"><span class="msym" style="font-size:19px">rocket_launch</span>Deploy Opportunity</button></div>
+    </sc-if>
+
+    <!-- ============ DESIGN DNA ============ -->
+    <sc-if value="{{ isDna }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1180px">
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;margin:0 0 5px">Design DNA</h1>
+      <p style="font-size:13.5px;color:#cbc3d7;margin:0 0 24px">Your product's visual identity as reusable tokens. Every UI agent designs from this fingerprint.</p>
+      <div style="display:flex;align-items:center;gap:16px;border-radius:20px;background:linear-gradient(120deg,rgba(160,120,255,0.16),rgba(255,0,122,0.06));backdrop-filter:blur(24px);border:1px solid rgba(160,120,255,0.25);padding:22px;margin-bottom:22px">
+        <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#a078ff,#4cd7f6);display:flex;align-items:center;justify-content:center"><span class="msym" style="font-size:28px;color:#1a0a3a">auto_awesome</span></div>
+        <div style="flex:1"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px">Nimbus Fingerprint · v3</div><div style="font-size:13px;color:#cbc3d7;margin-top:3px">Calm · technical · premium-dark · geometric. Extracted from 14 approved screens.</div></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#4cd7f6;padding:6px 12px;border-radius:9px;background:rgba(76,215,246,0.12)">SYNCED TO 5 AGENTS</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-bottom:18px">
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:16px">Palette</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><sc-for list="{{ dnaPalette }}" as="p" hint-placeholder-count="6"><div><div style="height:56px;border-radius:12px;background:{{ p.hex }};border:1px solid rgba(255,255,255,0.12)"></div><div style="font-size:12px;font-weight:600;margin-top:8px">{{ p.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0">{{ p.hex }}</div></div></sc-for></div></div>
+        <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:16px">Type scale</div><div style="display:flex;flex-direction:column;gap:14px"><sc-for list="{{ dnaType }}" as="t" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.07)"><div style="width:48px;height:48px;border-radius:11px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:{{ t.fontStack }};font-size:23px;font-weight:600">Aa</div><div><div style="font-size:13px;font-weight:600">{{ t.role }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#958ea0">{{ t.font }} · {{ t.size }}</div></div></div></sc-for></div></div>
+      </div>
+      <div style="border-radius:20px;background:rgba(33,30,39,0.4);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);padding:22px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;margin-bottom:16px">Tokens</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><sc-for list="{{ dnaTokens }}" as="t" hint-placeholder-count="6"><div style="border-radius:12px;background:rgba(15,13,21,0.5);border:1px solid rgba(255,255,255,0.08);padding:14px"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#958ea0;text-transform:uppercase;margin-bottom:6px">{{ t.k }}</div><div style="font-size:13px;font-weight:600;color:#e7e0ed">{{ t.v }}</div></div></sc-for></div></div>
+    </div>
+    </sc-if>
+
+  </main>
+
+  <!-- command palette -->
+  <sc-if value="{{ paletteOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePalette }}" style="position:fixed;inset:0;z-index:60;background:rgba(8,6,12,0.6);backdrop-filter:blur(8px);display:flex;align-items:flex-start;justify-content:center;padding-top:13vh">
+    <div onClick="{{ stop }}" style="width:600px;max-width:90vw;border-radius:24px;background:rgba(33,30,39,0.85);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.18);box-shadow:0 30px 90px rgba(0,0,0,0.6),0 0 60px rgba(160,120,255,0.15);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.1)"><span class="msym" style="font-size:20px;color:#d0bcff">search</span><input autofocus placeholder="Ask your company, jump to a screen, or run a command…" style="flex:1;border:none;outline:none;background:transparent;color:#e7e0ed;font-family:'Geist',sans-serif;font-size:15px"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#958ea0;padding:4px 8px;border-radius:7px;border:1px solid rgba(255,255,255,0.12)">ESC</span></div>
+      <div style="max-height:400px;overflow-y:auto;padding:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#958ea0;padding:8px 12px 4px">GO TO</div>
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="7"><div onClick="{{ item.go }}" style="display:flex;align-items:center;gap:13px;padding:11px 13px;border-radius:12px;cursor:pointer;color:#cbc3d7" style-hover="background:rgba(160,120,255,0.16)"><span class="msym" style="font-size:19px;color:#d0bcff">{{ item.icon }}</span><span style="font-size:14px;font-weight:500;flex:1;color:#e7e0ed">{{ item.label }}</span></div></sc-for>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#958ea0;padding:12px 12px 4px">ACTIONS</div>
+        <div style="display:flex;align-items:center;gap:13px;padding:11px 13px;border-radius:12px;cursor:pointer;color:#cbc3d7" style-hover="background:rgba(160,120,255,0.16)"><span class="msym" style="font-size:19px;color:#d0bcff">add_circle</span><span style="font-size:14px;font-weight:500;color:#e7e0ed">Start a new evolution</span></div>
+        <div style="display:flex;align-items:center;gap:13px;padding:11px 13px;border-radius:12px;cursor:pointer;color:#cbc3d7" style-hover="background:rgba(160,120,255,0.16)"><span class="msym" style="font-size:19px;color:#d0bcff">radar</span><span style="font-size:14px;font-weight:500;color:#e7e0ed">Scan Opportunity Radar</span></div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen: 'dashboard', paletteOpen: false };
+
+  componentDidMount() {
+    this._kd = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === 'k') { e.preventDefault(); this.setState(s => ({ paletteOpen: !s.paletteOpen })); }
+      if (e.key === 'Escape') this.setState({ paletteOpen: false });
+    };
+    window.addEventListener('keydown', this._kd);
+  }
+  componentWillUnmount() { try { window.removeEventListener('keydown', this._kd); } catch (e) {} }
+
+  go(id) { return () => this.setState({ screen: id, paletteOpen: false }); }
+
+  renderVals() {
+    const screen = this.state.screen;
+    const titles = { dashboard: 'Command Center', agent: 'Agent Workspace', project: 'Projects', memory: 'Memory Explorer', cost: 'Cost Center', opportunity: 'Opportunity Radar', dna: 'Design DNA' };
+    const navDef = [
+      { id: 'dashboard', label: 'Command Center', icon: 'terminal' },
+      { id: 'agent', label: 'Agent Workspace', icon: 'diversity_3' },
+      { id: 'project', label: 'Projects', icon: 'folder_open' },
+      { id: 'memory', label: 'Memory Explorer', icon: 'psychology' },
+      { id: 'cost', label: 'Cost Center', icon: 'payments' },
+      { id: 'opportunity', label: 'Opportunity Radar', icon: 'radar' },
+      { id: 'dna', label: 'Design DNA', icon: 'auto_awesome' },
+    ];
+    const nav = navDef.map(n => {
+      const on = screen === n.id;
+      return { ...n, go: this.go(n.id), color: on ? '#340080' : '#cbc3d7', bg: on ? '#a078ff' : 'transparent', iconColor: on ? '#340080' : '#958ea0', weight: on ? 700 : 400, shadow: on ? '0 6px 18px rgba(160,120,255,0.3)' : 'none' };
+    });
+
+    const quickActions = [
+      { icon: 'mic', label: 'Voice Command' },
+      { icon: 'upload_file', label: 'Upload Screenshot' },
+      { icon: 'code', label: 'Import Repo' },
+      { icon: 'screen_record', label: 'Record Screen' },
+    ];
+    const projects = [
+      { name: 'Nimbus Analytics', desc: 'SaaS analytics for indie founders.', status: 'Last sync 2m ago', statusColor: '#cbc3d7', icon: 'hub', iconBg: 'rgba(160,120,255,0.18)', iconColor: '#d0bcff', bars: [40,62,48,70,100,55,82], barColor: '#a078ff' },
+      { name: 'Folio', desc: 'Portfolio generator for designers.', status: 'Processing…', statusColor: '#4cd7f6', icon: 'palette', iconBg: 'rgba(76,215,246,0.18)', iconColor: '#4cd7f6', bars: [55,40,72,48,90,52,80], barColor: '#4cd7f6' },
+      { name: 'Pulse', desc: 'Habit tracker, mobile-first.', status: 'Tests 88%', statusColor: '#10b981', icon: 'monitoring', iconBg: 'rgba(16,185,129,0.18)', iconColor: '#10b981', bars: [45,55,42,60,52,72,58], barColor: '#10b981' },
+      { name: 'Design DNA 3.0', desc: 'Standardizing motion across the ecosystem.', status: 'Paused', statusColor: '#ffb869', icon: 'tune', iconBg: 'rgba(255,184,105,0.18)', iconColor: '#ffb869', bars: [38,48,42,52,46,60,50], barColor: '#ffb869' },
+    ].map(p => ({ ...p, bars: p.bars.map(h => ({ h: h + '%', c: p.barColor })) }));
+
+    const mentor = { quote: 'Nimbus is masking a bigger play — your onboarding work is reusable as a product. The competition ships features; you should be shipping leverage.', name: 'Cortex-7', role: 'Strategic Oracle Agent' };
+    const activity = [
+      { abbr: 'SD', agent: 'Senior Developer', action: 'committed Welcome.tsx to Nimbus', time: '2m ago', bg: '#3880ff' },
+      { abbr: 'QA', agent: 'QA Engineer', action: 'passed 8/8 acceptance checks', time: '4m ago', bg: '#10b981' },
+      { abbr: 'UX', agent: 'UX Lead', action: 'finalized 3-step onboarding flow', time: '11m ago', bg: '#a078ff' },
+      { abbr: 'CR', agent: 'Competitor Researcher', action: 'flagged 2 rival pricing changes', time: '28m ago', bg: '#4cd7f6' },
+    ];
+
+    const agentStatus = [
+      { abbr: 'CEO', role: 'CEO', status: 'Synthesizing Strategy', c1: '#a078ff', c2: '#4cd7f6', dot: '#a078ff', divider: true },
+      { abbr: 'CTO', role: 'CTO', status: 'Validating Stack', c1: '#4cd7f6', c2: '#10b981', dot: '#4cd7f6', divider: true },
+      { abbr: 'UX', role: 'UX Lead', status: 'Refining Flow', c1: '#ff007a', c2: '#ff5c00', dot: '#ff5c00', divider: false },
+    ];
+    const canvasRoadmap = [
+      'Generate the 3-step onboarding flow with annotated wireframes (UX Lead).',
+      'Build screen 1 — Welcome.tsx — reusing the project component library (Senior Developer).',
+      'Gate against acceptance criteria: a11y contrast, tab order, 44px targets, empty/error states (QA).',
+    ];
+    const canvasArtifacts = [
+      { icon: 'route', name: 'onboarding-flow.fig', color: '#a078ff' },
+      { icon: 'code', name: 'Welcome.tsx', color: '#4cd7f6' },
+      { icon: 'verified', name: '8/8 QA pass', color: '#10b981' },
+    ];
+    const internal = [
+      { abbr: 'CEO', time: '14:02:11', color: '#a078ff', text: 'Goal: ship onboarding screen 1. Prioritize speed-to-preview; defer copy polish to Content Writer.' },
+      { abbr: 'CTO', time: '14:02:14', color: '#4cd7f6', text: 'Stack validated — Next.js + Supabase. Reuse <Stepper/>; logic check passed.' },
+      { abbr: 'UX', time: '14:02:18', color: '#ff5c00', text: 'Progressive disclosure over single form to cut first-screen load. Pulling Design DNA tokens.' },
+    ];
+
+    const projectTabs = [
+      { label: 'Brief', on: true }, { label: 'Plan', on: false }, { label: 'Architecture', on: false },
+      { label: 'Design', on: false }, { label: 'Build', on: false }, { label: 'Tests', on: false },
+    ].map(t => ({ label: t.label, weight: t.on ? 700 : 500, color: t.on ? '#340080' : '#cbc3d7', bg: t.on ? '#a078ff' : 'rgba(33,30,39,0.4)', border: t.on ? '#a078ff' : 'rgba(255,255,255,0.1)' }));
+    const artifacts = [
+      { icon: 'description', kind: 'PRD', name: 'product-requirements.md', by: 'Product Manager', age: '4d', color: 'rgba(160,120,255,0.16)', iconColor: '#d0bcff' },
+      { icon: 'route', kind: 'Flow', name: 'onboarding-flow.fig', by: 'UX Lead', age: '2h', color: 'rgba(124,108,247,0.16)', iconColor: '#a078ff' },
+      { icon: 'account_tree', kind: 'Architecture', name: 'system-design.md', by: 'System Architect', age: '3d', color: 'rgba(76,215,246,0.16)', iconColor: '#4cd7f6' },
+      { icon: 'code', kind: 'Frontend', name: 'Welcome.tsx', by: 'Senior Developer', age: 'now', color: 'rgba(56,128,255,0.16)', iconColor: '#8fb6ff' },
+      { icon: 'science', kind: 'Tests', name: 'welcome.e2e.spec.ts', by: 'Automation Tester', age: '12m', color: 'rgba(16,185,129,0.16)', iconColor: '#10b981' },
+    ];
+    const projMemory = [
+      { t: 'DECISION', d: 'Progressive disclosure for onboarding (3 steps).', by: 'UX Lead' },
+      { t: 'REUSED', d: '<Stepper/> + <Field/> from Folio library.', by: 'Memory Manager' },
+      { t: 'CONSTRAINT', d: 'Ship MVP on Supabase + Next.js, no custom infra.', by: 'CTO Agent' },
+    ];
+
+    const memNodes = [
+      { left: '32%', top: '30%', size: '150px', label: 'Nimbus', sub: 'PROJECT', icon: 'hub', iconSize: '22px', iconColor: '#d0bcff', fs: '15px', bg: 'rgba(124,108,247,0.14)', border: 'rgba(208,188,255,0.3)', glow: 'rgba(124,108,247,0.25)', dur: '6s', delay: '0s' },
+      { left: '58%', top: '52%', size: '190px', label: 'Market Thesis', sub: 'WEIGHT 0.89', icon: 'insights', iconSize: '24px', iconColor: '#4cd7f6', fs: '16px', bg: 'rgba(76,215,246,0.1)', border: 'rgba(76,215,246,0.3)', glow: 'rgba(76,215,246,0.22)', dur: '7s', delay: '-1s' },
+      { left: '78%', top: '34%', size: '130px', label: 'Design DNA', sub: 'V3 ASSETS', icon: 'auto_awesome', iconSize: '20px', iconColor: '#ff007a', fs: '14px', bg: 'rgba(255,0,122,0.1)', border: 'rgba(255,0,122,0.3)', glow: 'rgba(255,0,122,0.2)', dur: '6.5s', delay: '-2s' },
+      { left: '40%', top: '74%', size: '120px', label: 'Growth Pivot', sub: 'DECISION', icon: 'fork_right', iconSize: '19px', iconColor: '#ffb869', fs: '13px', bg: 'rgba(255,184,105,0.1)', border: 'rgba(255,184,105,0.3)', glow: 'rgba(255,184,105,0.18)', dur: '7.5s', delay: '-3s' },
+      { left: '76%', top: '74%', size: '120px', label: 'Pulse', sub: 'LEDGER OK', icon: 'monitoring', iconSize: '19px', iconColor: '#10b981', fs: '13px', bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.3)', glow: 'rgba(16,185,129,0.18)', dur: '6.8s', delay: '-1.5s' },
+    ];
+    const memEdgePairs = [[0,1],[1,2],[0,3],[1,4]];
+    const memEdges = memEdgePairs.map(([a,b]) => ({ x1: memNodes[a].left, y1: memNodes[a].top, x2: memNodes[b].left, y2: memNodes[b].top }));
+    const memDNA = [
+      { key: 'CORE_LOGIC_V4', hash: '0x88f2', color: '#d0bcff', desc: 'Primary decision branch — heuristic Bayesian weighting over project memory.' },
+      { key: 'VISUAL_ANCHOR', hash: '0x221a', color: '#4cd7f6', desc: 'Design DNA consistency matrix applied to all derived child assets.' },
+      { key: 'STAKEHOLDER_SYNC', hash: '0x55c9', color: '#ff007a', desc: 'Validated by AI consensus on timestamp 1715760000.' },
+    ];
+
+    const costModels = [
+      { name: 'Claude Sonnet', tier: 'T2', val: '$19.40', pct: 46, color: '#3880ff' },
+      { name: 'Claude Opus', tier: 'T3', val: '$11.20', pct: 27, color: '#a078ff' },
+      { name: 'Gemini Flash', tier: 'T1', val: '$6.80', pct: 16, color: '#4cd7f6' },
+      { name: 'Local · Llama 3', tier: 'T0', val: '$0.00', pct: 7, color: '#10b981' },
+      { name: 'GPT-mini', tier: 'T1', val: '$4.78', pct: 4, color: '#ffb869' },
+    ].map(c => ({ ...c, pctW: c.pct + '%' }));
+    const costAgents = [
+      { name: 'System Architect', val: '$9.10', pct: 80 }, { name: 'Senior Developer', val: '$8.40', pct: 72 },
+      { name: 'CEO Agent', val: '$7.20', pct: 60 }, { name: 'UI Designer', val: '$5.10', pct: 42 },
+      { name: 'UX Lead', val: '$4.30', pct: 36 }, { name: 'QA + others', val: '$8.08', pct: 30 },
+    ].map(c => ({ ...c, pctW: c.pct + '%' }));
+
+    const oppNodes = [
+      { left: '34%', top: '30%', color: '#ff007a', dur: '6s', delay: '-1s' },
+      { left: '70%', top: '40%', color: '#4cd7f6', dur: '7s', delay: '-3s' },
+      { left: '60%', top: '72%', color: '#ff5c00', dur: '6.5s', delay: '-2s' },
+      { left: '40%', top: '62%', color: '#a078ff', dur: '7.5s', delay: '-4s' },
+      { left: '28%', top: '52%', color: '#10b981', dur: '6.2s', delay: '-0.5s' },
+    ];
+    const upgrades = [
+      { icon: 'bolt', impact: 'Impact: High', title: 'AI changelog generator', desc: 'Matches your stack + 2 reusable solutions in memory.', color: '#ff007a', iconBg: 'rgba(255,0,122,0.18)' },
+      { icon: 'memory', impact: 'Impact: Med', title: 'Supabase cost monitor', desc: 'Adjacent to a shipped project; medium build effort.', color: '#4cd7f6', iconBg: 'rgba(76,215,246,0.18)' },
+      { icon: 'verified_user', impact: 'Impact: Watch', title: 'Design-token linter', desc: 'Emerging signal — low confidence, revisit next scan.', color: '#ff5c00', iconBg: 'rgba(255,92,0,0.18)' },
+    ];
+
+    const dnaPalette = [
+      { name: 'Iris', hex: '#A078FF' }, { name: 'Aqua', hex: '#4CD7F6' }, { name: 'Obsidian', hex: '#0F0D15' },
+      { name: 'Mist', hex: '#CBC3D7' }, { name: 'Spark', hex: '#FF007A' }, { name: 'Ember', hex: '#FF5C00' },
+    ];
+    const dnaType = [
+      { role: 'Display', font: 'Space Grotesk', size: '700 · 34px', fontStack: "'Space Grotesk', sans-serif" },
+      { role: 'Body', font: 'Geist', size: '400 · 16px', fontStack: "'Geist', sans-serif" },
+      { role: 'Mono', font: 'JetBrains Mono', size: '500 · 12px', fontStack: "'JetBrains Mono', monospace" },
+    ];
+    const dnaTokens = [
+      { k: 'Radius', v: '12 / 16 / 24 px' }, { k: 'Spacing', v: '4 · 8 · 16 · 24 px' },
+      { k: 'Elevation', v: 'glass blur 24px' }, { k: 'Motion', v: 'spring · 0.18s' },
+      { k: 'Border', v: 'rgba(255,255,255,.1)' }, { k: 'Glow', v: 'aurora 20% screen' },
+    ];
+
+    return {
+      nav, screenTitle: titles[screen] || 'Command Center',
+      isDashboard: screen === 'dashboard', isAgent: screen === 'agent', isProject: screen === 'project',
+      isMemory: screen === 'memory', isCost: screen === 'cost', isOpp: screen === 'opportunity', isDna: screen === 'dna',
+      quickActions, projects, mentor, activity, agentStatus, canvasRoadmap, canvasArtifacts, internal,
+      projectTabs, artifacts, projMemory, memNodes, memEdges, memDNA, costModels, costAgents, oppNodes, upgrades,
+      dnaPalette, dnaType, dnaTokens,
+      paletteOpen: this.state.paletteOpen,
+      openPalette: () => this.setState({ paletteOpen: true }),
+      closePalette: () => this.setState({ paletteOpen: false }),
+      stop: (e) => e.stopPropagation(),
+      goProject: this.go('project'), goAgent: this.go('agent'),
+    };
+  }
+}
+</script>
+</body>
+</html>

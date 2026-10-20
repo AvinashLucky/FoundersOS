@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FounderOS · Mission Control</title>
+<style>
+  /* ── Strata v2 tokens (the Google-grade ramp) ─────────────────────────── */
+  :root{
+    --void:#07080c; --base:#0b0d13; --raised:#11141d; --glass:rgba(255,255,255,.04);
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --ink:#eef0f6; --ink2:#b6bac8; --ink3:#7d8294; --ink4:#54596b;
+    --accent:#6d5df6; --accent2:#22d3ee; --glow:rgba(109,93,246,.45);
+    --amber:#fbbf24; --pink:#f472b6; --green:#34d399;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'Cascadia Code',monospace;
+    --serif:'Newsreader',Georgia,serif;
+    --r:14px; --ease:cubic-bezier(.22,.9,.24,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 70% -10%, rgba(109,93,246,.14), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(34,211,238,.08), transparent 60%),
+      var(--void);
+    color:var(--ink); font-family:var(--sans); line-height:1.55; overflow-x:hidden;
+  }
+  ::selection{background:rgba(109,93,246,.4)}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent2)}
+
+  /* top bar */
+  .bar{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+  .logo .dot{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 24px var(--glow)}
+  .pill{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:4px 10px}
+  .bar .right{margin-left:auto;display:flex;gap:10px;align-items:center;color:var(--ink3);font-family:var(--mono);font-size:11px}
+  kbd{border:1px solid var(--line2);border-radius:5px;padding:2px 6px;font-family:var(--mono);font-size:10px;color:var(--ink3)}
+
+  /* hero */
+  .hero{padding:64px 0 36px;text-align:left}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,58px);letter-spacing:-.02em;line-height:1.08;margin-top:14px}
+  h1 em{font-style:italic;background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:14px;max-width:560px;color:var(--ink2);font-size:15.5px}
+
+  /* stage — the self-driving demo */
+  .stage-wrap{position:relative;margin:34px 0 8px}
+  .stage{
+    position:relative;border:1px solid var(--line2);border-radius:20px;background:
+      linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01)),
+      radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px) 0 0/22px 22px, var(--base);
+    padding:26px;min-height:430px;overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .stage .hud{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+  .hud .live{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 2.2s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  .hud .caption{margin-left:auto;color:var(--ink4);letter-spacing:.08em;text-transform:none}
+
+  .cmd{display:flex;align-items:center;gap:12px;margin-top:14px;border:1px solid var(--line2);border-radius:12px;background:var(--raised);padding:13px 16px}
+  .cmd .p{color:var(--accent2);font-family:var(--mono)}
+  .cmd .text{font-family:var(--serif);font-size:16px;color:var(--ink);min-height:22px}
+  .cmd .caret{display:inline-block;width:1px;height:16px;background:var(--accent2);vertical-align:-3px;animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .cmd .run{margin-left:auto;font-size:12.5px;font-weight:600;color:#0b0d13;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;padding:8px 16px;transition:transform .2s var(--ease),box-shadow .3s}
+  .cmd .run.pressed{transform:scale(.96);box-shadow:0 0 30px var(--glow)}
+
+  .plan{margin-top:12px;font-family:var(--mono);font-size:10.5px;color:var(--ink3);opacity:0;transform:translateY(6px);transition:all .45s var(--ease)}
+  .plan.show{opacity:1;transform:none}
+  .plan b{color:var(--accent2);font-weight:500}
+
+  .depts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+  .dept{border:1px solid var(--line);border-radius:10px;background:var(--glass);padding:12px;transition:all .5s var(--ease)}
+  .dept .chip{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;color:#0b0d13;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .dept .nm{margin-top:8px;font-size:12px}
+  .dept .st{margin-top:4px;font-family:var(--mono);font-size:9.5px;color:var(--ink4)}
+  .dept.idle{opacity:.35;filter:saturate(0)}
+  .dept.done{border-color:rgba(34,211,238,.4)}
+  .dept.done .st{color:var(--accent2)}
+  .dept.done .st::before{content:"✓ "}
+
+  .feed{margin-top:12px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+  .msg{border:1px solid var(--line);border-radius:10px;background:var(--glass);padding:10px 14px;font-size:12.5px;color:var(--ink2);opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
+  .msg.show{opacity:1;transform:none}
+  .msg .who{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:10px;color:var(--ink3);margin-bottom:4px}
+  .stance{border:1px solid;border-radius:5px;padding:1px 7px;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+  .stance.challenge{color:var(--pink);border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.08)}
+  .stance.support{color:var(--accent2);border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.08)}
+  .msg.decision{border-color:rgba(34,211,238,.35);background:linear-gradient(180deg,rgba(34,211,238,.05),transparent)}
+  .msg.decision .who b{color:var(--ink)}
+  .cost{margin-left:auto;color:var(--ink4)}
+
+  /* the agent cursor */
+  #cursor{position:absolute;z-index:30;width:22px;height:22px;left:0;top:0;pointer-events:none;
+    transition:transform 1.1s var(--ease);filter:drop-shadow(0 4px 12px rgba(0,0,0,.6))}
+  #cursor svg{display:block}
+  #cursor .tag{position:absolute;left:20px;top:16px;white-space:nowrap;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d13;font-family:var(--mono);font-size:9.5px;font-weight:700;border-radius:999px;padding:3px 9px}
+  #cursor.click svg{animation:clickpop .35s var(--ease)}
+  @keyframes clickpop{40%{transform:scale(.72)}}
+
+  /* lanes */
+  .lanes-head{margin:64px 0 6px}
+  h2{font-family:var(--serif);font-weight:300;font-size:30px;letter-spacing:-.01em}
+  .lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  @media(max-width:880px){.lanes{grid-template-columns:1fr}.depts{grid-template-columns:repeat(2,1fr)}}
+  .lane{border:1px solid var(--line);border-radius:var(--r);background:var(--glass);backdrop-filter:blur(14px);padding:18px}
+  .lane h3{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);font-weight:500}
+  .lane h3 .n{margin-left:auto;color:var(--ink4);letter-spacing:0}
+  .lane .d{width:7px;height:7px;border-radius:50%}
+  .lane.past .d{background:var(--green)} .lane.now .d{background:var(--accent2);box-shadow:0 0 10px var(--accent2)} .lane.next .d{background:var(--ink4)}
+  .card{border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);padding:12px 14px;margin-top:10px;transition:all .35s var(--ease)}
+  .card:hover{border-color:var(--line2);transform:translateY(-2px)}
+  .card .t{font-size:13.5px;color:var(--ink)}
+  .card .m{margin-top:5px;display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:9.5px;color:var(--ink4)}
+  .tag2{border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:var(--ink3)}
+  .card.shipped .t::before{content:"✓ ";color:var(--green)}
+  .card.hot{border-color:rgba(34,211,238,.35)}
+  .card.hot .t::before{content:"● ";color:var(--accent2)}
+  .card.dim{opacity:.75}
+  .card.queued{border-color:rgba(52,211,153,.4)}
+  .card.queued::after{content:"queued by agent ✓";display:block;margin-top:6px;font-family:var(--mono);font-size:9px;color:var(--green)}
+
+  /* credits + footer */
+  .credits{margin:70px 0 0;border-top:1px solid var(--line);padding:26px 0 8px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .credits .c{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .foot{padding:22px 0 48px;color:var(--ink4);font-family:var(--mono);font-size:10.5px}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+    .plan,.msg{opacity:1!important;transform:none!important}
+    #cursor{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- Top bar -->
+  <header class="bar">
+    <div class="logo"><span class="dot"></span> FounderOS <span class="pill">mission control · concept v2</span></div>
+    <div class="right"><span>design preview — sample data</span><kbd>⌘K</kbd></div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="kicker">One founder · a full company</div>
+    <h1>Watch the company <em>work</em>.<br/>Then watch it argue.</h1>
+    <p class="sub">This surface demonstrates itself. The agent below types an intent, wakes only the
+    departments it needs, lets them challenge each other, and ships one decision — with the cost receipt.
+    Nothing here is a video: it's the product's own motion language.</p>
+  </section>
+
+  <!-- Self-driving stage -->
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <div class="hud"><span class="live"></span> live demo · the loop <span class="caption" id="caption">warming up…</span></div>
+
+      <div class="cmd" id="cmd">
+        <span class="p">›</span>
+        <span class="text" id="typed"></span><span class="caret" id="caret"></span>
+        <span class="run" id="runBtn">Run</span>
+      </div>
+
+      <div class="plan" id="plan"><b>COO</b> activated PM, UX for this intent; AR, QA on standby <span style="color:var(--ink4)">(token economy)</span></div>
+
+      <div class="depts">
+        <div class="dept" id="d-pm"><span class="chip">PM</span><div class="nm">Product</div><div class="st">scope</div></div>
+        <div class="dept" id="d-ar"><span class="chip">AR</span><div class="nm">Architecture</div><div class="st">design</div></div>
+        <div class="dept" id="d-ux"><span class="chip">UX</span><div class="nm">Design</div><div class="st">flow</div></div>
+        <div class="dept" id="d-qa"><span class="chip">QA</span><div class="nm">QA + Security</div><div class="st">gates</div></div>
+      </div>
+
+      <div class="feed">
+        <div class="msg" id="m1">
+          <div class="who"><b>UX → PM</b> <span class="stance challenge">challenges</span> <span class="cost">claude-haiku · $0.0004</span></div>
+          The scope buries the one flow users came for. Cut to the core journey this release.
+        </div>
+        <div class="msg" id="m2">
+          <div class="who"><b>PM → UX</b> <span class="stance support">supports</span> <span class="cost">claude-haiku · $0.0003</span></div>
+          Agreed on flow-first — it maps to the exact user problem we prioritised.
+        </div>
+        <div class="msg decision" id="m3">
+          <div class="who"><b>CEO · decision</b> <span class="cost">run total $0.0041 · remembered ↩</span></div>
+          Design and Product disagreed on scope; I'm ruling for the single core journey — onboarding ships as
+          three screens, everything else moves to phase two. UX's challenge stands; PM re-scopes by Friday.
+        </div>
+      </div>
+
+      <!-- the agent cursor -->
+      <div id="cursor">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 2l16 7.5-7 1.8L8.6 18 3 2z" fill="url(#g)" stroke="#0b0d13" stroke-width="1"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="22" y2="22">
+            <stop stop-color="#6d5df6"/><stop offset="1" stop-color="#22d3ee"/>
+          </linearGradient></defs>
+        </svg>
+        <span class="tag">FounderOS Agent</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lanes -->
+  <div class="lanes-head">
+    <div class="kicker">The build, honestly</div>
+    <h2>Past · Present · Future</h2>
+  </div>
+
+  <div class="lanes">
+    <div class="lane past">
+      <h3><span class="d"></span> Shipped <span class="n">12 systems · 58/58 tests</span></h3>
+      <div class="card shipped"><div class="t">The Loop v2 — activation → debate → CEO ruling</div><div class="m"><span class="tag2">AI Research</span> streamed live over SSE</div></div>
+      <div class="card shipped"><div class="t">Agent Debate + Conversation replay</div><div class="m"><span class="tag2">Design</span> 4-phase transcript, saved per run</div></div>
+      <div class="card shipped"><div class="t">Governors — safety gate · budget cap · ETHOS</div><div class="m"><span class="tag2">Security · FinOps</span> refusal before tokens</div></div>
+      <div class="card shipped"><div class="t">Compounding memory — decisions recalled into next run</div><div class="m"><span class="tag2">AI Research</span> the moat</div></div>
+      <div class="card shipped"><div class="t">Freelance Studio + Idea Agent</div><div class="m"><span class="tag2">Growth</span> scored ideas → listings → posting board</div></div>
+      <div class="card shipped"><div class="t">Analytics, spend trend, ⌘K, hardening, tenancy</div><div class="m"><span class="tag2">Platform · Data</span> + 6 more systems</div></div>
+    </div>
+
+    <div class="lane now">
+      <h3><span class="d"></span> In flight <span class="n">the money path</span></h3>
+      <div class="card hot" id="target-card"><div class="t">P1 · Live Research Agent — web search → cited brief</div><div class="m"><span class="tag2">AI Research</span> makes every idea trustworthy</div></div>
+      <div class="card hot"><div class="t">P2 · Deploy + real auth — live URL, magic-link</div><div class="m"><span class="tag2">Platform</span> Vercel · Atlas</div></div>
+      <div class="card hot"><div class="t">P3 · Design System v2 — this page becomes the app</div><div class="m"><span class="tag2">Design</span> motion language · light theme · 5-state rule</div></div>
+      <div class="card hot"><div class="t">P4 · Reskin + Export — one build → Gumroad-ready zip</div><div class="m"><span class="tag2">Growth</span> the leverage step</div></div>
+    </div>
+
+    <div class="lane next">
+      <h3><span class="d"></span> Horizon <span class="n">blueprints ready</span></h3>
+      <div class="card dim"><div class="t">Knowledge Graph — reasoning across projects</div><div class="m"><span class="tag2">AI Research</span></div></div>
+      <div class="card dim"><div class="t">Design DNA — learn the founder's visual language</div><div class="m"><span class="tag2">Design</span></div></div>
+      <div class="card dim"><div class="t">Technology & Opportunity Radars</div><div class="m"><span class="tag2">Research</span> scheduled sweeps</div></div>
+      <div class="card dim"><div class="t">Founder Intelligence — weekly executive brief</div><div class="m"><span class="tag2">Data</span></div></div>
+      <div class="card dim"><div class="t">Billing & plans — usage-metered, BYO-key</div><div class="m"><span class="tag2">FinOps</span></div></div>
+      <div class="card dim"><div class="t">Teams · worker queues · native marketplace publish</div><div class="m"><span class="tag2">Platform</span></div></div>
+    </div>
+  </div>
+
+  <!-- Credits -->
+  <div class="credits">
+    <span style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.18em;text-transform:uppercase;margin-right:6px">Built by the FounderOS agent company —</span>
+    <span class="c">Product</span><span class="c">Architecture</span><span class="c">Design</span>
+    <span class="c">QA + Security</span><span class="c">FinOps</span><span class="c">AI Research</span>
+    <span class="c">Growth</span><span class="c">COO</span><span class="c">CEO</span>
+  </div>
+  <div class="foot">FounderOS · Strata v2 concept · every number above is sample data from the offline provider — the real app shows real receipts.</div>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.getElementById('stage');
+  var cursor = document.getElementById('cursor');
+  var typed = document.getElementById('typed');
+  var caret = document.getElementById('caret');
+  var caption = document.getElementById('caption');
+  var runBtn = document.getElementById('runBtn');
+  var plan = document.getElementById('plan');
+  var INTENT = 'Design the onboarding flow';
+
+  function el(id){ return document.getElementById(id); }
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+  // Move the cursor so its tip points at the center-left of a target element.
+  function moveTo(target, dx, dy){
+    var s = stage.getBoundingClientRect();
+    var t = target.getBoundingClientRect();
+    var x = t.left - s.left + (dx == null ? t.width/2 : dx);
+    var y = t.top - s.top + (dy == null ? t.height/2 : dy);
+    cursor.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function click(){
+    cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click');
+  }
+
+  function resetState(){
+    typed.textContent = '';
+    plan.classList.remove('show');
+    ['d-pm','d-ar','d-ux','d-qa'].forEach(function(id){ el(id).classList.remove('done','idle'); });
+    ['m1','m2','m3'].forEach(function(id){ el(id).classList.remove('show'); });
+    runBtn.classList.remove('pressed');
+    el('target-card').classList.remove('queued');
+  }
+
+  function finalState(){
+    typed.textContent = INTENT;
+    plan.classList.add('show');
+    el('d-ar').classList.add('idle'); el('d-qa').classList.add('idle');
+    el('d-pm').classList.add('done'); el('d-ux').classList.add('done');
+    ['m1','m2','m3'].forEach(function(id){ el(id).classList.add('show'); });
+    caption.textContent = 'decision shipped · $0.0041 · remembered';
+  }
+
+  if (reduce){ finalState(); return; }
+
+  async function typeIntent(){
+    for (var i = 0; i <= INTENT.length; i++){
+      typed.textContent = INTENT.slice(0, i);
+      await sleep(34);
+    }
+  }
+
+  async function play(){
+    resetState();
+    caption.textContent = 'agent taking the wheel…';
+    moveTo(stage, 60, 60);
+    await sleep(900);
+
+    // 1 · move to the command line and type
+    caption.textContent = 'typing the intent…';
+    moveTo(typed, 8, 14); await sleep(1200);
+    click(); await sleep(300);
+    await typeIntent();
+    await sleep(350);
+
+    // 2 · press Run
+    caption.textContent = 'running the company…';
+    moveTo(runBtn); await sleep(1150);
+    click(); runBtn.classList.add('pressed'); await sleep(320);
+    runBtn.classList.remove('pressed');
+
+    // 3 · plan + activation
+    plan.classList.add('show');
+    el('d-ar').classList.add('idle'); el('d-qa').classList.add('idle');
+    await sleep(900);
+
+    // 4 · departments finish while cursor inspects them
+    moveTo(el('d-pm')); await sleep(1050); el('d-pm').classList.add('done');
+    moveTo(el('d-ux')); await sleep(950);  el('d-ux').classList.add('done');
+    await sleep(400);
+
+    // 5 · the debate
+    caption.textContent = 'departments debating…';
+    moveTo(el('m1'), 40, 20); el('m1').classList.add('show'); await sleep(1500);
+    moveTo(el('m2'), 40, 20); el('m2').classList.add('show'); await sleep(1400);
+
+    // 6 · CEO decision
+    caption.textContent = 'ceo resolving the disagreement…';
+    moveTo(el('m3'), 60, 24); await sleep(700);
+    el('m3').classList.add('show'); await sleep(2100);
+    caption.textContent = 'decision shipped · $0.0041 · remembered';
+
+    // 7 · agent queues the next roadmap item
+    var card = el('target-card');
+    var s = stage.getBoundingClientRect(), c = card.getBoundingClientRect();
+    var inView = c.top > s.top && c.bottom < s.bottom + 400; // only if near the stage
+    if (inView){
+      moveTo(card, 30, 20); await sleep(1200); click();
+      card.classList.add('queued'); await sleep(1400);
+    } else { await sleep(1200); }
+
+    // 8 · rest, then loop
+    moveTo(stage, 60, 60);
+    caption.textContent = 'replaying in a moment…';
+    await sleep(2600);
+    play();
+  }
+
+  // Start when the stage is visible.
+  var started = false;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && !started){ started = true; play(); }
+    });
+  }, { threshold: 0.35 });
+  io.observe(stage);
+
+  window.addEventListener('resize', function(){ /* positions recompute on next move */ });
+})();
+</script>
+</body>
+</html>

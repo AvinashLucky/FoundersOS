@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Discovery Engine — Plan</title>
+<style>
+:root{
+  --bg:#06070A; --bg2:#0B0D12; --surface:#10131A; --surface2:#151923;
+  --line:#1F2330; --line2:#2A3040;
+  --text:#E9EAEE; --muted:#8B90A0; --dim:#5E6475;
+  --purple:#7C5CFF; --purple2:#A48CFF; --gold:#E2C37E; --sage:#10B981; --red:#F87171; --amber:#F5B454;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+a{color:var(--purple2);text-decoration:none}
+code{font-family:'Cascadia Code','Consolas',monospace;font-size:.86em;background:var(--surface2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:#D6D0FF}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:250px 1fr;max-width:1320px;margin:0 auto}
+nav.toc{position:sticky;top:0;height:100vh;overflow:auto;padding:36px 22px;border-right:1px solid var(--line)}
+nav.toc .brand{font-weight:700;letter-spacing:-.02em;font-size:15px;margin-bottom:4px}
+nav.toc .sub{color:var(--dim);font-size:12px;margin-bottom:26px}
+nav.toc a{display:flex;gap:10px;color:var(--muted);font-size:13.2px;padding:7px 10px;border-radius:8px;transition:.15s}
+nav.toc a span{color:var(--dim);font-variant-numeric:tabular-nums;width:18px}
+nav.toc a:hover{background:var(--surface);color:var(--text)}
+main{padding:56px 64px 120px;min-width:0}
+@media(max-width:980px){.wrap{grid-template-columns:1fr}nav.toc{display:none}main{padding:36px 22px 80px}}
+
+/* hero */
+.hero{padding:10px 0 46px;border-bottom:1px solid var(--line);margin-bottom:10px;position:relative}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:18px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(226,195,126,.12)}
+h1{font-size:48px;line-height:1.08;letter-spacing:-.035em;font-weight:750;max-width:880px}
+h1 em{font-style:normal;background:linear-gradient(92deg,var(--purple2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);font-size:18px;max-width:760px;margin-top:18px}
+.thesis{margin-top:28px;padding:20px 24px;border:1px solid var(--line2);border-radius:var(--r);
+  background:linear-gradient(180deg,var(--surface),var(--bg2));max-width:880px;font-size:17px;letter-spacing:-.01em}
+.thesis b{color:var(--gold);font-weight:650}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{font-size:12.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);background:var(--surface)}
+.chip b{color:var(--text);font-weight:600}
+
+/* sections */
+section{padding:54px 0 8px;scroll-margin-top:20px}
+.num{font-size:12px;color:var(--purple2);letter-spacing:.14em;font-weight:650;text-transform:uppercase;margin-bottom:8px}
+h2{font-size:30px;letter-spacing:-.028em;line-height:1.2;font-weight:720;margin-bottom:12px}
+h3{font-size:17px;letter-spacing:-.015em;font-weight:650;margin:22px 0 8px}
+p{max-width:820px;margin-bottom:12px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* cards */
+.grid{display:grid;gap:14px;margin-top:18px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:980px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 20px 18px}
+.card h4{font-size:15.5px;font-weight:650;letter-spacing:-.01em;margin-bottom:6px}
+.card p{font-size:14px;color:var(--muted);margin:0}
+.card .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:650;margin-bottom:10px;display:block}
+.t-purple{color:var(--purple2)} .t-gold{color:var(--gold)} .t-sage{color:var(--sage)} .t-red{color:var(--red)} .t-amber{color:var(--amber)}
+.card.hot{border-color:rgba(226,195,126,.35);background:linear-gradient(180deg,rgba(226,195,126,.06),var(--surface))}
+
+/* callouts */
+.call{border-left:3px solid var(--gold);background:var(--surface);padding:16px 20px;border-radius:0 12px 12px 0;margin:18px 0;max-width:880px}
+.call.warn{border-color:var(--red)} .call.good{border-color:var(--sage)} .call.info{border-color:var(--purple)}
+.call b{font-weight:650}
+
+/* tables */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;font-size:14px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tbl th{text-align:left;font-weight:600;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+  background:var(--bg2);padding:12px 14px;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr:hover td{background:rgba(124,92,255,.035)}
+.tbl td.k{font-weight:600;white-space:nowrap}
+.pct{font-weight:650;white-space:nowrap}
+.pct.lo{color:var(--red)} .pct.mid{color:var(--amber)} .pct.hi{color:var(--sage)}
+.scroll{overflow-x:auto}
+
+/* badges */
+.b{display:inline-block;font-size:11px;font-weight:650;letter-spacing:.04em;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.b.fast{background:rgba(16,185,129,.12);color:var(--sage);border:1px solid rgba(16,185,129,.3)}
+.b.med{background:rgba(245,180,84,.1);color:var(--amber);border:1px solid rgba(245,180,84,.3)}
+.b.slow{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.b.na{background:var(--surface2);color:var(--dim);border:1px solid var(--line2)}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:26px}
+.fstep{position:relative;text-align:center;padding:13px 18px;border-radius:12px;border:1px solid var(--line2);
+  background:var(--surface);font-size:14.5px;font-weight:550}
+.fstep small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
+.farrow{width:1px;height:18px;background:linear-gradient(var(--line2),var(--purple))}
+.fstep.end{border-color:var(--gold);background:linear-gradient(180deg,rgba(226,195,126,.1),var(--surface));color:var(--gold)}
+
+/* flow chips */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}
+.flow span{font-size:12.5px;padding:5px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--line2)}
+.flow i{color:var(--dim);font-style:normal;font-size:12px}
+.flow span.pain{border-color:rgba(248,113,113,.4);color:#FFC9C9;background:rgba(248,113,113,.07)}
+
+/* workflow output card */
+.wf{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);padding:24px;margin-top:18px;max-width:900px}
+.wf .hd{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;font-size:13.5px;margin-bottom:16px}
+.wf .hd b{color:var(--muted);font-weight:500;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.wf ol{padding-left:20px;font-size:14px}
+.wf ol li{padding:4px 0}
+.wf ol li em{font-style:normal;font-size:11px;font-weight:650;letter-spacing:.06em;padding:2px 7px;border-radius:6px;margin-left:8px}
+em.man{background:rgba(248,113,113,.12);color:var(--red)} em.auto{background:rgba(16,185,129,.12);color:var(--sage)}
+.money{margin-top:18px;padding:16px 18px;border-radius:12px;background:var(--bg2);border:1px dashed var(--line2);font-size:14px}
+.money .eq{font-family:'Cascadia Code',Consolas,monospace;font-size:13.5px;color:#D6D0FF}
+.money .res{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:-.02em;margin-top:6px}
+
+/* questions */
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+@media(max-width:980px){.qgrid{grid-template-columns:1fr}}
+.q{padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px}
+.q b{color:var(--purple2);margin-right:6px;font-variant-numeric:tabular-nums}
+
+/* timeline */
+.tl{margin-top:20px;border-left:1px solid var(--line2);padding-left:26px;max-width:880px}
+.tl .w{position:relative;padding-bottom:22px}
+.tl .w:before{content:'';position:absolute;left:-31px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 4px rgba(124,92,255,.15)}
+.tl .w.gold:before{background:var(--gold);box-shadow:0 0 0 4px rgba(226,195,126,.15)}
+.tl .w h4{font-size:15px;font-weight:650}
+.tl .w h4 span{color:var(--dim);font-weight:500;font-size:12.5px;margin-left:8px}
+.tl .w p{font-size:14px;color:var(--muted);margin:4px 0 0}
+.tl .w .done{font-size:12.5px;color:var(--sage);margin-top:4px}
+
+/* sector filter */
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+.controls input{background:var(--surface);border:1px solid var(--line2);color:var(--text);padding:10px 14px;border-radius:10px;
+  font:inherit;font-size:14px;min-width:260px;outline:none}
+.controls input:focus{border-color:var(--purple)}
+.fbtn{background:var(--surface);border:1px solid var(--line2);color:var(--muted);padding:8px 13px;border-radius:999px;font:inherit;font-size:12.5px;cursor:pointer}
+.fbtn.on{color:var(--text);border-color:var(--purple);background:rgba(124,92,255,.12)}
+.count{color:var(--dim);font-size:12.5px;margin-left:auto}
+
+footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="toc">
+  <div class="brand">Product Discovery Engine</div>
+  <div class="sub">Plan for future products · Sep 2026</div>
+  <a href="#thesis"><span>01</span>The thesis</a>
+  <a href="#funnel"><span>02</span>The funnel</a>
+  <a href="#phase0"><span>03</span>Phase 0 · accuracy test</a>
+  <a href="#sources"><span>04</span>Seven sources, 80%+</a>
+  <a href="#manual"><span>05</span>Where manual work hides</a>
+  <a href="#questions"><span>06</span>Nine questions per step</a>
+  <a href="#output"><span>07</span>The output format</a>
+  <a href="#score"><span>08</span>Scoring in ₹</a>
+  <a href="#sectors"><span>09</span>Sector map</a>
+  <a href="#start"><span>10</span>Where to start</a>
+  <a href="#cadence"><span>11</span>First sector · 6 weeks</a>
+  <a href="#tools"><span>12</span>Tooling</a>
+  <a href="#rules"><span>13</span>Boundaries</a>
+  <a href="#ceiling"><span>14</span>Honest ceilings</a>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="eyebrow"><i></i>Research → Opportunity → Spec → Build → Sell</div>
+  <h1>Find where a human spends <em>30 minutes</em> on work software could do in <em>30 seconds.</em></h1>
+  <p class="lede">A repeatable engine for every future product: study proven Indian products, map their workflows, find the expensive manual work inside them, and build your own AI product for it, with your own brand, UI and IP.</p>
+  <div class="thesis">Don't measure <b>"how close can I clone the company?"</b> Measure <b>"how completely do I understand the company's workflow, and which part of it costs someone money every day?"</b></div>
+  <div class="chips">
+    <span class="chip"><b>1</b> sector at a time</span>
+    <span class="chip"><b>7</b> research sources</span>
+    <span class="chip"><b>₹</b> saved per month, not bars</span>
+    <span class="chip">Finish line: <b>1 paid pilot</b></span>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="thesis">
+  <div class="num">01 · The thesis</div>
+  <h2>Workflow understanding, not clones</h2>
+  <p>A clone copies the easy 20%, the screens, and leaves you to build the hard 80% from nothing: operations, data, partners, trust. A workflow map shows where the money leaks. That leak is the product.</p>
+  <div class="grid g3">
+    <div class="card"><span class="tag t-red">Don't build</span><h4>"AI Hospital App"</h4><p>Too broad, competes head-on with Practo, and needs a hospital's whole operation behind it.</p></div>
+    <div class="card"><span class="tag t-amber">Better</span><h4>"AI for clinic operations"</h4><p>Narrower, but still a platform. Too many workflows to win at once.</p></div>
+    <div class="card hot"><span class="tag t-gold">Build</span><h4>"Lab report verification that saves 200 staff-hours a month"</h4><p>One workflow, one buyer, one number. Sellable in a single conversation.</p></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="funnel">
+  <div class="num">02 · The funnel</div>
+  <h2>From research to a paying client</h2>
+  <p class="muted">Every stage has an output you can count. If a stage produces nothing countable, stop and fix it before moving on.</p>
+  <div class="funnel">
+    <div class="fstep">Open-source ground truth<small>crawler accuracy measured for free</small></div><div class="farrow"></div>
+    <div class="fstep">1 sector · consumer apps + B2B vendors + job postings<small>~10–12 products studied</small></div><div class="farrow"></div>
+    <div class="fstep">Workflows mapped<small>crawler (L1–L5) + help docs + demos</small></div><div class="farrow"></div>
+    <div class="fstep">Manual tasks found<small>job postings + 5–10 interviews with people who do the work</small></div><div class="farrow"></div>
+    <div class="fstep">Every task priced in ₹ saved / month<small>volume × minutes × staff cost</small></div><div class="farrow"></div>
+    <div class="fstep">Top 3 opportunities<small>scored and filtered (§08)</small></div><div class="farrow"></div>
+    <div class="fstep">5 client conversations<small>show the ₹ number, ask if it's real</small></div><div class="farrow"></div>
+    <div class="fstep end">1 paid pilot, the real finish line<small style="color:var(--gold);opacity:.8">then: product spec → architecture → build</small></div>
+  </div>
+  <div class="call">A research report with "47 workflows discovered" and no client is an unfinished funnel. <b>Success is measured by a buyer.</b></div>
+</section>
+
+<!-- 03 -->
+<section id="phase0">
+  <div class="num">03 · Phase 0</div>
+  <h2>Measure the crawler on software whose code you can read</h2>
+  <p>Before trusting research on Practo or Zerodha, prove the crawler's accuracy on open-source systems you run on your own laptop. You have their code and docs, so you know the correct answer, and you get a reference backend for the sector at the same time.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Sector</th><th>Open-source system</th><th>What it gives you</th></tr>
+    <tr><td class="k">🏥 Hospitals</td><td>Bahmni · OpenMRS</td><td>A complete hospital system; Bahmni runs in Indian hospitals. Registration → consultation → orders → billing.</td></tr>
+    <tr><td class="k">🧪 Labs</td><td>OpenELIS</td><td>A complete lab information system: sample → test → result → report.</td></tr>
+    <tr><td class="k">🧾 Accounting / ERP</td><td>ERPNext</td><td>Indian-built. Invoices, GST, reconciliation, inventory.</td></tr>
+    <tr><td class="k">🏭 CRM / ERP</td><td>Odoo (community)</td><td>CRM, sales, purchase, approvals.</td></tr>
+    <tr><td class="k">🏢 Service desk</td><td>Zammad</td><td>Tickets, classification, SLAs, knowledge base.</td></tr>
+    <tr><td class="k">🛒 Commerce</td><td>Medusa · Saleor</td><td>Catalogue, orders, returns, admin.</td></tr>
+    <tr><td class="k">🎓 Learning</td><td>Moodle</td><td>Courses, assignments, grading, progress.</td></tr>
+    <tr><td class="k">🧑‍💼 HR</td><td>OrangeHRM</td><td>Recruitment, leave, onboarding.</td></tr>
+  </table></div>
+  <h3>The test, in five steps</h3>
+  <div class="flow"><span>Run it locally</span><i>→</i><span>Crawl L1–L5</span><i>→</i><span>Rebuild workflow maps from the crawl only</span><i>→</i><span>Compare with code + docs</span><i>→</i><span>Accuracy % per layer</span></div>
+  <p class="muted small" style="margin-top:12px">The list of misses shows exactly where the crawler is weak. Fix it, run the test again, and you have a regression test for the crawler.</p>
+</section>
+
+<!-- 04 -->
+<section id="sources">
+  <div class="num">04 · Getting to 80%+</div>
+  <h2>The crawler is one source out of seven</h2>
+  <p>No crawler reads a backend. On its own it caps at about 20–30% of a working product. Combined with six public sources it reaches roughly 80–85%, and regulated sectors are easiest because law and standards publish most of their logic.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Layer</th><th>Crawler alone</th><th>Target</th><th>How</th></tr>
+    <tr><td class="k">Colors, fonts, spacing</td><td class="pct hi">95%</td><td class="pct hi">99%</td><td>Crawl every breakpoint (mobile, tablet, desktop). The browser reports the exact values.</td></tr>
+    <tr><td class="k">Layout</td><td class="pct hi">90%</td><td class="pct hi">97%</td><td>Also the <b>mobile app</b>: Android emulator + Appium dumps each screen's layout. Most Indian sector apps are app-first.</td></tr>
+    <tr><td class="k">Visible features</td><td class="pct mid">70–85%</td><td class="pct hi">90%+</td><td><b>Help centers</b> (which document nearly every feature), app-store "What's new" notes, release notes, YouTube tutorials, <b>vendor sales demos</b> for admin/staff sides you can't sign up for.</td></tr>
+    <tr><td class="k">Tech stack</td><td class="pct mid">60–80%</td><td class="pct hi">90%</td><td><b>Job postings</b> name the exact stack. Also engineering blogs, conference talks, Wappalyzer / BuiltWith, company GitHub.</td></tr>
+    <tr><td class="k">API shape</td><td class="pct lo">30–50%</td><td class="pct hi">80%+</td><td>Run every L2 workflow with network capture so every endpoint fires; add <b>public developer docs</b> (e.g. Zerodha Kite Connect is fully documented).</td></tr>
+    <tr><td class="k">Backend logic</td><td class="pct lo">0–10%</td><td class="pct hi">70–85%</td><td><b>Sector standards</b> + <b>open-source equivalents</b> (§03) + black-box testing + patents + expert interviews.</td></tr>
+    <tr><td class="k">Infrastructure</td><td class="pct lo">5%</td><td class="pct mid">70%</td><td>Engineering blogs, AWS/GCP customer case studies, status pages, job postings.</td></tr>
+  </table></div>
+  <h3>Standards that define the backend, by sector</h3>
+  <div class="grid g3">
+    <div class="card"><span class="tag t-purple">Hospitals</span><p><b style="color:var(--text)">ABDM</b> (national health stack, public APIs) · <b style="color:var(--text)">HL7 FHIR</b> (patient-record format) · <b style="color:var(--text)">ICD-10</b> (diagnosis codes) · <b style="color:var(--text)">NABH</b> (accreditation)</p></div>
+    <div class="card"><span class="tag t-purple">Labs</span><p><b style="color:var(--text)">LOINC</b> (test codes) · <b style="color:var(--text)">NABL</b> (accreditation) · <b style="color:var(--text)">HL7</b> (instrument interfaces)</p></div>
+    <div class="card"><span class="tag t-purple">Stocks</span><p><b style="color:var(--text)">SEBI</b> regulations (margin, KYC, risk) · <b style="color:var(--text)">T+1</b> settlement · <b style="color:var(--text)">NSE/BSE</b> specs · public broker APIs (Kite Connect, Upstox, Angel One)</p></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="manual">
+  <div class="num">05 · The critical correction</div>
+  <h2>The crawler cannot see manual work</h2>
+  <p>Consumer apps are the <b>automated</b> part of a company. The 30-minute human work (reconciliation, pathologist review, claims, KYC exceptions) happens <b>inside</b>, on internal tools no crawler reaches. The crawler maps a workflow's shape; these three sources show where the human effort sits.</p>
+  <div class="grid g3">
+    <div class="card hot"><span class="tag t-gold">Strongest signal</span><h4>Job postings</h4><p>Hundreds of companies hiring "medical coder", "claims processor", "KYC executive" or "reconciliation executive" means that work is manual. The number of openings suggests the volume, and the <b style="color:var(--text)">salary tells you what automating it is worth</b>.</p></div>
+    <div class="card"><span class="tag t-sage">Ground truth</span><h4>5–10 interviews</h4><p>A clinic front desk, a lab technician, an accounts clerk, a broker's back office. They will tell you what they copy, re-type, chase and double-check. Your future clients can be these sources.</p></div>
+    <div class="card"><span class="tag t-purple">Where workflows live</span><h4>B2B tools staff use</h4><p>Hospital and lab management systems, accounting and service-desk software. Many have free trials, demos and detailed docs. Research the <b style="color:var(--text)">business side</b>, not the patient app.</p></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="questions">
+  <div class="num">06 · The method</div>
+  <h2>Nine questions for every workflow step</h2>
+  <p class="muted">Ask these of each step of a mapped workflow. Every "yes" is a candidate opportunity.</p>
+  <div class="qgrid">
+    <div class="q"><b>1</b>Does it require manual data entry?</div>
+    <div class="q"><b>2</b>Does it require calling someone?</div>
+    <div class="q"><b>3</b>Does it require checking multiple systems?</div>
+    <div class="q"><b>4</b>Does it require reading PDFs or images?</div>
+    <div class="q"><b>5</b>Does it require copying information across?</div>
+    <div class="q"><b>6</b>Does it wait on an approval?</div>
+    <div class="q"><b>7</b>Does it cause delays?</div>
+    <div class="q"><b>8</b>Does it create errors, and what does an error cost?</div>
+    <div class="q"><b>9</b>Does it happen thousands of times a month?</div>
+  </div>
+  <h3>Example chain: hospital</h3>
+  <div class="flow"><span>Patient</span><i>→</i><span>Appointment</span><i>→</i><span>Doctor</span><i>→</i><span>Prescription</span><i>→</i><span class="pain">Lab order</span><i>→</i><span class="pain">Report</span><i>→</i><span class="pain">Insurance</span><i>→</i><span class="pain">Billing</span></div>
+  <p class="muted small" style="margin-top:10px">Red steps: where the nine questions usually return "yes". Verify with interviews, don't assume.</p>
+</section>
+
+<!-- 07 -->
+<section id="output">
+  <div class="num">07 · The output format</div>
+  <h2>What the engine produces for each workflow</h2>
+  <p>Not "Homepage, Products, Cart". One card per workflow, with the steps, which ones are manual, and a rupee number.</p>
+  <div class="wf">
+    <div class="hd">
+      <b>Sector</b><span>Diagnostic labs</span>
+      <b>Role</b><span>Lab technician → pathologist</span>
+      <b>Workflow</b><span>Result verification and report release</span>
+      <b>Evidence</b><span>OpenELIS flow (observed) · 3 interviews · 40 job postings</span>
+    </div>
+    <ol>
+      <li>Machine result arrives in the lab system <em class="auto">AUTOMATED</em></li>
+      <li>Technician checks the result against the patient's age and sex reference range <em class="man">MANUAL</em></li>
+      <li>Abnormal values flagged, previous reports pulled for comparison <em class="man">MANUAL</em></li>
+      <li>Pathologist reviews flagged cases <em class="man">MANUAL · expert</em></li>
+      <li>Interpretation comment written <em class="man">MANUAL</em></li>
+      <li>Report generated and released to the patient <em class="auto">AUTOMATED</em></li>
+    </ol>
+    <p class="muted small" style="margin-top:14px"><b style="color:var(--text)">AI opportunity:</b> auto-check reference ranges, pre-pull history and highlight changes, draft interpretation comments for the pathologist to approve. <b style="color:var(--text)">A human still signs.</b></p>
+    <div class="money">
+      <div class="muted small">Money this saves (illustrative numbers, replace with interview data)</div>
+      <div class="eq">3,000 reports/month × 4 min saved × ₹250/hr staff cost</div>
+      <div class="res">≈ ₹50,000 / month per lab</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="score">
+  <div class="num">08 · Scoring</div>
+  <h2>Rank in rupees, then filter</h2>
+  <div class="call info"><b>Primary score:</b> <code>volume / month × minutes per task × staff cost per minute</code> = ₹ saved per month. That number is your price anchor and your pitch.</div>
+  <p>Then filter the ranked list. Any "no" drops or delays the opportunity:</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Filter</th><th>Pass if</th><th>Why it matters</th></tr>
+    <tr><td class="k">Frequency</td><td>1,000+ times / month per client</td><td>Rare tasks don't justify a product.</td></tr>
+    <tr><td class="k">Digital inputs</td><td>The data already exists as text, PDF, image or a system record</td><td>Paper-only workflows need digitisation first.</td></tr>
+    <tr><td class="k">Error cost</td><td>A mistake costs money, time or trust</td><td>Makes accuracy a selling point, not a nice-to-have.</td></tr>
+    <tr><td class="k">Human stays in control</td><td>AI drafts, a person approves</td><td>Required in health and finance, and it makes the sale easier.</td></tr>
+    <tr><td class="k">Buyer speed</td><td>The owner or one manager can say yes</td><td>Decides whether you're paid in weeks or in a year (§09).</td></tr>
+    <tr><td class="k">Regulatory burden</td><td>You can meet it as a small team</td><td>Banks need audits and certifications before you start.</td></tr>
+  </table></div>
+</section>
+
+<!-- 09 -->
+<section id="sectors">
+  <div class="num">09 · Sector map</div>
+  <h2>29 sectors: where to look and who buys fast</h2>
+  <p class="muted">The reference products are for study, not a ranking. "Manual work" and "buyer speed" are starting estimates; confirm each with job postings and interviews.</p>
+  <div class="controls">
+    <input id="q" type="text" placeholder="Search sector, product or task…">
+    <button class="fbtn on" data-f="all">All</button>
+    <button class="fbtn" data-f="fast">Fast buyers</button>
+    <button class="fbtn" data-f="med">Medium</button>
+    <button class="fbtn" data-f="slow">Slow</button>
+    <span class="count" id="cnt"></span>
+  </div>
+  <div class="scroll"><table class="tbl" id="st">
+    <thead><tr><th>Sector</th><th>Study</th><th>Workflow chain</th><th>Where the manual work likely is</th><th>Buyer speed</th></tr></thead>
+    <tbody>
+<tr data-s="med"><td class="k">🏥 Hospitals</td><td>Practo · Apollo 24/7 · Manipal</td><td>appointment → doctor → records → billing → pharmacy → insurance</td><td>Insurance pre-auth and claims, discharge summaries, billing codes</td><td><span class="b fast">Clinics fast</span> <span class="b slow">Chains slow</span></td></tr>
+<tr data-s="fast"><td class="k">🧪 Diagnostics / labs</td><td>Tata 1mg · Dr Lal PathLabs · Metropolis</td><td>booking → collection → LIS → report → interpretation</td><td>Result verification, sample tracking, reading prescriptions</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="slow"><td class="k">💳 Banking</td><td>HDFC · ICICI · Kotak</td><td>onboarding → KYC → transactions → service → disputes → loans</td><td>KYC exceptions, disputes, loan document checks</td><td><span class="b slow">Slow</span></td></tr>
+<tr data-s="med"><td class="k">💰 Fintech / payments</td><td>PhonePe · Paytm · Razorpay</td><td>payment → reconciliation → fraud → settlement → merchant ops</td><td>Reconciliation, chargebacks, merchant onboarding documents</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="med"><td class="k">📈 Stocks / investing</td><td>Zerodha · Groww · Angel One</td><td>KYC → portfolio → orders → risk → reports → tax</td><td>Account-opening exceptions, support queries, tax reports</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="fast"><td class="k">🛒 E-commerce</td><td>Amazon India · Flipkart · Meesho</td><td>catalogue → pricing → inventory → order → returns</td><td>Seller listings, return disputes, seller support</td><td><span class="b fast">Sellers fast</span></td></tr>
+<tr data-s="slow"><td class="k">⚡ Quick commerce</td><td>Blinkit · Zepto · Instamart</td><td>demand → inventory → picking → routing → delivery</td><td>Forecasting, exception handling, rider allocation</td><td><span class="b slow">Slow · few buyers</span></td></tr>
+<tr data-s="fast"><td class="k">🍔 Food</td><td>Zomato · Swiggy · Domino's</td><td>restaurant onboarding → ordering → kitchen → delivery → support</td><td>Menu onboarding, support tickets, refund decisions</td><td><span class="b fast">Restaurants fast</span></td></tr>
+<tr data-s="slow"><td class="k">🚗 Mobility</td><td>Uber · Ola · Rapido</td><td>booking → dispatch → routing → pricing → drivers</td><td>Driver document checks, support, fraud</td><td><span class="b slow">Slow</span></td></tr>
+<tr data-s="fast"><td class="k">🎓 Learning</td><td>Udemy · upGrad · Coursera</td><td>path → assessment → progress → certification</td><td>Grading, doubt resolution, learner support</td><td><span class="b fast">Institutes fast</span></td></tr>
+<tr data-s="fast"><td class="k">💻 Indian EdTech</td><td>Unacademy · Physics Wallah · Scaler</td><td>curriculum → mentor → assignments → evaluation → placement</td><td>Assignment evaluation, mentor scheduling, placement ops</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="med"><td class="k">🧑‍💻 Developer / tech</td><td>GitHub · GitLab · Postman</td><td>code → review → test → deploy → monitor</td><td>Code review, test writing, incident triage</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="fast"><td class="k">🏢 HR / recruitment</td><td>Naukri · LinkedIn · Indeed</td><td>discovery → screening → matching → interview → hire</td><td>Résumé screening, interview scheduling, background checks</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="fast"><td class="k">🧾 Accounting</td><td>Zoho Books · TallyPrime · RazorpayX</td><td>invoice → payment → reconciliation → GST → reporting</td><td>Bank reconciliation, invoice entry, GST filing prep</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="med"><td class="k">🏭 Enterprise ops</td><td>Zoho · Freshworks · SAP</td><td>CRM → tickets → approvals → workflows → analytics</td><td>Ticket triage, approval routing</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="fast"><td class="k">📣 Marketing</td><td>HubSpot · Zoho Marketing Plus · Salesforce MC</td><td>lead → segment → campaign → automation → attribution</td><td>Lead research, personalised outreach, CRM updates</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="fast"><td class="k">🏠 Real estate</td><td>NoBroker · 99acres · Housing.com</td><td>listing → verification → matching → visits → documentation</td><td>Listing verification, lead qualification, paperwork</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="med"><td class="k">✈️ Travel</td><td>MakeMyTrip · EaseMyTrip · Cleartrip</td><td>search → pricing → booking → cancellation</td><td>Cancellations, refunds, itinerary changes</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="slow"><td class="k">🛡️ Insurance</td><td>Policybazaar · ACKO · Digit</td><td>quote → KYC → underwriting → claim → settlement</td><td>Claims assessment, document verification</td><td><span class="b slow">Slow</span></td></tr>
+<tr data-s="fast"><td class="k">⚖️ Legal / compliance</td><td>Vakilsearch · LegalWiz · ClearTax</td><td>document → compliance → filing → status → reminders</td><td>Drafting, compliance tracking, filing reminders</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="med"><td class="k">📦 Logistics</td><td>Delhivery · Shiprocket · Porter</td><td>order → allocation → pickup → tracking → exceptions</td><td>Failed-delivery follow-ups, address verification</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="fast"><td class="k">🏪 Retail / POS</td><td>Shopify · Zoho POS · GoFrugal</td><td>catalogue → billing → inventory → supplier → analytics</td><td>Reordering, supplier invoice entry</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="fast"><td class="k">💼 Services / freelancing</td><td>Upwork · Fiverr · Urban Company</td><td>discovery → matching → quote → execution → payment</td><td>Quotations, matching, scheduling</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="med"><td class="k">🏗️ Construction</td><td>Procore · Autodesk Construction Cloud · PlanGrid</td><td>drawings → tasks → approvals → materials → site reports</td><td>Site reports, material reconciliation, approvals</td><td><span class="b med">Medium</span></td></tr>
+<tr data-s="fast"><td class="k">🧑‍🔬 Research / data</td><td>Wolfram Alpha · Perplexity · Google Scholar</td><td>search → extract → verify → synthesise → cite</td><td>Extraction, verification, citation</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="fast"><td class="k">📰 Media / content</td><td>YouTube · Instagram · Canva</td><td>discover → create → edit → publish → analytics</td><td>Editing, captioning, repurposing</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="fast"><td class="k">🎬 Video creation</td><td>CapCut · InVideo · VEED</td><td>script → assets → edit → captions → render → publish</td><td>Script, edit, captions</td><td><span class="b fast">Fast</span></td></tr>
+<tr data-s="na"><td class="k">🤖 AI platforms</td><td>ChatGPT · Gemini · Claude</td><td>research → reasoning → tools → agents → memory</td><td>Not a market to sell into: this is the tool layer you build with</td><td><span class="b na">Tool layer</span></td></tr>
+<tr data-s="slow"><td class="k">🏛️ Government / Digital India</td><td>DigiLocker · UMANG · Aadhaar</td><td>identity → documents → verification → services</td><td>Form filling, document verification</td><td><span class="b slow">Slow · tenders</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="start">
+  <div class="num">10 · Where to start</div>
+  <h2>One sector first. Start where buyers decide fast.</h2>
+  <div class="grid g3">
+    <div class="card hot"><span class="tag t-gold">Start here</span><h4>Diagnostic labs or clinics</h4><p>The owner often decides alone, in weeks. Structured, high-volume workflows. Open-source ground truth exists (OpenELIS, Bahmni). The public standards (LOINC, NABL, ABDM) spell out much of the backend.</p></div>
+    <div class="card"><span class="tag t-sage">Second</span><h4>SMB accounting or enterprise service desk</h4><p>Fast buyers, ERPNext and Zammad as ground truth, and reconciliation and ticket triage are classic 30-minutes-to-30-seconds work.</p></div>
+    <div class="card"><span class="tag t-red">Later, with references</span><h4>Banks, insurance, government</h4><p>6–18 month procurement, vendor audits, often ISO 27001 or SOC 2 required. Bank apps are also the hardest to crawl, and automating your own bank login can lock your real account.</p></div>
+  </div>
+  <div class="call">The three "research labs" (healthcare, financial ops, enterprise ops) are right for building breadth <b>after</b> the first paid pilot. Before that, three sectors at once means three unfinished funnels.</div>
+</section>
+
+<!-- 11 -->
+<section id="cadence">
+  <div class="num">11 · First sector</div>
+  <h2>A six-week cadence</h2>
+  <p class="muted">A suggested pace, not a promise. Each week ends with a countable output; if it's missing, the week isn't done.</p>
+  <div class="tl">
+    <div class="w"><h4>Week 1 · Ground truth <span>Phase 0</span></h4><p>Run the sector's open-source system locally, crawl it, rebuild the workflow maps from the crawl, compare with code and docs.</p><div class="done">Done when: crawler accuracy % per layer is written down.</div></div>
+    <div class="w"><h4>Week 2 · Map the sector <span>crawler + docs</span></h4><p>3 consumer apps + 3–5 B2B vendors. L1–L5 per product, one model session per product. Help centers, demos, release notes.</p><div class="done">Done when: every core workflow is recorded step by step (L2).</div></div>
+    <div class="w"><h4>Week 3 · Find the manual work <span>job posts + interviews</span></h4><p>Pull job postings for the sector's operational roles. Interview 5–10 people who do the work. Run the nine questions on every step.</p><div class="done">Done when: a list of manual tasks, each with volume and minutes.</div></div>
+    <div class="w"><h4>Week 4 · Price and rank <span>§08</span></h4><p>₹ saved per month for every task. Apply the filters. Pick the top 3.</p><div class="done">Done when: 3 opportunity cards, each with a rupee number.</div></div>
+    <div class="w"><h4>Week 5 · Sell before building <span>5 conversations</span></h4><p>Show each prospect the number: "this costs you ≈ ₹X a month; would you pay ₹Y to remove it?" Adjust with what you learn.</p><div class="done">Done when: at least one prospect agrees to a paid pilot.</div></div>
+    <div class="w gold"><h4>Week 6 · Spec and build <span>pilot</span></h4><p>Product spec → architecture → build plan for the one workflow the pilot client will pay for. Own brand, own UI, own backend.</p><div class="done">Done when: the pilot spec is signed off by the client.</div></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="tools">
+  <div class="num">12 · Tooling</div>
+  <h2>What already exists, and what gets added</h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag t-sage">Already built · reuse, never rebuild</span><h4>The competitor research engine</h4><p>Login: <code>save-session-cdp.js</code> (you launch Chrome yourself, Playwright attaches; Google login works). Crawl: <code>crawl.js</code> produces L1–L5 per product. Only one config file per competitor changes between projects. Details: <code>docs/L5-RESEARCH-KIT.md</code>.</p></div>
+    <div class="card"><span class="tag t-purple">Five layers per product</span><h4>L1 → L5</h4><p><b style="color:var(--text)">L1</b> screen map · <b style="color:var(--text)">L2</b> workflows step by step (the most valuable, and the one to fill first) · <b style="color:var(--text)">L3</b> network calls · <b style="color:var(--text)">L4</b> templates and presets · <b style="color:var(--text)">L5</b> conclusions.</p></div>
+    <div class="card"><span class="tag t-amber">To add</span><h4>Mobile app mapping</h4><p>Android emulator + Appium to dump app screen layouts, the mobile version of L1. Needed because most Indian sector products are app-first.</p></div>
+    <div class="card"><span class="tag t-amber">To add</span><h4>Job-posting and interview log</h4><p>One sheet per sector: role, number of openings, salary range, tasks named in the posting, interview notes. This is where manual work gets counted.</p></div>
+  </div>
+  <p class="muted small" style="margin-top:14px">Budget rule: one product per model session. The model reads the kit and the outputs, never the crawler source; reading the source is what burns a session in ten minutes.</p>
+</section>
+
+<!-- 13 -->
+<section id="rules">
+  <div class="num">13 · Boundaries</div>
+  <h2>What's allowed, as facts</h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag t-sage">Allowed</span><p style="color:var(--text)">Studying workflows, features, ideas and common layout patterns · designing your own backend from observed behaviour · signing up for the same third-party vendors (payments, maps, SMS) with your own account · public business listings to find clients · personal data a person published themselves (DPDP Act §3(c)(ii)).</p></div>
+    <div class="card"><span class="tag t-red">Not allowed</span><p style="color:var(--text)">Their names, logos, text, images, icons, code or combined look (trade dress) · calling their private endpoints or using their keys · patient or health records, ever · personal data someone else posted about a person · phone numbers used for calls/SMS without TRAI DND compliance.</p></div>
+  </div>
+  <div class="call warn"><b>Known risks you've accepted:</b> most sites' terms ban automated access, so expect possible account bans. Banks can lock a real account when a login is automated. The DPDP Act's main provisions take effect in phases through 13 May 2027. <span class="muted">This is not legal advice.</span></div>
+</section>
+
+<!-- 14 -->
+<section id="ceiling">
+  <div class="num">14 · Honest ceilings</div>
+  <h2>80–85% is reachable. 100% isn't, and isn't needed.</h2>
+  <div class="grid g2">
+    <div class="card"><span class="tag t-red">Why 100% is impossible</span><p>You can't trigger every state · matching outputs don't prove matching logic · their data shapes their results · behaviour at scale is invisible to one account · they ship weekly and run A/B tests, so the target moves.</p></div>
+    <div class="card"><span class="tag t-sage">What to aim for instead</span><p>Near-100% on the <b style="color:var(--text)">core workflows</b> users spend their time in. "Same output" becomes provable through <b style="color:var(--text)">acceptance tests</b>: this input → this output, this flow in this many steps. A build that passes the same tests counts as the same, whatever its code.</p></div>
+  </div>
+  <div class="call">All percentages in this plan are estimates, not measurements. Phase 0 (§03) turns them into measured numbers for each sector.</div>
+</section>
+
+<footer>
+  Product Discovery Engine · plan for future products, independent of Avion · Sep 2026<br>
+  Figures quoted elsewhere (25.5B India app downloads in 2025; 2.2B Account Aggregator-enabled accounts) came from another model's draft and are <b>unverified</b>; they are left out of this plan until checked.
+</footer>
+
+</main>
+</div>
+
+<script>
+(function(){
+  const rows=[...document.querySelectorAll('#st tbody tr')];
+  const q=document.getElementById('q'), cnt=document.getElementById('cnt');
+  let f='all';
+  function apply(){
+    const t=q.value.trim().toLowerCase(); let n=0;
+    rows.forEach(r=>{
+      const ok=(f==='all'||r.dataset.s===f||(f==='fast'&&r.textContent.toLowerCase().includes(' fast')))&&(!t||r.textContent.toLowerCase().includes(t));
+      r.style.display=ok?'':'none'; if(ok)n++;
+    });
+    cnt.textContent=n+' of '+rows.length+' sectors';
+  }
+  document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on')); b.classList.add('on'); f=b.dataset.f; apply();
+  }));
+  q.addEventListener('input',apply); apply();
+})();
+</script>
+</body>
+</html>

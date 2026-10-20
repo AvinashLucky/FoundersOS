@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "prj_proofgate",
+  "name": "ProofGate",
+  "domain": "developer",
+  "summary": "From checking chatbot answers to proving that delegated actions stay within authority.",
+  "layout": "split",
+  "apps": {
+    "frontend": {
+      "dir": "frontend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 5110
+    },
+    "backend": {
+      "dir": "backend",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "port": 4110
+    }
+  },
+  "runtime": {
+    "node": ">=20",
+    "packageManager": "npm"
+  },
+  "client": {
+    "name": "",
+    "contact": ""
+  },
+  "delivery": {
+    "status": "planned",
+    "pricedUsd": null,
+    "deliveredAt": null
+  },
+  "provenance": {
+    "blueprintRunId": null,
+    "createdAt": "2026-10-02T00:00:00Z",
+    "detailsDir": "details"
+  },
+  "eject": {
+    "standalone": true,
+    "verifiedAt": null
+  }
+}

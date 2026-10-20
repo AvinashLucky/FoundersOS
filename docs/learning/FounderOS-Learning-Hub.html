@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FounderOS · Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07080C; --base:#0B0D13; --raised:#11141B; --raised2:#161A23;
+  --hair:rgba(255,255,255,.07); --hair2:rgba(255,255,255,.14);
+  --ink:#F4F5F8; --ink2:#AAB0BF; --ink3:#6B7185; --ink4:#3D4250;
+  --iris:#7C6CF7; --iris2:#B9AEFB; --cyan:#34E5FF; --green:#54E0A8; --amber:#F5B544; --pink:#FF6EC7;
+  --you:#34E5FF;   /* you = backend */
+  --me:#7C6CF7;    /* me = UI/UX */
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',-apple-system,sans-serif; --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(900px 600px at 8% -8%,rgba(124,108,247,.16),transparent 60%),
+  radial-gradient(800px 560px at 98% 2%,rgba(52,229,255,.10),transparent 55%),
+  var(--void);
+  color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+.mono{font-family:var(--mono)} .serif{font-family:var(--serif)}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+a{color:inherit}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--iris2)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,8,12,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--hair)}
+.nav .wrap{display:flex;align-items:center;gap:6px;height:56px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav .brand{font-family:var(--serif);font-size:18px;margin-right:14px;white-space:nowrap}
+.nav .brand b{color:var(--cyan)}
+.nav a{font-size:12.5px;color:var(--ink3);text-decoration:none;padding:7px 11px;border-radius:8px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+
+/* hero */
+.hero{padding:80px 0 50px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(34px,6vw,62px);line-height:1.02}
+.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero p{max-width:640px;color:var(--ink2);font-size:17px;margin:20px 0 0}
+.pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.pill{font-family:var(--mono);font-size:11px;padding:7px 13px;border-radius:999px;border:1px solid var(--hair2);color:var(--ink2)}
+
+.sec{padding:54px 0;border-top:1px solid var(--hair)}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-h .n{font-family:var(--mono);font-size:13px;color:var(--iris)}
+.sec-h h2{font-family:var(--serif);font-weight:350;font-size:clamp(23px,3.5vw,34px)}
+.lead{color:var(--ink2);max-width:720px;margin:6px 0 28px;font-size:15.5px}
+
+/* who does what */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.split{grid-template-columns:1fr}}
+.who{border:1px solid var(--hair);border-radius:18px;padding:24px;background:linear-gradient(160deg,rgba(255,255,255,.04),transparent)}
+.who.you{border-color:rgba(52,229,255,.3)}
+.who.me{border-color:rgba(124,108,247,.32)}
+.who .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.who.you .tag{color:var(--you)} .who.me .tag{color:var(--me)}
+.who h3{font-family:var(--serif);font-weight:400;font-size:22px;margin:10px 0 14px}
+.who ul{margin:0;padding-left:18px} .who li{font-size:13.5px;color:var(--ink2);margin-bottom:7px}
+.who .ico{font-size:24px}
+
+/* structure tree */
+.tree{font-family:var(--mono);font-size:12.5px;line-height:1.95;background:var(--raised);border:1px solid var(--hair);border-radius:16px;padding:22px 24px;overflow-x:auto;color:var(--ink2)}
+.tree .f{color:var(--cyan)} .tree .c{color:var(--ink4)} .tree .y{color:var(--you)} .tree .m{color:var(--me)}
+
+/* cards grid */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+.card{border:1px solid var(--hair);border-radius:15px;padding:20px;background:rgba(255,255,255,.03)}
+.card h4{font-family:var(--serif);font-weight:400;font-size:17px;margin:0 0 7px;display:flex;align-items:center;gap:9px}
+.card p{font-size:13px;color:var(--ink2);margin:0}
+.card .mini{font-family:var(--mono);font-size:10.5px;color:var(--ink3);margin-top:10px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin-top:6px}
+.fstep{flex:1 1 150px;min-width:150px;border:1px solid var(--hair);border-radius:13px;padding:14px;background:rgba(255,255,255,.03)}
+.fstep .k{font-family:var(--mono);font-size:10px;color:var(--iris);letter-spacing:.1em}
+.fstep h5{font-family:var(--serif);font-weight:500;font-size:14px;margin:6px 0 4px}
+.fstep p{font-size:11.5px;color:var(--ink3);margin:0}
+.arr{align-self:center;color:var(--iris);opacity:.6;font-size:17px}
+
+/* sprint */
+.sprint{border:1px solid var(--hair);border-radius:18px;padding:0;overflow:hidden;margin-bottom:14px}
+.sprint .top{display:flex;align-items:center;gap:14px;padding:16px 22px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.sprint .num{font-family:var(--mono);font-size:12px;color:var(--iris);border:1px solid var(--hair2);border-radius:8px;padding:4px 10px}
+.sprint .ttl{font-family:var(--serif);font-weight:400;font-size:19px}
+.sprint .days{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber)}
+.sprint .goal{font-size:13px;color:var(--ink2);padding:14px 22px 4px}
+.sprint .body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:680px){.sprint .body{grid-template-columns:1fr}}
+.sprint .col{padding:16px 22px}
+.sprint .col.you{border-right:1px solid var(--hair)}
+@media(max-width:680px){.sprint .col.you{border-right:0;border-bottom:1px solid var(--hair)}}
+.sprint .col .h{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.sprint .col.you .h{color:var(--you)} .sprint .col.me .h{color:var(--me)}
+.sprint .col ul{margin:0;padding-left:16px}
+.sprint .col li{font-size:12.5px;color:var(--ink2);margin-bottom:5px}
+.demo{font-family:var(--mono);font-size:11px;color:var(--green);padding:0 22px 16px}
+
+/* capture */
+.capture{border:1px solid rgba(255,110,199,.28);border-radius:18px;padding:24px;background:linear-gradient(160deg,rgba(255,110,199,.07),transparent)}
+.capture h3{font-family:var(--serif);font-weight:400;font-size:21px;margin:0 0 6px}
+.capsteps{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.capstep{flex:1 1 160px;min-width:160px;border:1px solid var(--hair);border-radius:12px;padding:13px;background:rgba(255,255,255,.03)}
+.capstep .k{font-family:var(--mono);font-size:10px;color:var(--pink)}
+.capstep h5{font-family:var(--serif);font-weight:500;font-size:13.5px;margin:5px 0 3px}
+.capstep p{font-size:11.5px;color:var(--ink3);margin:0}
+
+/* start */
+.code{font-family:var(--mono);font-size:13px;background:#0c1020;border:1px solid var(--hair2);border-radius:14px;padding:18px 20px;color:#cdd6f4;line-height:1.9;overflow-x:auto}
+.code .c{color:var(--ink3)} .code .p{color:var(--cyan)}
+
+footer{padding:50px 0 70px;border-top:1px solid var(--hair);color:var(--ink3);font-size:13px}
+footer b{color:var(--ink);font-family:var(--serif);font-weight:400}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ink3)}
+.legend span{display:flex;align-items:center;gap:7px}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <span class="brand">Founder<b>OS</b> · Learning</span>
+  <a href="#roles">Who does what</a>
+  <a href="#structure">Structure</a>
+  <a href="#how">How it works</a>
+  <a href="#backend">Backend</a>
+  <a href="#frontend">Frontend</a>
+  <a href="#sprints">Sprint plan</a>
+  <a href="#capture">Screen capture</a>
+  <a href="#start">Start</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kick">FounderOS · Learning Hub · v1</div>
+  <h1 style="margin-top:18px">Understand FounderOS<br>before you <em>build</em> it.</h1>
+  <p>A plain-language tour of how your project fits together — the folders, the backend, the frontend, and a clear sprint plan. You build the backend; I take care of UI/UX and explain every piece here as we go.</p>
+  <div class="pillrow">
+    <span class="pill">Clean monorepo</span>
+    <span class="pill">Next.js + React (UI)</span>
+    <span class="pill">MongoDB + workers (backend)</span>
+    <span class="pill">Ship in ~2 weeks of sprints</span>
+  </div>
+</div></header>
+
+<!-- ROLES -->
+<section class="sec" id="roles"><div class="wrap">
+  <div class="sec-h"><span class="n">01</span><h2>Who does what</h2></div>
+  <p class="lead">A simple split so we never collide. You own the backend and the code. I own the look, feel, and flow — and I explain the backend to you clearly so you always know what you're building and why.</p>
+  <div class="split">
+    <div class="who you">
+      <div class="ico">🛠️</div>
+      <div class="tag">You — Backend &amp; Code</div>
+      <h3>Build the engine</h3>
+      <ul>
+        <li>Database (MongoDB) &amp; data models</li>
+        <li>API routes &amp; backend services</li>
+        <li>The engines: memory, model router, agents, queue (BullMQ)</li>
+        <li>Auth, security, performance</li>
+        <li>Wiring the UI to real data</li>
+      </ul>
+    </div>
+    <div class="who me">
+      <div class="ico">🎨</div>
+      <div class="tag">Me — UI/UX &amp; Guidance</div>
+      <h3>Design the experience</h3>
+      <ul>
+        <li>Screens, components, the Strata design system</li>
+        <li>Layout, motion, states (loading / empty / error)</li>
+        <li>Accessibility &amp; responsive design</li>
+        <li>Clear sprint-by-sprint explanations of backend + frontend</li>
+        <li>These HTML learning guides, kept up to date</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- STRUCTURE -->
+<section class="sec" id="structure"><div class="wrap">
+  <div class="sec-h"><span class="n">02</span><h2>Your project structure</h2></div>
+  <p class="lead">One clean monorepo. <span style="color:var(--you)">Cyan = backend you build</span>, <span style="color:var(--me)">violet = UI/UX I build</span>. Everything else is config or docs.</p>
+  <div class="tree">
+FoundersOS/
+├─ <span class="m">apps/web/</span>            <span class="c"># the Next.js app — screens & design (UI/UX)</span>
+│  └─ src/
+│     ├─ <span class="m">app/</span>          <span class="c"># routes, layout, global styles</span>
+│     ├─ <span class="m">features/</span>     <span class="c"># screens (Command Surface, …)</span>
+│     ├─ <span class="m">shared/</span>       <span class="c"># design system: ui/ providers/ motion/</span>
+│     └─ <span class="m">modules/</span>      <span class="c"># client-side module views</span>
+│
+├─ <span class="y">packages/</span>           <span class="c"># shared backend core — YOU build these</span>
+│  ├─ <span class="y">core/</span>          <span class="c"># shared types everything agrees on ✅ done</span>
+│  ├─ <span class="y">utils/ logger/</span> <span class="c"># helpers + logging ✅ done</span>
+│  ├─ <span class="y">db/</span>            <span class="c"># MongoDB + event log (in progress)</span>
+│  ├─ <span class="y">ai-providers/</span>  <span class="c"># model router (Claude/Gemini/OpenAI)</span>
+│  ├─ <span class="y">agents/ memory/</span><span class="c"># the AI company + its memory</span>
+│  └─ <span class="y">auth/ queue/ …</span> <span class="c"># auth, jobs, cache, storage</span>
+│
+├─ <span class="y">services/worker/</span>    <span class="c"># background jobs (BullMQ, FFmpeg)</span>
+├─ <span class="f">docs/</span>               <span class="c"># blueprints/ reference/ learning/ + living docs</span>
+├─ infra/ plugins/ tooling/  <span class="c"># docker/CI, extensions, scripts</span>
+└─ README · ENGINEERING · PROJECT-STRUCTURE · package.json
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--me)"></span> UI/UX — I build</span>
+    <span><span class="dot" style="background:var(--you)"></span> Backend — you build</span>
+    <span><span class="dot" style="background:var(--cyan)"></span> docs / config</span>
+  </div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how"><div class="wrap">
+  <div class="sec-h"><span class="n">03</span><h2>How it works, in one line</h2></div>
+  <p class="lead">A founder types one intent. The backend wakes only the AI "departments" it needs, they work in parallel, review each other, and return <b style="color:var(--ink)">one answer</b> — which the UI shows calmly while everything is remembered for next time.</p>
+  <div class="flow">
+    <div class="fstep"><div class="k">UI</div><h5>Intent</h5><p>You type a goal on the Command Surface.</p></div>
+    <div class="arr">→</div>
+    <div class="fstep"><div class="k">BACKEND</div><h5>Plan</h5><p>The COO splits it into tasks; picks the cheapest capable model.</p></div>
+    <div class="arr">→</div>
+    <div class="fstep"><div class="k">BACKEND</div><h5>Work</h5><p>Agents run in parallel &amp; review each other.</p></div>
+    <div class="arr">→</div>
+    <div class="fstep"><div class="k">UI</div><h5>Answer</h5><p>One synthesized answer + cost + reasoning.</p></div>
+    <div class="arr">→</div>
+    <div class="fstep"><div class="k">BACKEND</div><h5>Remember</h5><p>Decisions &amp; assets saved to memory.</p></div>
+  </div>
+</div></section>
+
+<!-- BACKEND -->
+<section class="sec" id="backend"><div class="wrap">
+  <div class="sec-h"><span class="n">04</span><h2>Backend, explained simply</h2><span class="mono" style="font-size:11px;color:var(--you)">you build these</span></div>
+  <p class="lead">Each is an independent module in <span class="mono">packages/</span>. Build them in this order — each one makes the next possible.</p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Database (MongoDB)</h4><p>Where everything lives: workspaces, projects, runs, memory. Flexible documents, no rigid schema fights.</p><div class="mini">packages/db · collections + repositories</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Event Log</h4><p>An append-only history of everything that happens. Memory, the timeline, and the decision log are all "views" of it.</p><div class="mini">packages/db · the source of truth</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Model Router</h4><p>One doorway to all AI models. Always picks the cheapest model that can do the job; swaps providers without touching other code.</p><div class="mini">packages/ai-providers</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Memory Engine</h4><p>Curated, searchable memory per project. Gets smarter over time — the real moat.</p><div class="mini">packages/memory + knowledge-graph</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Agent Orchestrator</h4><p>The "COO" that turns one intent into coordinated work and one answer. The brain.</p><div class="mini">packages/agents</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--you)"></span>Queue &amp; Workers</h4><p>Long jobs (big runs, video processing) run in the background with BullMQ — the UI never freezes.</p><div class="mini">packages/queue + services/worker</div></div>
+  </div>
+</div></section>
+
+<!-- FRONTEND -->
+<section class="sec" id="frontend"><div class="wrap">
+  <div class="sec-h"><span class="n">05</span><h2>Frontend, explained simply</h2><span class="mono" style="font-size:11px;color:var(--me)">I build these</span></div>
+  <p class="lead">All in <span class="mono">apps/web</span>. The look is "Strata" — calm, dark, premium; not a busy dashboard.</p>
+  <div class="grid g3">
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>Screens</h4><p>Each screen lives in <span class="mono">features/</span>. The home is the Command Surface.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>Design system</h4><p>Reusable components + Strata tokens in <span class="mono">shared/ui</span>. One look, every screen.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>Adaptive themes</h4><p>Each project gets its own accent (FinTech, Health…) on one substrate.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>Motion</h4><p>Framer Motion + GSAP — premium, meaningful, never noisy.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>State</h4><p>Server data via React Query; global UI via Redux Toolkit. I set the patterns; you wire real data.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--me)"></span>States &amp; a11y</h4><p>Loading, empty, error states + keyboard + reduced-motion, every screen.</p></div>
+  </div>
+</div></section>
+
+<!-- SPRINTS -->
+<section class="sec" id="sprints"><div class="wrap">
+  <div class="sec-h"><span class="n">06</span><h2>The sprint plan</h2></div>
+  <p class="lead">Short sprints, each ending in something that runs. <span style="color:var(--you)">Your backend work</span> and <span style="color:var(--me)">my UI/UX work</span> side by side, so we move in parallel. Based on the 12-phase roadmap, sequenced to demo fast.</p>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 0</span><span class="ttl">Align &amp; Boot</span><span class="days">~Day 0–1</span></div>
+    <div class="goal">Get the clean project running and understood.</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>npm install at the root</li><li>Run apps/web, confirm it loads</li><li>Skim packages/core (the shared types)</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>This Learning Hub ✅</li><li>Clean structure ✅</li><li>Walk you through the Command Surface UI</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: the app runs locally and you know the map.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 1</span><span class="ttl">Projects (first real feature)</span><span class="days">~Day 1–3</span></div>
+    <div class="goal">Create, open and theme projects — the first end-to-end slice.</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>Finish packages/db (Mongo + event log + repository)</li><li>projects collection + /api/v1/projects</li><li>Env loader (validates config on boot)</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>Project list + create/open screens</li><li>Empty &amp; loading states</li><li>Adaptive theme per project domain</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: create a project, see it themed, reopen it.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 2</span><span class="ttl">Sign in &amp; Workspace</span><span class="days">~Day 3–4</span></div>
+    <div class="goal">Make it multi-user-safe.</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>Magic-link sign-in + sessions</li><li>Workspace scoping (data isolation)</li><li>BYO API keys, encrypted</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>Sign-in / onboarding screens</li><li>Workspace switcher</li><li>Account &amp; keys settings UI</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: sign in, your projects are yours alone.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 3</span><span class="ttl">Memory seed</span><span class="days">~Day 4–5</span></div>
+    <div class="goal">Projects start remembering.</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>packages/memory: write + recall over Mongo</li><li>Save decisions/notes per project</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>Memory Explorer (read-only)</li><li>The "memory indexing" animation</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: save a note, recall it later.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 4</span><span class="ttl">The Loop — one prompt, one answer</span><span class="days">~Day 5–7</span></div>
+    <div class="goal">The core "wow": the AI company actually runs.</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>Model Router with one real provider</li><li>Minimal COO run + BullMQ worker</li><li>Stream progress to the UI (SSE)</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>Live "company at work" animation</li><li>The executive answer + cost meter</li><li>"Show your work" panel</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: type an intent → watch agents → get one answer that's remembered.</div>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="num">Sprint 5</span><span class="ttl">Screen &amp; Visual Capture</span><span class="days">~Day 7–9</span></div>
+    <div class="goal">Feed screenshots &amp; videos into memory (your question — see below).</div>
+    <div class="body">
+      <div class="col you"><div class="h"><span class="dot" style="background:var(--you)"></span>You · backend</div><ul><li>Upload + storage of images/video</li><li>FFmpeg in the worker to process video</li><li>Vision model → structured notes into memory</li></ul></div>
+      <div class="col me"><div class="h"><span class="dot" style="background:var(--me)"></span>Me · UI/UX</div><ul><li>Capture / drag-drop upload UI</li><li>Visual memory gallery</li><li>Screenshot annotation view</li></ul></div>
+    </div>
+    <div class="demo">▶ Demo: drop a screenshot → FounderOS "sees" it and remembers the design.</div>
+  </div>
+
+  <p class="lead" style="margin-top:22px">After Sprint 5 you have a believable, demoable FounderOS. Later sprints layer on Design DNA, the Radars, Founder Intelligence, billing, and production hardening — full detail in <span class="mono">docs/blueprints/FounderOS-Step7-MVP-Roadmap.md</span>.</p>
+</div></section>
+
+<!-- CAPTURE -->
+<section class="sec" id="capture"><div class="wrap">
+  <div class="sec-h"><span class="n">07</span><h2>Yes — screen &amp; visual capture is covered</h2></div>
+  <p class="lead">You asked if I have info on the screenshot/video capture idea. I do — it's the <b style="color:var(--ink)">multimodal memory</b> part of the architecture. Here's the plan in plain terms.</p>
+  <div class="capture">
+    <h3>How "visual capture" works</h3>
+    <p style="color:var(--ink2);font-size:14px;margin:0">FounderOS doesn't just store a screenshot — it <b style="color:var(--ink)">understands</b> it and remembers the meaning, so it can reuse your design and spot UX issues later.</p>
+    <div class="capsteps">
+      <div class="capstep"><div class="k">1 · CAPTURE</div><h5>Upload or grab</h5><p>Drop a screenshot, a screen recording, or a design file. (UI: me)</p></div>
+      <div class="capstep"><div class="k">2 · PROCESS</div><h5>Worker + FFmpeg</h5><p>Video is split into key frames/steps in the background. (Backend: you)</p></div>
+      <div class="capstep"><div class="k">3 · SEE</div><h5>Vision model</h5><p>A vision model reads the image → layout, colors, spacing, friction points.</p></div>
+      <div class="capstep"><div class="k">4 · REMEMBER</div><h5>Into memory</h5><p>The structured meaning (not just the file) is saved &amp; linked in the graph.</p></div>
+      <div class="capstep"><div class="k">5 · REUSE</div><h5>Design DNA</h5><p>Feeds your personal design language + UX/QA review later.</p></div>
+    </div>
+    <p style="color:var(--ink3);font-size:12px;margin-top:14px;font-family:var(--mono)">Lives in: packages/storage (files) · services/worker (FFmpeg + vision) · packages/memory (meaning) · later → Design DNA. Scheduled for Sprint 5.</p>
+  </div>
+</div></section>
+
+<!-- START -->
+<section class="sec" id="start"><div class="wrap">
+  <div class="sec-h"><span class="n">08</span><h2>How to start (today)</h2></div>
+  <p class="lead">Run the app you already have, then we begin Sprint 1.</p>
+  <div class="code">
+<span class="c"># from the project root</span><br>
+npm install<br>
+npm run dev          <span class="c"># opens apps/web → the Command Surface</span><br>
+<br>
+<span class="c"># to read the design language &amp; vision anytime:</span><br>
+<span class="c"># open</span> docs/blueprints/<span class="p">FounderOS-Design-Showcase.html</span><br>
+<span class="c"># open</span> docs/blueprints/<span class="p">FounderOS-Step7-MVP-Roadmap.md</span>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <b>FounderOS · Learning Hub</b><br>
+  Kept in <span class="mono" style="color:var(--cyan)">docs/learning/</span> and updated as we complete sprints. You build the backend; I'll keep the UI/UX and these guides current.<br>
+  <span style="font-family:var(--mono);font-size:11px;color:var(--ink4)">v1 · June 28, 2026 · references: docs/blueprints (vision, architecture, roadmap)</span>
+</div></footer>
+
+</body>
+</html>

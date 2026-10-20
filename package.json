@@ -1,0 +1,32 @@
+{
+  "name": "founderos",
+  "private": true,
+  "version": "0.1.0",
+  "description": "FounderOS — a Virtual AI Software Company. npm-workspaces monorepo (ONE node_modules at the root).",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*",
+    "plugins/*"
+  ],
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace apps/web",
+    "dev:web": "npm run dev --workspace apps/web",
+    "dev:gati": "npm --prefix projects/gati-rides run dev",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:skills": "node --test tooling/skills/design-director.test.mjs",
+    "design": "node skills/design-director/scripts/design.mjs",
+    "verify": "npm run typecheck && npm run test && npm run build",
+    "doctor": "node tooling/mono-doctor.mjs",
+    "doctor:fix": "node tooling/mono-doctor.mjs --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "docs:check": "node tooling/docs-check.mjs",
+    "secrets:check": "node tooling/secret-scan.mjs"
+  }
+}

@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en" data-theme="founder">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FounderOS · Strata Design Language</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* timeless substrate — constant across every theme */
+  --void:#06070A; --base:#0A0C11; --raised:#11141B; --raised2:#161A23;
+  --hair:rgba(255,255,255,.07); --hair2:rgba(255,255,255,.13);
+  --ink:#F4F5F8; --ink2:#A6ABBA; --ink3:#6B7185; --ink4:#3D4250;
+  --glass:rgba(255,255,255,.04); --glass2:rgba(255,255,255,.06);
+  /* adaptive accent — overridden per project theme */
+  --accent:#7C6CF7; --accent2:#34E5FF; --accent-ink:#0A0C11;
+  --glow:rgba(124,108,247,.35); --glow2:rgba(52,229,255,.22);
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',-apple-system,sans-serif; --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1); --ease2:cubic-bezier(.16,1,.3,1);
+}
+[data-theme="founder"]{--accent:#7C6CF7;--accent2:#34E5FF;--glow:rgba(124,108,247,.35);--glow2:rgba(52,229,255,.22)}
+[data-theme="fintech"]{--accent:#1FB58F;--accent2:#3DD6C4;--glow:rgba(31,181,143,.33);--glow2:rgba(61,214,196,.2)}
+[data-theme="health"]{--accent:#2BA8E0;--accent2:#6FE0D0;--glow:rgba(43,168,224,.32);--glow2:rgba(111,224,208,.2)}
+[data-theme="creative"]{--accent:#9D5CF6;--accent2:#FF6EC7;--glow:rgba(157,92,246,.35);--glow2:rgba(255,110,199,.22)}
+[data-theme="media"]{--accent:#F5A524;--accent2:#FF6B6B;--glow:rgba(245,165,36,.3);--glow2:rgba(255,107,107,.2)}
+[data-theme="commerce"]{--accent:#FF7A1A;--accent2:#FF4D8D;--glow:rgba(255,122,26,.3);--glow2:rgba(255,77,141,.2)}
+[data-theme="developer"]{--accent:#18D2E0;--accent2:#9EF01A;--glow:rgba(24,210,224,.3);--glow2:rgba(158,240,26,.2)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--void);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.6;
+  -webkit-font-smoothing:antialiased;letter-spacing:-.011em;overflow-x:hidden;
+  transition:background .6s var(--ease)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.9;
+  background:
+   radial-gradient(900px 600px at 8% -8%,var(--glow),transparent 60%),
+   radial-gradient(800px 560px at 98% 4%,var(--glow2),transparent 55%),
+   radial-gradient(700px 700px at 50% 116%,var(--glow),transparent 62%);
+  transition:background .8s var(--ease)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);
+  background-size:42px 42px;-webkit-mask-image:radial-gradient(circle at 50% 30%,#000,transparent 75%)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+.serif{font-family:var(--serif)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent2);opacity:.92}
+.accent{color:var(--accent2)}
+.muted{color:var(--ink2)} .faint{color:var(--ink3)}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.display{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:1.02}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(6,7,10,.66);border-bottom:1px solid var(--hair)}
+.nav .wrap{display:flex;align-items:center;gap:8px;height:58px}
+.brand{font-family:var(--serif);font-size:19px;font-weight:500;letter-spacing:-.02em;margin-right:auto}
+.brand b{color:var(--accent2);font-weight:500}
+.nav a{font-size:13px;color:var(--ink3);text-decoration:none;padding:7px 12px;border-radius:9px;transition:.25s var(--ease);white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--glass)}
+.nav .links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav .links::-webkit-scrollbar{display:none}
+@media(max-width:760px){.nav .links{display:none}}
+
+/* hero */
+.hero{position:relative;padding:120px 0 90px}
+.hero .kicker{margin-bottom:24px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7.5vw,84px);line-height:1.0;letter-spacing:-.03em}
+.hero h1 em{font-style:italic;color:var(--accent2)}
+.hero .sub{max-width:620px;margin:28px 0 0;font-size:clamp(16px,2.1vw,20px);color:var(--ink2);font-weight:350}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:38px}
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;padding:13px 22px;border-radius:13px;border:1px solid transparent;cursor:pointer;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);text-decoration:none;display:inline-flex;align-items:center;gap:9px}
+.btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:var(--accent-ink);font-weight:600;box-shadow:0 12px 40px -12px var(--glow)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 20px 54px -14px var(--glow)}
+.btn.ghost{background:var(--glass);border-color:var(--hair2);color:var(--ink)}
+.btn.ghost:hover{background:var(--glass2);transform:translateY(-2px)}
+.heroStats{display:flex;gap:34px;flex-wrap:wrap;margin-top:54px;font-family:var(--mono);font-size:12.5px;color:var(--ink3)}
+.heroStats b{display:block;font-family:var(--serif);font-size:26px;font-weight:400;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px}
+
+/* section */
+.sec{padding:84px 0;border-top:1px solid var(--hair)}
+.sec-h{margin-bottom:42px;max-width:720px}
+.sec-h .kicker{margin-bottom:16px;display:block}
+.sec-h h2{font-family:var(--serif);font-weight:350;font-size:clamp(26px,4vw,42px);letter-spacing:-.025em}
+.sec-h p{margin:16px 0 0;color:var(--ink2);font-size:16px}
+
+/* shift grid */
+.shift{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.shift .c{padding:22px;border-radius:16px;border:1px solid var(--hair);background:var(--glass)}
+.shift .c .no{font-family:var(--mono);font-size:11px;color:var(--accent2);letter-spacing:.2em}
+.shift .c h3{font-family:var(--serif);font-weight:400;font-size:20px;margin:12px 0 6px}
+.shift .c p{font-size:13.5px;color:var(--ink2);margin:0}
+.shift .c .x{font-size:12px;color:var(--ink4);margin-top:10px;font-family:var(--mono)}
+
+/* principles */
+.princ{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:18px;overflow:hidden}
+.princ .p{background:var(--base);padding:26px 24px;transition:background .4s var(--ease)}
+.princ .p:hover{background:var(--raised)}
+.princ .p .ix{font-family:var(--mono);font-size:11px;color:var(--accent2)}
+.princ .p h3{font-family:var(--serif);font-weight:400;font-size:21px;margin:12px 0 8px;letter-spacing:-.01em}
+.princ .p p{font-size:13.5px;color:var(--ink2);margin:0}
+
+/* THEME LAB */
+.lab{border:1px solid var(--hair2);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,var(--raised),var(--base))}
+.themebar{display:flex;gap:8px;flex-wrap:wrap;padding:18px 20px;border-bottom:1px solid var(--hair);background:var(--glass)}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;padding:9px 15px;border-radius:11px;border:1px solid var(--hair2);
+  background:transparent;color:var(--ink2);cursor:pointer;transition:.3s var(--ease);display:flex;align-items:center;gap:8px}
+.chip:hover{color:var(--ink);border-color:var(--ink3)}
+.chip .sw{width:11px;height:11px;border-radius:4px}
+.chip.active{background:linear-gradient(120deg,var(--accent),var(--accent2));color:var(--accent-ink);border-color:transparent;font-weight:600}
+.labbody{display:grid;grid-template-columns:1.15fr .85fr;gap:0}
+@media(max-width:820px){.labbody{grid-template-columns:1fr}}
+.labL{padding:30px;border-right:1px solid var(--hair)}
+.labR{padding:30px;background:var(--glass)}
+.projname{font-family:var(--serif);font-weight:400;font-size:27px;letter-spacing:-.02em;transition:.4s var(--ease)}
+.projmeta{font-family:var(--mono);font-size:11.5px;color:var(--accent2);margin-top:6px;letter-spacing:.06em}
+.projdesc{color:var(--ink2);font-size:14px;margin:16px 0 22px}
+.swatches{display:flex;gap:10px;margin-bottom:20px}
+.swatches .s{flex:1;height:54px;border-radius:12px;border:1px solid var(--hair);position:relative;overflow:hidden}
+.swatches .s span{position:absolute;left:8px;bottom:6px;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.85)}
+.miniagents{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.ma{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:11px;border:1px solid var(--hair);background:var(--base)}
+.ma .d{width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2)}
+.ma .nm{font-size:12.5px;color:var(--ink)} .ma .st{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.cardpreview{border:1px solid var(--hair2);border-radius:16px;padding:18px;background:linear-gradient(150deg,var(--glass2),transparent)}
+.cardpreview .pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600}
+.cardpreview h4{font-family:var(--serif);font-weight:400;font-size:18px;margin:14px 0 6px}
+.cardpreview p{font-size:12.5px;color:var(--ink2);margin:0 0 16px}
+.cardpreview .barfill{height:6px;border-radius:99px;background:var(--hair);overflow:hidden}
+.cardpreview .barfill i{display:block;height:100%;width:68%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+/* COMMAND SURFACE */
+.surface{border:1px solid var(--hair2);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,var(--raised),var(--void))}
+.surfTop{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--hair);background:var(--glass)}
+.surfTop .dot{width:10px;height:10px;border-radius:50%;background:var(--ink4)}
+.surfTop .ttl{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:6px;letter-spacing:.08em}
+.surfTop .live{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--accent2);display:flex;align-items:center;gap:7px}
+.surfTop .live .p{width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.surfBody{padding:30px;display:grid;grid-template-columns:1fr;gap:22px}
+.cmdline{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:16px;border:1px solid var(--hair2);background:var(--base)}
+.cmdline .caret{color:var(--accent2);font-family:var(--mono)}
+.cmdline .typed{font-family:var(--serif);font-size:18px;color:var(--ink)}
+.cmdline .cur{display:inline-block;width:2px;height:20px;background:var(--accent2);vertical-align:middle;animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.chorus{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:680px){.chorus{grid-template-columns:repeat(2,1fr)}}
+.agent{padding:14px;border-radius:13px;border:1px solid var(--hair);background:var(--glass);opacity:.4;transform:translateY(8px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .5s}
+.agent.on{opacity:1;transform:none;border-color:var(--hair2)}
+.agent .ic{width:26px;height:26px;border-radius:8px;background:linear-gradient(130deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:13px;color:var(--accent-ink);font-weight:700;font-family:var(--mono)}
+.agent .nm{font-size:12.5px;margin-top:10px;color:var(--ink)}
+.agent .role{font-family:var(--mono);font-size:9.5px;color:var(--ink3);margin-top:3px}
+.agent .tick{font-family:var(--mono);font-size:9.5px;color:var(--accent2);margin-top:8px;opacity:0;transition:opacity .4s}
+.agent.done .tick{opacity:1}
+.answer{padding:22px 24px;border-radius:16px;border:1px solid var(--hair2);background:linear-gradient(150deg,var(--glass2),transparent);opacity:0;transform:translateY(14px);transition:.7s var(--ease)}
+.answer.in{opacity:1;transform:none}
+.answer .who{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2)}
+.answer .txt{font-family:var(--serif);font-weight:350;font-size:18px;line-height:1.5;margin-top:12px;color:var(--ink)}
+.answer .meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
+.answer .meta b{color:var(--ink2);font-weight:500}
+
+/* graph + memory mini */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.duo{grid-template-columns:1fr}}
+.mini{border:1px solid var(--hair);border-radius:16px;padding:20px;background:var(--glass)}
+.mini h4{font-family:var(--serif);font-weight:400;font-size:17px;margin:0 0 4px}
+.mini p{font-size:12.5px;color:var(--ink2);margin:0 0 14px}
+.memrows{display:flex;flex-direction:column;gap:7px}
+.memrow{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.memrow .bar{flex:1;height:4px;border-radius:99px;background:var(--hair);overflow:hidden}
+.memrow .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width 1.3s var(--ease)}
+
+/* FOUNDER INTELLIGENCE */
+.fil{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:900px){.fil{grid-template-columns:repeat(2,1fr)}}
+.fil .f{padding:18px;border-radius:15px;border:1px solid var(--hair);background:linear-gradient(160deg,var(--glass),transparent);transition:.4s var(--ease)}
+.fil .f:hover{transform:translateY(-3px);border-color:var(--hair2)}
+.fil .f .ic{font-size:19px}
+.fil .f h4{font-family:var(--serif);font-weight:400;font-size:15.5px;margin:11px 0 6px;letter-spacing:-.01em}
+.fil .f p{font-size:11.5px;color:var(--ink2);margin:0}
+
+/* tokens: type + space */
+.tokrow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.tokrow{grid-template-columns:1fr}}
+.typescale .t{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.typescale .t .lab{font-family:var(--mono);font-size:10.5px;color:var(--ink3);width:108px;flex:none}
+.typescale .voice{font-family:var(--mono);font-size:9px;color:var(--accent2);width:62px;flex:none}
+.spacescale{display:flex;flex-direction:column;gap:9px}
+.sp{display:flex;align-items:center;gap:14px}
+.sp .bx{height:14px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px}
+.sp .lab{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+
+/* navigation arch */
+.navarch{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.navarch{grid-template-columns:1fr}}
+.navarch .col{border:1px solid var(--hair);border-radius:15px;padding:20px;background:var(--glass)}
+.navarch .col h4{font-family:var(--serif);font-weight:400;font-size:17px;margin:0 0 12px}
+.navarch .col ul{margin:0;padding:0;list-style:none}
+.navarch .col li{font-size:12.5px;color:var(--ink2);padding:7px 0;border-bottom:1px dashed var(--hair);display:flex;gap:9px}
+.navarch .col li:last-child{border:0}
+.navarch .col li .k{font-family:var(--mono);font-size:10px;color:var(--accent2);flex:none;width:18px}
+
+/* responsive devices */
+.dev{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.dev{grid-template-columns:1fr}}
+.dev .d{border:1px solid var(--hair);border-radius:16px;padding:22px;background:var(--glass)}
+.dev .d .tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2)}
+.dev .d h4{font-family:var(--serif);font-weight:400;font-size:19px;margin:10px 0 8px}
+.dev .d p{font-size:12.5px;color:var(--ink2);margin:0}
+
+/* a11y + critique */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.cols2{grid-template-columns:1fr}}
+.list .li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--hair)}
+.list .li .b{width:6px;height:6px;border-radius:50%;background:var(--accent2);margin-top:8px;flex:none;box-shadow:0 0 8px var(--accent2)}
+.list .li h4{font-size:14px;margin:0 0 3px;font-weight:600}
+.list .li p{font-size:12.5px;color:var(--ink2);margin:0}
+.crit .li .b{background:var(--accent)}
+.crit{border:1px solid var(--hair2);border-radius:18px;padding:8px 24px;background:linear-gradient(160deg,var(--glass),transparent)}
+
+footer{padding:60px 0 80px;border-top:1px solid var(--hair);color:var(--ink3)}
+footer .big{font-family:var(--serif);font-weight:300;font-size:clamp(24px,4vw,38px);color:var(--ink);letter-spacing:-.02em;max-width:760px}
+footer .meta{margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--ink4)}
+
+.float{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;gap:8px;align-items:center;
+  padding:9px 9px 9px 16px;border-radius:14px;border:1px solid var(--hair2);background:rgba(10,12,17,.8);backdrop-filter:blur(16px)}
+.float span{font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
+.float .mini-sw{width:22px;height:22px;border-radius:7px;border:1px solid var(--hair2);cursor:pointer;transition:transform .25s}
+.float .mini-sw:hover{transform:scale(1.12)}
+@media(max-width:620px){.float{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <div class="brand">Founder<b>OS</b></div>
+  <div class="links">
+    <a href="#shift">The Shift</a>
+    <a href="#principles">Principles</a>
+    <a href="#themes">Adaptive Themes</a>
+    <a href="#surface">Command Surface</a>
+    <a href="#intelligence">Founder Intelligence</a>
+    <a href="#tokens">Tokens</a>
+    <a href="#nav">Navigation</a>
+    <a href="#responsive">Responsive</a>
+    <a href="#critique">Critique</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="kicker rv">Strata — the FounderOS design language</div>
+  <h1 class="rv">An elite software company,<br><em>calm</em> on one surface.</h1>
+  <p class="sub rv">FounderOS isn't a dashboard, an admin panel, or another SaaS app. It's a stage where intent becomes outcome — where an unseen company of agents thinks, builds, reviews, and remembers, and hands you one confident answer. Strata is the language that makes that feel inevitable.</p>
+  <div class="cta rv">
+    <a class="btn primary" href="#surface">Enter the Command Surface →</a>
+    <a class="btn ghost" href="#themes">See adaptive themes</a>
+  </div>
+  <div class="heroStats rv">
+    <div><b>Creation</b>over management</div>
+    <div><b>Thinking</b>over clicking</div>
+    <div><b>Momentum</b>over navigation</div>
+    <div><b>Confidence</b>over confusion</div>
+  </div>
+</div></header>
+
+<!-- THE SHIFT -->
+<section class="sec" id="shift"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">01 · The Category Shift</span>
+    <h2>We removed the dashboard on purpose.</h2>
+    <p>Management UIs make you the operator. Strata makes you the founder. Every pattern below trades control surfaces for a sense of momentum.</p></div>
+  <div class="shift">
+    <div class="c rv"><div class="no">A → B</div><h3>Creation over management</h3><p>The surface opens on a single intent line, not a grid of widgets. You start by making, not by configuring.</p><div class="x">no settings-first screens</div></div>
+    <div class="c rv"><div class="no">A → B</div><h3>Thinking over clicking</h3><p>One focal plane at a time. The company carries the steps; you carry the judgment.</p><div class="x">≤1 primary decision per view</div></div>
+    <div class="c rv"><div class="no">A → B</div><h3>Momentum over navigation</h3><p>Work flows as shared-layout transitions, not page reloads. You never "go to" — context comes to you.</p><div class="x">spatial continuity, not routes</div></div>
+    <div class="c rv"><div class="no">A → B</div><h3>Clarity over complexity</h3><p>Progressive disclosure hides the org until summoned. Depth is available, never imposed.</p><div class="x">"show the company" is opt-in</div></div>
+    <div class="c rv"><div class="no">A → B</div><h3>Confidence over confusion</h3><p>Every answer is reviewed, sourced, costed, and reversible — visible the instant you ask.</p><div class="x">trust is one gesture away</div></div>
+    <div class="c rv"><div class="no">A → B</div><h3>Premium over plentiful</h3><p>Fewer, deeper surfaces. Restraint is the feature; nothing competes for attention.</p><div class="x">earn every pixel</div></div>
+  </div>
+</div></section>
+
+<!-- PRINCIPLES -->
+<section class="sec" id="principles"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">02 · Design Principles</span>
+    <h2>Eight laws of the calm command surface.</h2>
+    <p>Distilled — not copied — from the deepest patterns in Linear, Raycast, Arc, Stripe, Figma, Notion, Cursor, Claude and Vision Pro: hierarchy, focus, rhythm, progressive disclosure, spatial depth, motion-as-meaning, and cognitive-load reduction.</p></div>
+  <div class="princ">
+    <div class="p rv"><div class="ix">P1</div><h3>Calm by default, alive on intent</h3><p>Stillness until you act; then cinematic, purposeful response. The interface breathes, it never fidgets.</p></div>
+    <div class="p rv"><div class="ix">P2</div><h3>One focal plane</h3><p>Exactly one subject is in focus; everything else recedes in depth, blur, and contrast. Focus is a managed resource.</p></div>
+    <div class="p rv"><div class="ix">P3</div><h3>Depth over density</h3><p>Spatial layering — glass, elevation, parallax — organizes meaning instead of cramming more boxes onto a grid.</p></div>
+    <div class="p rv"><div class="ix">P4</div><h3>Motion is meaning</h3><p>Animation shows the company working — agents converging, memory indexing, the graph linking — never decoration.</p></div>
+    <div class="p rv"><div class="ix">P5</div><h3>Progressive disclosure</h3><p>The simplest possible surface first; depth unfolds on demand. The org is invisible until you ask to see it.</p></div>
+    <div class="p rv"><div class="ix">P6</div><h3>Three voices, one system</h3><p>The company speaks in serif, the system labels in mono, your content lives in sans. Typography itself tells the story.</p></div>
+    <div class="p rv"><div class="ix">P7</div><h3>Adaptive identity, constant substrate</h3><p>Each project carries its own accent personality on one timeless dark substrate — variety without chaos.</p></div>
+    <div class="p rv"><div class="ix">P8</div><h3>Reversible &amp; legible</h3><p>Every action can be undone and inspected. Reasoning, sources, and cost are one gesture away — confidence by design.</p></div>
+  </div>
+</div></section>
+
+<!-- ADAPTIVE THEMES -->
+<section class="sec" id="themes"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">03 · Adaptive Theme System</span>
+    <h2>Every project speaks in its own accent.</h2>
+    <p>Not fixed colors — an adaptive system. The substrate, spacing, type and motion stay constant for consistency; a project's domain sets its accent spectrum and motion character. Switch a project below and watch the entire surface re-tune, live.</p></div>
+  <div class="lab rv">
+    <div class="themebar" id="themebar">
+      <button class="chip active" data-theme="founder"><span class="sw" style="background:#7C6CF7"></span>Founder OS</button>
+      <button class="chip" data-theme="fintech"><span class="sw" style="background:#1FB58F"></span>FinTech</button>
+      <button class="chip" data-theme="health"><span class="sw" style="background:#2BA8E0"></span>Healthcare</button>
+      <button class="chip" data-theme="creative"><span class="sw" style="background:#9D5CF6"></span>Creative AI</button>
+      <button class="chip" data-theme="media"><span class="sw" style="background:#F5A524"></span>Media</button>
+      <button class="chip" data-theme="commerce"><span class="sw" style="background:#FF7A1A"></span>E-commerce</button>
+      <button class="chip" data-theme="developer"><span class="sw" style="background:#18D2E0"></span>Developer</button>
+    </div>
+    <div class="labbody">
+      <div class="labL">
+        <div class="projname" id="projName">FounderOS · Home Workspace</div>
+        <div class="projmeta" id="projMeta">DEFAULT IDENTITY · IRIS / CYAN · MEASURED MOTION</div>
+        <div class="projdesc" id="projDesc">The neutral home identity — the calm executive substrate every project inherits before it takes on its own personality.</div>
+        <div class="swatches" id="swatches"></div>
+        <div class="miniagents">
+          <div class="ma"><span class="d"></span><span class="nm">Product</span><span class="st">framing intent</span></div>
+          <div class="ma"><span class="d"></span><span class="nm">Engineering</span><span class="st">architecture</span></div>
+          <div class="ma"><span class="d"></span><span class="nm">Design</span><span class="st">applying DNA</span></div>
+        </div>
+      </div>
+      <div class="labR">
+        <div class="cardpreview">
+          <span class="pill" id="pvPill">PROJECT</span>
+          <h4 id="pvTitle">Live component preview</h4>
+          <p id="pvDesc">Components inherit the active accent automatically through design tokens — one component, every identity.</p>
+          <div class="barfill"><i></i></div>
+          <div style="display:flex;gap:10px;margin-top:18px">
+            <a class="btn primary" style="padding:10px 16px;font-size:13px" href="#">Primary</a>
+            <a class="btn ghost" style="padding:10px 16px;font-size:13px" href="#">Secondary</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- COMMAND SURFACE -->
+<section class="sec" id="surface"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">04 · The Command Surface</span>
+    <h2>One line in. One answer out. A company in between.</h2>
+    <p>The flagship screen. You state intent; the org activates only the departments it needs, works in parallel, reviews itself, and the CEO voice returns one synthesized answer — with the reasoning, cost and memory one click away. Scroll into view to watch a run.</p></div>
+  <div class="surface rv" id="surface-demo">
+    <div class="surfTop">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="ttl">founderos · run #0427</span>
+      <span class="live"><span class="p"></span>COMPANY AT WORK</span>
+    </div>
+    <div class="surfBody">
+      <div class="cmdline">
+        <span class="caret mono">›</span>
+        <span class="typed serif" id="typed"></span><span class="cur"></span>
+      </div>
+      <div class="chorus" id="chorus">
+        <div class="agent" data-d="0"><div class="ic">PM</div><div class="nm">Product</div><div class="role">scope · PRD</div><div class="tick">✓ framed</div></div>
+        <div class="agent" data-d="1"><div class="ic">AR</div><div class="nm">Architecture</div><div class="role">system design</div><div class="tick">✓ designed</div></div>
+        <div class="agent" data-d="2"><div class="ic">UX</div><div class="nm">Design</div><div class="role">flow · DNA</div><div class="tick">✓ on-brand</div></div>
+        <div class="agent" data-d="3"><div class="ic">QA</div><div class="nm">QA + Security</div><div class="role">gates</div><div class="tick">✓ passed</div></div>
+      </div>
+      <div class="answer" id="answer">
+        <div class="who">CEO · the single voice</div>
+        <div class="txt">Here's the plan for your onboarding flow: a three-step magic-link signup, a reused billing module from <span class="accent">Project Atlas</span>, and a security-reviewed session model. I kept it on your Design DNA and routed all of it through balanced models — frontier only for the architecture call.</div>
+        <div class="meta">
+          <span><b>4</b> departments</span>
+          <span><b>11</b> tasks · 9 parallel</span>
+          <span><b>2</b> assets reused</span>
+          <span><b>$0.14</b> spend · ~71% saved</span>
+          <span><b>↩</b> reversible</span>
+        </div>
+      </div>
+      <div class="duo">
+        <div class="mini">
+          <h4>Memory indexing</h4>
+          <p>Decisions, components and lessons written back as the run completes.</p>
+          <div class="memrows" id="memrows">
+            <div class="memrow"><span>decision</span><div class="bar"><i data-w="92"></i></div></div>
+            <div class="memrow"><span>component</span><div class="bar"><i data-w="78"></i></div></div>
+            <div class="memrow"><span>lesson</span><div class="bar"><i data-w="64"></i></div></div>
+            <div class="memrow"><span>pattern</span><div class="bar"><i data-w="85"></i></div></div>
+          </div>
+        </div>
+        <div class="mini">
+          <h4>Knowledge graph</h4>
+          <p>The new work links into your living graph for future reuse.</p>
+          <svg viewBox="0 0 320 150" width="100%" id="graphmini">
+            <g stroke="var(--hair2)" stroke-width="1" id="glines"></g>
+            <g id="gnodes"></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- FOUNDER INTELLIGENCE -->
+<section class="sec" id="intelligence"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">05 · Founder Intelligence Layer</span>
+    <h2>It improves your projects — and improves you.</h2>
+    <p>The third pillar. Beyond shipping faster, FounderOS quietly compounds <em>you</em> as a founder: what you learn, what you decide, where your time goes, what to reuse, and what matters this week.</p></div>
+  <div class="fil">
+    <div class="f rv"><div class="ic">🎯</div><h4>Learning Tracker</h4><p>Spots skills worth learning from the work you actually do — and surfaces the one that unlocks the most.</p></div>
+    <div class="f rv"><div class="ic">📓</div><h4>Decision Journal</h4><p>Records major decisions and their outcomes, so judgment compounds instead of repeating.</p></div>
+    <div class="f rv"><div class="ic">⏱️</div><h4>Productivity Insights</h4><p>Shows where your attention actually goes across projects, and where momentum leaks.</p></div>
+    <div class="f rv"><div class="ic">♻️</div><h4>Knowledge Reuse</h4><p>Surfaces relevant past work the moment it's useful — you never solve the same problem twice.</p></div>
+    <div class="f rv"><div class="ic">🗞️</div><h4>Weekly Executive Brief</h4><p>One calm Monday read: progress, risks, opportunities, model updates, and cost suggestions.</p></div>
+  </div>
+</div></section>
+
+<!-- TOKENS -->
+<section class="sec" id="tokens"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">06 · Typography &amp; Spacing</span>
+    <h2>Three voices. One eight-point grid.</h2></div>
+  <div class="tokrow">
+    <div class="rv">
+      <div class="typescale">
+        <div class="t"><span class="lab">Display / 64</span><span class="voice">serif</span><span class="serif" style="font-size:32px;font-weight:300">The company speaks</span></div>
+        <div class="t"><span class="lab">Title / 28</span><span class="voice">serif</span><span class="serif" style="font-size:22px;font-weight:400">An executive answer</span></div>
+        <div class="t"><span class="lab">Body / 16</span><span class="voice">sans</span><span style="font-size:15px">Your content, calm and neutral</span></div>
+        <div class="t"><span class="lab">Label / 12</span><span class="voice">mono</span><span class="mono" style="font-size:12px;color:var(--ink2)">SYSTEM · STATUS · META</span></div>
+        <div class="t"><span class="lab">Micro / 10</span><span class="voice">mono</span><span class="mono" style="font-size:10px;color:var(--ink3)">run #0427 · $0.14</span></div>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="spacescale">
+        <div class="sp"><div class="bx" style="width:4px"></div><span class="lab">4 · hairline inset</span></div>
+        <div class="sp"><div class="bx" style="width:8px"></div><span class="lab">8 · base unit</span></div>
+        <div class="sp"><div class="bx" style="width:16px"></div><span class="lab">16 · component padding</span></div>
+        <div class="sp"><div class="bx" style="width:24px"></div><span class="lab">24 · card rhythm</span></div>
+        <div class="sp"><div class="bx" style="width:40px"></div><span class="lab">40 · section inset</span></div>
+        <div class="sp"><div class="bx" style="width:84px"></div><span class="lab">84 · section breathing</span></div>
+      </div>
+      <p class="faint" style="font-size:12.5px;margin-top:20px;font-family:var(--mono)">radius 4→24 · elevation by blur + 1px hairline, never heavy shadows · motion 180–520ms on cubic-bezier(.22,1,.36,1)</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- NAVIGATION -->
+<section class="sec" id="nav"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">07 · Navigation &amp; Page Hierarchy</span>
+    <h2>You don't navigate. Context arrives.</h2>
+    <p>A command-first spatial model. One persistent surface; depth opens as panels and shared-layout transitions, not page reloads. Three zones, no deep menus.</p></div>
+  <div class="navarch">
+    <div class="col rv"><h4>Command zone — always</h4><ul>
+      <li><span class="k">⌘K</span> Intent line — the universal entry to everything</li>
+      <li><span class="k">↹</span> Project switcher — re-tunes the whole accent</li>
+      <li><span class="k">◷</span> Run timeline — live + history, scrubbable</li>
+    </ul></div>
+    <div class="col rv"><h4>Focus zone — the work</h4><ul>
+      <li><span class="k">1</span> Command Surface — the run &amp; the answer</li>
+      <li><span class="k">2</span> Project Canvas — lifecycle stages as one continuum</li>
+      <li><span class="k">3</span> Memory &amp; Graph — recall, reuse, connect</li>
+    </ul></div>
+    <div class="col rv"><h4>Depth zone — on demand</h4><ul>
+      <li><span class="k">↘</span> Show the company — agents, gates, debate</li>
+      <li><span class="k">↘</span> Cost &amp; routing — spend, models, budgets</li>
+      <li><span class="k">↘</span> Founder Intelligence — brief, learning, decisions</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<!-- RESPONSIVE -->
+<section class="sec" id="responsive"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">08 · Responsive Experience</span>
+    <h2>One language, three postures.</h2></div>
+  <div class="dev">
+    <div class="d rv"><div class="tag">Mobile · focus</div><h4>The companion</h4><p>One thing at a time: intent line, the answer, and a swipe to "show the company." Briefs and approvals on the go. Thumb-reachable command bar pinned to the bottom.</p></div>
+    <div class="d rv"><div class="tag">Tablet · review</div><h4>The desk</h4><p>Two-pane: the run on the left, depth panel on the right. Pencil/touch for marking up flows and approving gates. The reviewing surface.</p></div>
+    <div class="d rv"><div class="tag">Desktop · command</div><h4>The studio</h4><p>The full spatial surface: command zone, focus plane, and depth panels coexisting. Keyboard-first, magnetic targets, parallel runs visible at a glance.</p></div>
+  </div>
+</div></section>
+
+<!-- ACCESSIBILITY + CRITIQUE -->
+<section class="sec" id="critique"><div class="wrap">
+  <div class="sec-h rv"><span class="kicker">09 · Accessibility &amp; Honest Critique</span>
+    <h2>Premium means everyone, and naming the flaws.</h2></div>
+  <div class="cols2">
+    <div class="list rv">
+      <div class="li"><span class="b"></span><div><h4>Motion is optional</h4><p>Every animation respects <span class="mono">prefers-reduced-motion</span>; meaning is never carried by motion alone.</p></div></div>
+      <div class="li"><span class="b"></span><div><h4>Contrast on the substrate</h4><p>Text meets WCAG AA on the dark base; accents are validated per theme, never used as the only signal.</p></div></div>
+      <div class="li"><span class="b"></span><div><h4>Keyboard-complete</h4><p>⌘K-first means the whole product is operable without a mouse; visible focus rings on the accent.</p></div></div>
+      <div class="li"><span class="b"></span><div><h4>Calm for cognition</h4><p>One focal plane and progressive disclosure reduce load for ADHD, anxiety, and first-time users alike.</p></div></div>
+      <div class="li"><span class="b"></span><div><h4>Screen-reader narration</h4><p>The "company at work" has a live-region text track: "Architecture passed review" — not just animation.</p></div></div>
+    </div>
+    <div class="crit rv">
+      <div class="list">
+        <div class="li"><span class="b"></span><div><h4>Risk: dark-only elegance</h4><p>A pure dark substrate can fail bright-environment and low-vision users. <b>Fix:</b> ship a "Daylight" substrate variant that keeps Strata's depth model in light.</p></div></div>
+        <div class="li"><span class="b"></span><div><h4>Risk: invisible-company anxiety</h4><p>Hiding the org can feel like loss of control for power users. <b>Fix:</b> a persistent, unobtrusive "company pulse" and instant "show your work."</p></div></div>
+        <div class="li"><span class="b"></span><div><h4>Risk: serif-as-voice legibility</h4><p>Serif at small sizes or dense data can tire eyes. <b>Fix:</b> serif reserved for the company's voice and titles only; never for data or long forms.</p></div></div>
+        <div class="li"><span class="b"></span><div><h4>Risk: theme accent drift</h4><p>Seven accents risk inconsistency. <b>Fix:</b> accents are tokenized and contrast-locked; substrate/space/type never change.</p></div></div>
+        <div class="li"><span class="b"></span><div><h4>Risk: cinematic vs. performance</h4><p>Rich motion can stutter on low-end devices. <b>Fix:</b> GPU-only transforms, motion budget, and graceful degradation to fades.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="big rv">Trendy ages. Calm, hierarchy, and meaning don't. Strata is built to still feel right in ten years.</div>
+  <div class="meta">FounderOS · Strata Design Language · v1.0 · This showcase mirrors the React design system in <span class="accent">founderos-app/</span> — same tokens, same components, same motion.</div>
+</div></footer>
+
+<div class="float">
+  <span>theme</span>
+  <div class="mini-sw" style="background:#7C6CF7" data-theme="founder" title="Founder"></div>
+  <div class="mini-sw" style="background:#1FB58F" data-theme="fintech" title="FinTech"></div>
+  <div class="mini-sw" style="background:#2BA8E0" data-theme="health" title="Health"></div>
+  <div class="mini-sw" style="background:#9D5CF6" data-theme="creative" title="Creative"></div>
+  <div class="mini-sw" style="background:#F5A524" data-theme="media" title="Media"></div>
+  <div class="mini-sw" style="background:#FF7A1A" data-theme="commerce" title="Commerce"></div>
+  <div class="mini-sw" style="background:#18D2E0" data-theme="developer" title="Developer"></div>
+</div>
+
+<script>
+// ---------- reveal on scroll ----------
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// ---------- theme system ----------
+const THEMES={
+  founder:{name:'FounderOS · Home Workspace',meta:'DEFAULT IDENTITY · IRIS / CYAN · MEASURED MOTION',desc:'The neutral home identity — the calm executive substrate every project inherits before it takes on its own personality.',pill:'WORKSPACE',title:'Calm by default',sw:['#7C6CF7','#34E5FF','#11141B','#A6ABBA']},
+  fintech:{name:'Ledger · FinTech Platform',meta:'TRUST IDENTITY · EMERALD / TEAL · PRECISE MOTION',desc:'Restrained and exact. Tighter motion, denser data, accents that read as trust and accuracy.',pill:'FINTECH',title:'Precision you can trust',sw:['#1FB58F','#3DD6C4','#11141B','#A6ABBA']},
+  health:{name:'Vitals · Healthcare',meta:'CARE IDENTITY · AZURE / AQUA · GENTLE MOTION',desc:'Soft, reassuring, unhurried. Slower springs and airy spacing signal calm and care.',pill:'HEALTH',title:'Calm, careful, clear',sw:['#2BA8E0','#6FE0D0','#11141B','#A6ABBA']},
+  creative:{name:'Prism · Creative AI Studio',meta:'EXPRESSIVE IDENTITY · VIOLET / MAGENTA · VIVID MOTION',desc:'Bold and playful. Higher saturation and livelier motion for expressive, generative work.',pill:'CREATIVE',title:'Made to express',sw:['#9D5CF6','#FF6EC7','#11141B','#A6ABBA']},
+  media:{name:'Signal · Media &amp; Publishing',meta:'WARM IDENTITY · AMBER / CORAL · EDITORIAL MOTION',desc:'Warm and editorial. The serif voice leans in; motion has a confident, magazine cadence.',pill:'MEDIA',title:'Warm and editorial',sw:['#F5A524','#FF6B6B','#11141B','#A6ABBA']},
+  commerce:{name:'Cart · E-commerce',meta:'ENERGETIC IDENTITY · ORANGE / PINK · BRISK MOTION',desc:'Energetic and conversion-minded. Snappier transitions, punchier primaries, momentum forward.',pill:'COMMERCE',title:'Built to convert',sw:['#FF7A1A','#FF4D8D','#11141B','#A6ABBA']},
+  developer:{name:'Forge · Developer Platform',meta:'ELECTRIC IDENTITY · CYAN / LIME · CRISP MOTION',desc:'Technical and electric. Mono leans in, motion is crisp and exact, accents feel like a terminal alive.',pill:'DEVELOPER',title:'For people who build',sw:['#18D2E0','#9EF01A','#11141B','#A6ABBA']},
+};
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  const d=THEMES[t];
+  document.getElementById('projName').innerHTML=d.name;
+  document.getElementById('projMeta').textContent=d.meta;
+  document.getElementById('projDesc').innerHTML=d.desc;
+  document.getElementById('pvPill').textContent=d.pill;
+  document.getElementById('pvTitle').textContent=d.title;
+  // swatches
+  const sw=document.getElementById('swatches'); sw.innerHTML='';
+  const labels=['accent','accent-2','raised','ink-2'];
+  d.sw.forEach((c,i)=>{const el=document.createElement('div');el.className='s';el.style.background=c;el.innerHTML='<span>'+labels[i]+'</span>';sw.appendChild(el)});
+  // sync chips
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.theme===t));
+}
+document.querySelectorAll('.chip,[data-theme].mini-sw').forEach(el=>el.addEventListener('click',()=>applyTheme(el.dataset.theme)));
+applyTheme('founder');
+
+// ---------- graph mini ----------
+(function(){
+  const nodes=[[160,75,13,'P'],[60,32,9,''],[260,38,9,''],[44,120,9,''],[276,118,9,'']];
+  const lines=[[0,1],[0,2],[0,3],[0,4],[1,2],[3,4]];
+  const gl=document.getElementById('glines'),gn=document.getElementById('gnodes');
+  lines.forEach(l=>{const a=nodes[l[0]],b=nodes[l[1]];const e=document.createElementNS('http://www.w3.org/2000/svg','line');
+    e.setAttribute('x1',a[0]);e.setAttribute('y1',a[1]);e.setAttribute('x2',b[0]);e.setAttribute('y2',b[1]);gl.appendChild(e)});
+  nodes.forEach((n,i)=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',n[0]);c.setAttribute('cy',n[1]);c.setAttribute('r',n[2]);
+    c.setAttribute('fill',i===0?'var(--accent)':'var(--raised2)');c.setAttribute('stroke','var(--accent2)');c.setAttribute('stroke-width',i===0?0:1);gn.appendChild(c)});
+})();
+
+// ---------- command surface run ----------
+const prompt="Design the onboarding flow for my SaaS.";
+let played=false;
+function typeRun(){
+  if(played)return; played=true;
+  const typed=document.getElementById('typed'); let i=0;
+  const tick=()=>{ if(i<=prompt.length){typed.textContent=prompt.slice(0,i);i++;setTimeout(tick,38)} else activate(); };
+  tick();
+}
+function activate(){
+  const agents=[...document.querySelectorAll('#chorus .agent')];
+  agents.forEach((a,k)=>{
+    setTimeout(()=>a.classList.add('on'),260*k+200);
+    setTimeout(()=>a.classList.add('done'),260*k+900);
+  });
+  setTimeout(()=>{
+    document.getElementById('answer').classList.add('in');
+    document.querySelectorAll('#memrows i').forEach(b=>b.style.width=b.dataset.w+'%');
+  },260*agents.length+1100);
+}
+const surf=document.getElementById('surface-demo');
+new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)typeRun()}),{threshold:.4}).observe(surf);
+
+// ---------- magnetic primary buttons ----------
+document.querySelectorAll('.btn.primary').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;b.style.transform='translate('+x*0.18+'px,'+(y*0.18-2)+'px)'});
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+});
+</script>
+</body>
+</html>

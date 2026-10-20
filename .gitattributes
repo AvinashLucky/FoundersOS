@@ -1,0 +1,7 @@
+# Consistent line endings on Windows and Linux (CI), so diffs show real changes only.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.skill binary
+*.docx binary
+*.pdf binary

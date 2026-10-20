@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FounderOS · The Money Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07080C;--base:#0B0D13;--raised:#11141B;--raised2:#171b24;
+  --hair:rgba(255,255,255,.07);--hair2:rgba(255,255,255,.14);
+  --ink:#F4F5F8;--ink2:#AAB0BF;--ink3:#6B7185;--ink4:#3D4250;
+  --iris:#7C6CF7;--iris2:#B9AEFB;--cyan:#34E5FF;--green:#54E0A8;--amber:#F5B544;--pink:#FF6EC7;--gold:#F5C24A;
+  --serif:'Newsreader',Georgia,serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(900px 600px at 6% -8%,rgba(124,108,247,.16),transparent 60%),
+ radial-gradient(820px 560px at 98% 2%,rgba(245,194,74,.10),transparent 55%),
+ radial-gradient(700px 700px at 50% 116%,rgba(52,229,255,.08),transparent 62%),var(--void);
+ color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+.mono{font-family:var(--mono)}.serif{font-family:var(--serif)}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+a{color:inherit}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(7,8,12,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--hair)}
+.nav .wrap{display:flex;align-items:center;gap:6px;height:54px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav .brand{font-family:var(--serif);font-size:17px;margin-right:14px;white-space:nowrap}
+.nav .brand b{color:var(--gold)}
+.nav a{font-size:12.5px;color:var(--ink3);text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.hero{padding:74px 0 44px}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.8vw,58px);line-height:1.02}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{max-width:660px;color:var(--ink2);font-size:16.5px;margin:18px 0 0}
+.pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.pill{font-family:var(--mono);font-size:11px;padding:7px 13px;border-radius:999px;border:1px solid var(--hair2);color:var(--ink2)}
+.sec{padding:52px 0;border-top:1px solid var(--hair)}
+.sec-h{display:flex;align-items:baseline;gap:13px;margin-bottom:8px;flex-wrap:wrap}
+.sec-h .n{font-family:var(--mono);font-size:13px;color:var(--gold)}
+.sec-h h2{font-family:var(--serif);font-weight:350;font-size:clamp(22px,3.4vw,32px)}
+.lead{color:var(--ink2);max-width:740px;margin:6px 0 24px;font-size:15px}
+.flywheel{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.fw{flex:1 1 150px;min-width:150px;border:1px solid var(--hair);border-radius:13px;padding:15px;background:rgba(255,255,255,.03)}
+.fw .k{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em}
+.fw h5{font-family:var(--serif);font-weight:500;font-size:15px;margin:6px 0 4px}
+.fw p{font-size:11.5px;color:var(--ink3);margin:0}
+.arr{align-self:center;color:var(--gold);opacity:.6;font-size:17px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+.card{border:1px solid var(--hair);border-radius:15px;padding:18px;background:rgba(255,255,255,.03)}
+.card h4{font-family:var(--serif);font-weight:400;font-size:16.5px;margin:0 0 7px;display:flex;align-items:center;gap:9px}
+.card p{font-size:13px;color:var(--ink2);margin:0}
+.card .tag{font-family:var(--mono);font-size:10px;color:var(--gold);margin-top:10px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.steps{display:flex;flex-wrap:wrap;gap:8px}
+.step{flex:1 1 160px;min-width:160px;border:1px solid var(--hair);border-radius:13px;padding:14px;background:rgba(255,255,255,.03)}
+.step .k{font-family:var(--mono);font-size:10px;color:var(--cyan);letter-spacing:.1em}
+.step h5{font-family:var(--serif);font-weight:500;font-size:14px;margin:6px 0 4px}
+.step p{font-size:11.5px;color:var(--ink3);margin:0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--hair);color:var(--ink2)}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+td b{color:var(--ink);font-weight:600}
+.sprint{border:1px solid var(--hair);border-radius:16px;padding:16px 20px;margin-bottom:12px;background:rgba(255,255,255,.03)}
+.sprint .wk{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.sprint h4{font-family:var(--serif);font-weight:400;font-size:17px;margin:5px 0 8px}
+.sprint ul{margin:0;padding-left:18px}.sprint li{font-size:13px;color:var(--ink2);margin-bottom:5px}
+.callout{border:1px solid rgba(245,194,74,.3);border-radius:16px;padding:18px 22px;background:linear-gradient(160deg,rgba(245,194,74,.08),transparent);font-size:14px;color:var(--ink2)}
+.callout b{color:var(--ink)}
+footer{padding:50px 0 70px;border-top:1px solid var(--hair);color:var(--ink3);font-size:13px}
+footer b{color:var(--ink);font-family:var(--serif);font-weight:400}
+.disc{font-size:11.5px;color:var(--ink4);margin-top:10px}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <span class="brand">Founder<b>OS</b> · Money Engine</span>
+  <a href="#thesis">Thesis</a>
+  <a href="#flywheel">Flywheel</a>
+  <a href="#streams">Revenue</a>
+  <a href="#workflow">Workflow</a>
+  <a href="#trends">2026 trends</a>
+  <a href="#addons">Addons</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#plan">30-day plan</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kick">CEO point of view · turn the build into income</div>
+  <h1 style="margin-top:16px">FounderOS isn&rsquo;t just the product.<br>It&rsquo;s your <em>money engine</em>.</h1>
+  <p>The same system that builds your dream product can manufacture sellable assets — landing pages, templates, AI workflows, agentic tools — fast, on-brand, and reskinnable. This is the plan to sell them on Gumroad, Contra, Fiverr and beyond, at a founder&rsquo;s margin.</p>
+  <div class="pillrow">
+    <span class="pill">Build once · reskin many</span>
+    <span class="pill">Productize services</span>
+    <span class="pill">Bundles &amp; vaults</span>
+    <span class="pill">Ride 2026 trends</span>
+  </div>
+</div></header>
+
+<!-- THESIS -->
+<section class="sec" id="thesis"><div class="wrap">
+  <div class="sec-h"><span class="n">01</span><h2>The thesis</h2></div>
+  <p class="lead">Most freelancers sell <i>time</i>. You'll sell <i>assets</i> produced at machine speed. FounderOS runs the "company" that designs and builds a thing once; the adaptive theme system then reskins it into many sellable variants. You move from "one client, one build" to "one build, many sales."</p>
+  <div class="grid g3">
+    <div class="card"><h4><span class="dot" style="background:var(--gold)"></span>Speed</h4><p>The agent loop drafts; you finish. Days, not weeks, per sellable asset.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--cyan)"></span>Leverage</h4><p>One template → 7 domain reskins (FinTech, Health, Creative…) via Strata themes.</p></div>
+    <div class="card"><h4><span class="dot" style="background:var(--green)"></span>Margin</h4><p>Digital goods: no inventory, instant delivery, near-100% margin, sold repeatedly.</p></div>
+  </div>
+</div></section>
+
+<!-- FLYWHEEL -->
+<section class="sec" id="flywheel"><div class="wrap">
+  <div class="sec-h"><span class="n">02</span><h2>The founder flywheel</h2></div>
+  <p class="lead">Each turn feeds the next — your Money, Projects, Clients, Customers, and reputation as a Founder all compound.</p>
+  <div class="flywheel">
+    <div class="fw"><div class="k">BUILD</div><h5>Projects</h5><p>FounderOS produces an asset (page/template/tool).</p></div>
+    <div class="arr">→</div>
+    <div class="fw"><div class="k">SELL</div><h5>Customers</h5><p>List on Gumroad/Creative Market; buyers purchase instantly.</p></div>
+    <div class="arr">→</div>
+    <div class="fw"><div class="k">SERVE</div><h5>Clients</h5><p>Upsell custom reskins/builds on Fiverr/Contra.</p></div>
+    <div class="arr">→</div>
+    <div class="fw"><div class="k">COMPOUND</div><h5>Money</h5><p>Revenue + memory + reputation fund the next, bigger build.</p></div>
+    <div class="arr">→</div>
+    <div class="fw"><div class="k">BECOME</div><h5>Founder</h5><p>A catalog + audience = a real one-person software company.</p></div>
+  </div>
+</div></section>
+
+<!-- STREAMS -->
+<section class="sec" id="streams"><div class="wrap">
+  <div class="sec-h"><span class="n">03</span><h2>What to sell (grounded in 2026 demand)</h2></div>
+  <p class="lead">High-demand digital products right now, ranked by how well FounderOS can mass-produce them.</p>
+  <table>
+    <thead><tr><th>Product</th><th>Why it sells</th><th>Best platforms</th></tr></thead>
+    <tbody>
+      <tr><td><b>Landing-page / website templates</b></td><td>Every founder needs one; reskin per niche.</td><td>Gumroad, Creative Market</td></tr>
+      <tr><td><b>AI prompt packs &amp; GPT mini-tools</b></td><td>Top Gumroad category; cheap to make, easy to bundle.</td><td>Gumroad, Etsy</td></tr>
+      <tr><td><b>Automation workflows</b> (Zapier / Make / n8n)</td><td>Buyers import &amp; customize; save real time.</td><td>Gumroad, own store</td></tr>
+      <tr><td><b>Notion / dashboard templates</b></td><td>Evergreen demand; high perceived value.</td><td>Gumroad, Notion gallery</td></tr>
+      <tr><td><b>Agentic / GenAI starter kits</b></td><td>Hot, under-served; you already build these.</td><td>Gumroad, GitHub Sponsors</td></tr>
+      <tr><td><b>Productized services</b> ("I'll build your SaaS landing in 3 days")</td><td>Fixed scope, repeatable, premium.</td><td>Fiverr, Contra</td></tr>
+      <tr><td><b>Bundles / "Vaults"</b></td><td>5 products at one price = huge perceived value, ~100% margin.</td><td>Gumroad</td></tr>
+    </tbody>
+  </table>
+  <p class="disc">Demand signals from current marketplace guides (2026). Income varies widely — treat these as where attention is, not a guarantee. Validate each niche before going deep.</p>
+</div></section>
+
+<!-- WORKFLOW -->
+<section class="sec" id="workflow"><div class="wrap">
+  <div class="sec-h"><span class="n">04</span><h2>The production workflow (inside FounderOS)</h2></div>
+  <p class="lead">From idea to listing, the same loop every time — this is the efficiency you asked for.</p>
+  <div class="steps">
+    <div class="step"><div class="k">1 · RUN</div><h5>Generate</h5><p>Describe the asset → the company drafts structure, copy, design.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k">2 · RESKIN</div><h5>Theme it</h5><p>Apply a domain identity → instant FinTech / Health / Creative variants.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k">3 · POLISH</div><h5>Finish</h5><p>You refine the UI/UX; FounderOS keeps it on-brand &amp; accessible.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k">4 · PACKAGE</div><h5>Bundle</h5><p>Add a README, preview images, license → a sellable kit.</p></div>
+    <div class="arr">→</div>
+    <div class="step"><div class="k">5 · LIST</div><h5>Sell</h5><p>Publish to Gumroad/Contra/Fiverr; remember what sold (memory).</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px"><b>The reskin unlock:</b> your adaptive theme system means one strong template becomes a whole product line. Build the "Atlas SaaS Landing" once → sell 7 themed editions + a bundle. That's the leverage no time-for-money freelancer has.</div>
+</div></section>
+
+<!-- TRENDS -->
+<section class="sec" id="trends"><div class="wrap">
+  <div class="sec-h"><span class="n">05</span><h2>2026 styles to ride (and Strata already nails)</h2></div>
+  <p class="lead">Sell what's in demand. These are the current SaaS/web design trends — and your design system was built for them.</p>
+  <div class="grid g2">
+    <div class="card"><h4>Story-driven heroes</h4><p>Narrative headline + one focal action. <span style="color:var(--green)">Strata: ✓ one focal plane.</span></p></div>
+    <div class="card"><h4>Minimal, meaningful motion</h4><p>Scroll reveals, hover micro-interactions. <span style="color:var(--green)">Strata: ✓ Framer/GSAP, restrained.</span></p></div>
+    <div class="card"><h4>Bold typography + dark mode</h4><p>Oversized confident type on dark. <span style="color:var(--green)">Strata: ✓ serif voice + dark substrate.</span></p></div>
+    <div class="card"><h4>High-contrast accents</h4><p>Electric purples, magentas, neon greens, corals. <span style="color:var(--green)">Strata: ✓ adaptive accents.</span></p></div>
+    <div class="card"><h4>Interactive product previews</h4><p>Embedded demos in the hero. <span style="color:var(--cyan)">Build as a reusable block.</span></p></div>
+    <div class="card"><h4>Clarity-led minimalism + trust</h4><p>Every section earns its place; proof + testimonials. <span style="color:var(--green)">Strata: ✓ restraint.</span></p></div>
+  </div>
+</div></section>
+
+<!-- ADDONS -->
+<section class="sec" id="addons"><div class="wrap">
+  <div class="sec-h"><span class="n">06</span><h2>Your-side addons to build into FounderOS</h2></div>
+  <p class="lead">Modules that turn FounderOS into a selling machine. Each slots into the existing module pattern — I can build any of these next.</p>
+  <div class="grid g2">
+    <div class="card"><h4><span class="dot" style="background:var(--gold)"></span>Template Library</h4><p>Save any produced asset as a reusable template with tags, previews, and a price.</p><div class="tag">module: packages/templates</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--iris)"></span>Reskin Engine</h4><p>One click → generate all 7 themed variants of a template, export-ready.</p><div class="tag">extends: adaptive themes</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--cyan)"></span>Storefront Export</h4><p>Package an asset into a Gumroad-ready zip: files + README + preview images + license.</p><div class="tag">module: packages/export</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--green)"></span>Client Delivery</h4><p>Per-client handoff page: scope, preview, approve, download — for Fiverr/Contra gigs.</p><div class="tag">feature: delivery</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--pink)"></span>Trend Radar</h4><p>Pulls current design/UX trends &amp; best-sellers so you build what's selling now.</p><div class="tag">roadmap: Technology/Opportunity Radar</div></div>
+    <div class="card"><h4><span class="dot" style="background:var(--amber)"></span>Bundle Builder</h4><p>Combine assets into a priced "Vault" with auto-generated cover &amp; description.</p><div class="tag">module: packages/bundles</div></div>
+  </div>
+</div></section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing"><div class="wrap">
+  <div class="sec-h"><span class="n">07</span><h2>Pricing that works</h2></div>
+  <div class="grid g3">
+    <div class="card"><h4>Single asset</h4><p>$9–$29 — one template or prompt pack. The entry buy.</p></div>
+    <div class="card"><h4>Bundle / Vault</h4><p>$27–$79 — 5+ related assets. The profit center (near-100% margin).</p></div>
+    <div class="card"><h4>Productized service</h4><p>$150–$1,000+ — "Your SaaS landing in 3 days." Premium, repeatable.</p></div>
+  </div>
+  <div class="callout" style="margin-top:16px"><b>Rule of thumb:</b> lead with a cheap single asset to win the customer, then sell the Vault. The bundle is where the money is — the perceived value is huge and your cost to add one more file is zero.</div>
+</div></section>
+
+<!-- PLAN -->
+<section class="sec" id="plan"><div class="wrap">
+  <div class="sec-h"><span class="n">08</span><h2>Your 30-day money sprint</h2></div>
+  <div class="sprint"><div class="wk">Week 1 · Pick &amp; produce</div><h4>One niche, one hero asset</h4>
+    <ul><li>Choose a niche (e.g. "AI SaaS landing templates").</li><li>Use FounderOS to produce one excellent template.</li><li>Reskin into 3 variants with the theme system.</li></ul></div>
+  <div class="sprint"><div class="wk">Week 2 · Package &amp; list</div><h4>First listing live</h4>
+    <ul><li>Add README, preview images, a simple license.</li><li>Publish on Gumroad + Creative Market.</li><li>Set up a Fiverr/Contra "custom reskin" gig.</li></ul></div>
+  <div class="sprint"><div class="wk">Week 3 · Bundle &amp; promote</div><h4>The Vault + audience</h4>
+    <ul><li>Combine variants into a priced bundle.</li><li>Post build-in-public demos (the FounderOS run is great content).</li><li>Collect emails for the next drop.</li></ul></div>
+  <div class="sprint"><div class="wk">Week 4 · Systematize</div><h4>Make it repeatable</h4>
+    <ul><li>Template your packaging steps inside FounderOS.</li><li>Decide the next niche from what got attention.</li><li>Reinvest first revenue into the Reskin Engine / Storefront Export addons.</li></ul></div>
+</div></section>
+
+<footer><div class="wrap">
+  <b>FounderOS · The Money Engine</b><br>
+  A CEO-POV plan to turn your dream build into income. Kept in <span class="mono" style="color:var(--gold)">docs/learning/</span> and updated as the addons ship.<br>
+  <span class="disc">Strategy &amp; demand signals reflect mid-2026 marketplace guides. Income is never guaranteed — validate each niche, ship small, iterate on what sells.</span>
+</div></footer>
+
+</body>
+</html>
